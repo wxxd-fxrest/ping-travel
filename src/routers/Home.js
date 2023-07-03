@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useLocation } from 'react-router-dom';
 import styled from "styled-components";
+import MapComponent from '../components/MapComponent';
 import Search from '../components/search/Search';
+import PlacePage from './PlacePage';
 
 const Home = () => {
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
     const { kakao } = window;
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault();
         if (!keyword.trim()) {
             alert('키워드를 입력해주세요!');
             return;
@@ -25,9 +29,9 @@ const Home = () => {
                     center: new kakao.maps.LatLng(37.624915253753194, 127.15122688059974),
                     level: 3,
                 };
-
                 //map
                 const map = new kakao.maps.Map(container, options);
+
                 places.forEach((el) => {
                     // 마커를 생성합니다
                     const marker = new kakao.maps.Marker({
@@ -42,40 +46,83 @@ const Home = () => {
                     var infowindow = new kakao.maps.InfoWindow({
                         content: el.place_name, // 인포윈도우에 표시할 내용
                     });
+                    // infowindow.open(map, marker);
 
-                    infowindow.open(map, marker); 
+                    kakao.maps.event.addListener(
+                        marker,
+                        "mouseover",
+                        makeOverListener(map, marker, infowindow)
+                    );
+
+                    // kakao.maps.event.addListener(
+                    //     marker,
+                    //     "mouseout",
+                    //     makeOutListener(infowindow)
+                    // );
+
+                    function makeOverListener(map, marker, infowindow) {
+                        return function () {
+                            infowindow.open(map, marker);
+                            console.log(el)
+                        };
+                    }
                 });
-                // 마커 클릭 이벤트로 데이터 전달 가능한지 확인 해야 함
-                // 마커 클릭과 목록 클릭 시 발생하는 이벤트가 달라야 할 것 같음
-                // 키워드로만 검색 시 마커와 인포윈도우가 검색됨 (주소로 검색 ㄴㄴ)
+                
+                // 상세보기 시 지도에 마커가 잘 안 보임 
+                // 지도 부분 일부 구현 완료
+                // 다른 기능 부터 구현 먼저 구현하기
 
             } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
                 alert('검색 결과가 존재하지 않습니다.');
             } else if (status === window.kakao.maps.services.Status.ERROR) {
                 alert('검색 결과 중 오류가 발생했습니다.');
             }
-            // console.log(places)
+            // console.log(places);
         });
     };
+
+    // const placeList = () => {
+    //     let serchList = [] ; 
+    //     for(let i = 0; i < places.length; i++) {
+    //         serchList.push(
+    //             <div key={i}>
+    //                 {places[i] && 
+    //                     <ul>
+    //                         <li>
+    //                             <h3> {places[i].place_name} </h3>
+    //                             <p> {places[i].address_name} </p>
+    //                             <p> {places[i].phone} </p>
+    //                             <p onClick={onClick}> {places[i].y}, {places[i].x} </p>
+    //                         </li>
+    //                     </ul>}
+    //             </div>
+    //         )
+    //     }
+    //     return serchList; 
+    // } ; 
+
+
    
     return (
         <Container>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
-            
-            <Map id='map' 
+            <MapComponent />
+            {/* <Map id='map' 
                 center={{ lat: 37.566826, lng: 126.9786567 }}
                 level={3}
                 style={{ width: '100%', height: '400px' }}>
                 {places.map((place, index) => (
-                        <MapMarker key={index}
-                            position={{ lat: place.y, lng: place.x }}/>
+                    <MapMarker key={index}
+                        position={{ lat: place.y, lng: place.x }}/>
                 ))}
-            </Map>
+            </Map> */}
+            {/* {placeList()} */}
 
             {places.map((p, i) => (
-                <Search key={i} places={p} />
-            ))}
+                <Search key={i} places={p}/>
+            ))}; 
+            
     {/* <Container>
       <div id="map" style={{ width: '100%', height: '500px' }}></div>
     </Container> */}
