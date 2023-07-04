@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import MapComponent from "../components/MapComponent";
 
 const PlacePage = ({places}) => {
+    const navigate = useNavigate();
     const { kakao } = window;
     const location = useLocation();
     const state = location.state;
@@ -34,6 +35,7 @@ const PlacePage = ({places}) => {
 
     return(
         <div>
+            <button onClick={() => navigate("/search")}> back </button>
             <Map id='map' 
                 center={{ lat: state.placey, lng: state.placex }}
                 level={3}

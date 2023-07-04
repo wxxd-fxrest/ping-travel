@@ -1,198 +1,154 @@
-import React, { useEffect, useState } from 'react';
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useLocation } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import { AuthContext } from '../AuthContext';
 import MapComponent from '../components/MapComponent';
-import Search from '../components/search/Search';
-import PlacePage from './PlacePage';
+import { auth } from '../firebase';
+
+let data = [
+    {
+        id : 11137036,
+        placey : 37.45978574975834,
+        placex : 126.9511239870991,
+        name : '서울대학교',
+        data : '서울대학교 DATA',
+    },
+    {
+        id : 7813437,
+        placey : 37.564332600526484,
+        placex : 126.93893346118793,
+        name : '연세대학교',
+        data : '연세대학교 DATA',
+    },
+    {
+        id: 11369827,
+        placey: 37.589526761187834, 
+        placex: 127.03231892661324,
+        name: '고려대학교',
+        data : '고려대학교 DATA',
+    },
+    {
+        id: 8663561,
+        placey: 37.550874837441, 
+        placex: 126.925554591431,
+        name: '홍익대학교',
+        data : '홍익대학교 DATA',
+    },
+    {
+        id: 11038502,
+        placey: 37.5968011678013,
+        placex: 127.05285401582,
+        name: '경희대학교',
+        data : '경희대학교 DATA',
+    },
+]; 
 
 const Home = () => {
-    const [keyword, setKeyword] = useState('');
-    const [places, setPlaces] = useState([]);
     const { kakao } = window;
+    const navigate = useNavigate();
+    const {currentUser} = useContext(AuthContext);
+    let currentID ;
+    const [place, setPlace] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [select, setSelect] = useState([]);
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (!keyword.trim()) {
-            alert('키워드를 입력해주세요!');
-            return;
-        }
-  
-        const ps = new window.kakao.maps.services.Places();
-        
-        ps.keywordSearch(keyword, (data, status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-                setPlaces(data);
+    useEffect(() => {
+        setPlace(data);
+        let container = document.getElementById("map");
+        let options = {
+            center: new kakao.maps.LatLng(37.45978574975834, 126.9511239870991),
+            level: 3,
+        };
+        //map
+        const map = new kakao.maps.Map(container, options);
 
-                let container = document.getElementById("map");
-                let options = {
-                    center: new kakao.maps.LatLng(37.624915253753194, 127.15122688059974),
-                    level: 3,
+        place.forEach((data) => {
+            // 마커를 생성합니다
+            const marker = new kakao.maps.Marker({
+                //마커가 표시 될 지도
+                map: map,
+                //마커가 표시 될 위치
+                position: new kakao.maps.LatLng(data.placey, data.placex),
+            });
+            marker.setMap(map);
+
+            var infowindow = new kakao.maps.InfoWindow({
+                content: data.name, // 인포윈도우에 표시할 내용
+            });
+            
+            infowindow.open(map, marker);
+
+            kakao.maps.event.addListener(
+                marker,
+                "click",
+                makeOverListener(map, marker, infowindow)
+            );
+            function makeOverListener(map, marker, infowindow) {
+                return function () {
+                    setOpen(true);
+                    setSelect(data)
                 };
-                //map
-                const map = new kakao.maps.Map(container, options);
-
-                places.forEach((el) => {
-                    // 마커를 생성합니다
-                    const marker = new kakao.maps.Marker({
-                        //마커가 표시 될 지도
-                        map: map,
-                        //마커가 표시 될 위치
-                        position: new kakao.maps.LatLng(el.y, el.x),
-                    });
-                    marker.setMap(map);
-
-                    // 마커에 표시할 인포윈도우를 생성합니다
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: el.place_name, // 인포윈도우에 표시할 내용
-                    });
-                    // infowindow.open(map, marker);
-
-                    kakao.maps.event.addListener(
-                        marker,
-                        "mouseover",
-                        makeOverListener(map, marker, infowindow)
-                    );
-
-                    // kakao.maps.event.addListener(
-                    //     marker,
-                    //     "mouseout",
-                    //     makeOutListener(infowindow)
-                    // );
-
-                    function makeOverListener(map, marker, infowindow) {
-                        return function () {
-                            infowindow.open(map, marker);
-                            console.log(el)
-                        };
-                    }
-                });
-                
-                // 상세보기 시 지도에 마커가 잘 안 보임 
-                // 지도 부분 일부 구현 완료
-                // 다른 기능 부터 구현 먼저 구현하기
-
-            } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
-                alert('검색 결과가 존재하지 않습니다.');
-            } else if (status === window.kakao.maps.services.Status.ERROR) {
-                alert('검색 결과 중 오류가 발생했습니다.');
-            }
-            // console.log(places);
+            };
         });
-    };
+        // console.log(place);
 
-    // const placeList = () => {
-    //     let serchList = [] ; 
-    //     for(let i = 0; i < places.length; i++) {
-    //         serchList.push(
-    //             <div key={i}>
-    //                 {places[i] && 
-    //                     <ul>
-    //                         <li>
-    //                             <h3> {places[i].place_name} </h3>
-    //                             <p> {places[i].address_name} </p>
-    //                             <p> {places[i].phone} </p>
-    //                             <p onClick={onClick}> {places[i].y}, {places[i].x} </p>
-    //                         </li>
-    //                     </ul>}
-    //             </div>
-    //         )
-    //     }
-    //     return serchList; 
-    // } ; 
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, place]);
 
 
-   
+
     return (
         <Container>
-            <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-            <button onClick={handleSearch}> 검색 </button>
+            <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/search')}}> 
+                검색 
+            </button>
+            {currentUser ? <>
+                <button onClick={() => {
+                    signOut(auth) 
+                    navigate("/")
+                    alert("로그아웃 되었습니다.")}}> 
+                    로그아웃
+                </button> 
+            </> : <>
+                <button onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/auth')}}> 
+                    로그인 / 회원가입 
+                </button>
+            </>}
+            <button onClick={(e) => {
+                    e.preventDefault();
+                    currentID = currentUser.email.split('@')[0];
+                    navigate(`/profile/${currentID}`)}}> 
+                    프로필
+            </button> 
             <MapComponent />
-            {/* <Map id='map' 
-                center={{ lat: 37.566826, lng: 126.9786567 }}
-                level={3}
-                style={{ width: '100%', height: '400px' }}>
-                {places.map((place, index) => (
-                    <MapMarker key={index}
-                        position={{ lat: place.y, lng: place.x }}/>
-                ))}
-            </Map> */}
-            {/* {placeList()} */}
-
-            {places.map((p, i) => (
-                <Search key={i} places={p}/>
-            ))}; 
-            
-    {/* <Container>
-      <div id="map" style={{ width: '100%', height: '500px' }}></div>
-    </Container> */}
-
+            {open === true ? 
+                <div>
+                    <h4> {select.name} </h4> 
+                    <h4> {select.data} </h4> 
+                    <button onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/place/${select.id}`, {
+                                state: {
+                                    name: select.name,
+                                    id: select.id,
+                                    placey: select.placey,
+                                    placex: select.placex,
+                                }
+                            }) ; 
+                        }}> 상세보기 </button>
+                </div>: <h4> null </h4>}
         </Container>
     );
 };
 
+// searchList 에선 state를 전달해 사용하지만 
+// home 에선 firebase내에 저장된 데이터를 받아와 사용할 것이기에 
+// 추후 navigate(state)부분 수정해야 함
+
 const Container = styled.div``;
 
 export default Home;
-
-
-    // x, y 좌표 가져와서 주소 받기
-    // const { kakao } = window;
-	// const [address, setAddress] = useState(null); // 현재 좌표의 주소를 저장할 상태
-
-	// const getAddress = (lat, lng) => {
-	// 	const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
-	// 	const coord = new kakao.maps.LatLng(37.55655854365159, 126.90455950069239); // 주소로 변환할 좌표 입력
-	// 	const callback = function (result, status) {
-	// 		if (status === kakao.maps.services.Status.OK) {
-	// 			setAddress(result[0].address);
-	// 		}
-	// 	};
-	// 	geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-	// };
-    
-    // <Map center={{ lat: 37.55655854365159, lng: 126.90455950069239 }} style={{ width: '800px', height: '600px' }} level={3}>
-    //     <MapMarker position={{ lat: 37.55655854365159, lng: 126.90455950069239 }} />
-    //     <button onClick={getAddress}>현재 좌표의 주소 얻기</button>
-    // </Map>
-
-    // {address && (
-    //     <div>
-    //         현재 좌표의 주소는..
-    //         <p>address_name: {address.address_name}</p>
-    //         <p>region_1depth_name: {address.region_1depth_name}</p>
-    //         <p>region_2depth_name: {address.region_2depth_name}</p>
-    //         <p>region_3depth_name: {address.region_3depth_name}</p>
-    //     </div>
-    // )} 
-
-    // ----
-    
-    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    // 이벤트 리스너로는 클로저를 만들어 등록합니다
-    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-    // kakao.maps.event.addListener(
-    //     marker,
-    //     "mouseover",
-    //     makeOverListener(map, marker, infowindow)
-    // );
-
-    // kakao.maps.event.addListener(
-    //     marker,
-    //     "mouseout",
-    //     makeOutListener(infowindow)
-    // );
-    
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-    function makeOverListener(map, marker, infowindow) {
-        return function () {
-            infowindow.open(map, marker);
-        };
-    };
-    
-        // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-        function makeOutListener(infowindow) {
-        return function () {
-            infowindow.close();
-        };
-    };
