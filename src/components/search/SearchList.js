@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PlacePage from "../../routers/PlacePage";
 
 const SearchList = ({places}) => {
     const { kakao } = window;
@@ -61,8 +60,11 @@ const SearchList = ({places}) => {
                                     id: places.id,
                                     placey: places.y,
                                     placex: places.x,
+                                    address: places.address_name,
+                                    roadAdrees: places.road_address_name,
+                                    type: "null"
                                 }
-                            }) ; 
+                            }); 
                         }}> 상세보기 </button>
                     </>}
                 </li>
