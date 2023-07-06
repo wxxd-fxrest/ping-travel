@@ -28,7 +28,7 @@ const Router = ({mainPing}) => {
                 <Profile mainPing={mainPing}/>
               </ProtectedRoute> } />
                             
-            <Route path="/place/:id" element={<PlacePage />} />
+            <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />
         </Routes>
     </BrowserRouter>
   );

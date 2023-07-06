@@ -13,20 +13,23 @@ import nullMarker from '..//img/location-pin.png';
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
 // nullMarker <a href="https://www.flaticon.com/free-icons/unavailable" title="unavailable icons">Unavailable icons created by exomoon design studio - Flaticon</a> 
             
-const PlacePage = () => {
+const PlacePage = ({mainPing}) => {
     const navigate = useNavigate();
     const { kakao } = window;
     const location = useLocation();
     const state = location.state;
     const {currentUser} = useContext(AuthContext);
     const [profileData, setProfileData] = useState([]); 
-    // const pathname = location.pathname; 
-    // const pathUID = (pathname.split('/')[2]);
-
+    const pathname = location.pathname; 
+    const pathUID = (pathname.split('/')[2]);
+    let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
+    console.log(placeData)
     // console.log("pathUID =>", pathUID);
     // console.log("state: ", state);
     // console.log(places);
-
+    // console.log(mainPing)
+    // placey: m.Data.placeY,
+    // placex: m.Data.placeX,
     const [write, setWrite] = useState(false);
     const [type, setType] = useState(false);
     const [text, setText] = useState("");
@@ -130,7 +133,7 @@ const PlacePage = () => {
         
         infowindow.open(map, marker);
         
-    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, state.name, state.placex, state.placey, state.type]);
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, mainPing, state.name, state.placex, state.placey, state.type]);
 
     return(
         <div>
@@ -140,14 +143,15 @@ const PlacePage = () => {
                 level={3}
                 style={{ width: '100%', height: '400px' }}>
             </Map>
-            <ul>
-                <li>
-                    <p> {state.name} </p>
-                    <p> {state.phone} </p>
-                    <p> {state.id} </p>
-                    <p> {state.placey}, {state.placex} </p>
-                </li>
-            </ul> 
+            {mainPing.map((m, i) => {
+                return (
+                <div key={i}>
+                    {m.Data.placeID === pathUID && <>
+                        <p>{m.Data.userID} {m.Data.type}</p>
+                        {m.Data.question ? <p>{m.Data.question}</p> : <p>{m.Data.review}</p>}
+                    </>}
+                </div>); 
+            })}
             <div>
                 {currentUser ? <>
                     <input type="checkbox" 

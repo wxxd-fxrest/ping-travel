@@ -75,7 +75,6 @@ const Home = ({mainPing}) => {
         //map
         const map = new kakao.maps.Map(container, options);
 
-
         mainPing.forEach((data) => {
             if(data.Data.type === 'question') {
                 var imageSrc = MARKER, // 마커이미지의 주소입니다    
@@ -106,26 +105,25 @@ const Home = ({mainPing}) => {
                 content: data.Data.placeName, // 인포윈도우에 표시할 내용
             });
             
-            infowindow.open(map, marker);
 
             kakao.maps.event.addListener(
                 marker,
                 "click",
                 makeOverListener(map, marker, infowindow)
             );
+            infowindow.open(map, marker);
 
             function makeOverListener(map, marker, infowindow) {
                 return function () {
                     setOpen(true);
                     setSelect(data.Data);
-                    // console.log(select.placeName);
+                    console.log(select);
                 };
             };
         });
         // console.log(place);
 
-    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, kakao.maps.event, mainPing, select.Data]);
-
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, kakao.maps.event, mainPing, select, select.Data]);
 
 
     return (
@@ -160,10 +158,11 @@ const Home = ({mainPing}) => {
             {open === true ? 
                 <div>
                     <h4> {select.placeName} </h4> 
-                    <h4> {select.review} </h4> 
+                    {select.review && <h4> {select.review} </h4>}
+                    {select.question && <h4> {select.question} </h4>}
                     <button onClick={(e) => {
                             e.preventDefault();
-                            navigate(`/place/${select.id}`, {
+                            navigate(`/place/${select.placeID}`, {
                                 state: {
                                     name: select.placeName,
                                     phone: select.placeNumber,
@@ -172,11 +171,35 @@ const Home = ({mainPing}) => {
                                     placex: select.placeX,
                                     address: select.placeAddress,
                                     roadAdrees: select.placeRoadAddress,
-                                    type: select.type
+                                    type: select.type,
                                 }
                             }) ; 
                         }}> 상세보기 </button>
-                </div>: <h4> null </h4>}
+                </div> : <h4> null </h4>}
+                {mainPing.map((m, i) => {
+                    return (
+                    <div key={i}>
+                        <h3>{m.Data.placeName}</h3>
+                        <p>{m.Data.type}</p>
+                        {m.Data.review && <h4> {m.Data.review} </h4>}
+                        {m.Data.question && <h4> {m.Data.question} </h4>}
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/place/${m.Data.placeID}`, {
+                                state: {
+                                    name: m.Data.placeName,
+                                    phone: m.Data.placeNumber,
+                                    id: m.Data.placeID,
+                                    placey: m.Data.placeY,
+                                    placex: m.Data.placeX,
+                                    address: m.Data.placeAddress,
+                                    roadAdrees: m.Data.placeRoadAddress,
+                                    type: m.Data.type,
+                                }
+                            }) ; 
+                        }}> 상세보기 </button>
+                    </div>); 
+                })}
         </Container>
     );
 };
