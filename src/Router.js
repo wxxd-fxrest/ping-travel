@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./routers/Home";
 import PlacePage from "./routers/PlacePage";
@@ -6,6 +6,9 @@ import Search from "./components/search/Search.js";
 import Auth from "./routers/Auth";
 import Profile from "./components/profile/Profile";
 import { AuthContext } from "./AuthContext";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "./firebase";
+import ProfileData from "./components/profile/ProfileData";
 
 const Router = ({mainPing}) => {
   const {currentUser} = useContext(AuthContext); 
@@ -15,7 +18,8 @@ const Router = ({mainPing}) => {
       return <Navigate to="/auth" /> 
     }
     return children ;
-  } ; 
+  }; 
+
   return (
     <BrowserRouter>
         <Routes>
@@ -25,7 +29,7 @@ const Router = ({mainPing}) => {
 
             <Route path="/profile/:id" element={
               <ProtectedRoute>
-                <Profile mainPing={mainPing}/>
+                <ProfileData mainPing={mainPing}/>
               </ProtectedRoute> } />
                             
             <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />

@@ -2,12 +2,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "react-kakao-maps-sdk";
-import { addDoc, collection, getDocs, query, Timestamp, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../AuthContext";
 import MARKER from '..//img/marker.png';
 import questionMarker from '..//img/question_marker.png';
 import nullMarker from '..//img/location-pin.png';
+import MainPing from "../components/MainPing";
 
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
@@ -56,35 +57,39 @@ const PlacePage = ({mainPing}) => {
     };
 
     const onSaveBtn = async() => {
+        let DocName = state.id
+        await setDoc(doc(db, "MainPing", DocName), {
+            placeName: state.name, 
+            placeY: state.placey,
+            placeX: state.placex,
+            placeID: state.id,
+            placeNumber: state.phone,
+            placeAddress: state.address,
+            placeRoadAddress: state.roadAdrees
+        });
         if(type === true) {
-            await addDoc(collection(db, "MainPing"), {
+            await addDoc(collection(db, "MainPing", DocName, "about"), {
                 UID: currentUser.uid,
                 userID: profileData.ID,
                 date: Timestamp.now(),
-                question: text, 
+                about: text, 
                 type: 'question', 
+                placeID: state.id,
                 placeName: state.name, 
                 placeY: state.placey,
                 placeX: state.placex,
-                placeID: state.id,
-                placeNumber: state.phone,
-                placeAddress: state.address,
-                placeRoadAddress: state.roadAdrees
             });
         } else if(type === false) {
-            await addDoc(collection(db, "MainPing"), {
+            await addDoc(collection(db, "MainPing", DocName, "about"), {
                 UID: currentUser.uid,
                 userID: profileData.ID,
                 date: Timestamp.now(),
-                review: text, 
-                type: 'review', 
+                about: text, 
+                type: 'review',
+                placeID: state.id,
                 placeName: state.name, 
                 placeY: state.placey,
                 placeX: state.placex,
-                placeID: state.id,
-                placeNumber: state.phone,
-                placeAddress: state.address,
-                placeRoadAddress: state.roadAdrees
             });
         }
     };
@@ -98,32 +103,12 @@ const PlacePage = ({mainPing}) => {
         //map
         const map = new kakao.maps.Map(container, options);
 
-        if(state.type === 'question') {
-            var imageSrc = MARKER, // 마커이미지의 주소입니다    
-                imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-        } else if(state.type === 'review') {
-            var imageSrc = questionMarker, // 마커이미지의 주소입니다    
-                imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-        } else if(state.type === 'null') {
-            var imageSrc = nullMarker, // 마커이미지의 주소입니다    
-                imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-        }; 
-
-        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-            markerPosition = new kakao.maps.LatLng(state.placey, state.placex); // 마커가 표시될 위치입니다
-
-
         // 마커를 생성합니다
         const marker = new kakao.maps.Marker({
             //마커가 표시 될 지도
             map: map,
             //마커가 표시 될 위치
-            position: markerPosition,
-            image: markerImage,
+            position:  new kakao.maps.LatLng(state.placey, state.placex)
         });
         marker.setMap(map);
 
@@ -137,21 +122,14 @@ const PlacePage = ({mainPing}) => {
 
     return(
         <div>
-            <button onClick={() => navigate("/search")}> back </button>
+            <button onClick={() => navigate("/")}> back </button>
             <Map id='map' 
                 center={{ lat: state.placey, lng: state.placex }}
                 level={3}
                 style={{ width: '100%', height: '400px' }}>
             </Map>
-            {mainPing.map((m, i) => {
-                return (
-                <div key={i}>
-                    {m.Data.placeID === pathUID && <>
-                        <p>{m.Data.userID} {m.Data.type}</p>
-                        {m.Data.question ? <p>{m.Data.question}</p> : <p>{m.Data.review}</p>}
-                    </>}
-                </div>); 
-            })}
+            <h4> {state.name} </h4>
+            <MainPing mainPing={mainPing} id={state.id}/>
             <div>
                 {currentUser ? <>
                     <input type="checkbox" 
