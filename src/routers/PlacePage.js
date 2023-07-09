@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "react-kakao-maps-sdk";
-import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../AuthContext";
 import MARKER from '..//img/marker.png';
@@ -66,6 +66,11 @@ const PlacePage = ({mainPing}) => {
             placeNumber: state.phone,
             placeAddress: state.address,
             placeRoadAddress: state.roadAdrees
+        });
+        await updateDoc(doc(db, "UserInfo", `${currentUser.uid}`), {
+            postID: arrayUnion(
+               state.id
+            )
         });
         if(type === true) {
             await addDoc(collection(db, "MainPing", DocName, "about"), {

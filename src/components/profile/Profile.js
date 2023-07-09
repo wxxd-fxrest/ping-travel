@@ -12,7 +12,7 @@ import questionMarker from '../../img/question_marker.png';
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
 
-const Profile = ({mainPing}) => {
+const Profile = ({mainPing, myPingID}) => {
     const { kakao } = window;
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
@@ -27,8 +27,12 @@ const Profile = ({mainPing}) => {
     // const [markerData, setMarkerData] = useState([]);
     // console.log(pathUID)
     // console.log(myPing)
-    const [myPlace, setMyPlace] = useState([]);
+    // console.log(myPingID)
+    // const [myPlace, setMyPlace] = useState([]);
 
+    // for(let i = 0; i < myPingID.length; i++) {
+    //     console.log(myPingID[i]);
+    // }
     useEffect(() => {
         const ProfileUserInfo = async () => {
             const getUserData = query(
@@ -56,38 +60,38 @@ const Profile = ({mainPing}) => {
         const map = new kakao.maps.Map(container, options);
 
         // let myPing = mainPing.filter((ping) => ping.Data.UID === currentUser.uid);
-        // myPlace.forEach((ping) => {
-        //     console.log(ping.placeX)        
-        //     // 마커를 생성합니다
-        //     const marker = new kakao.maps.Marker({
-        //         //마커가 표시 될 지도
-        //         map: map,
-        //         //마커가 표시 될 위치
-        //         position: new kakao.maps.LatLng(ping.placeY, ping.placeX)
-        //     });
+        myPingID.forEach((ping) => {
+  
+            // 마커를 생성합니다
+            const marker = new kakao.maps.Marker({
+                //마커가 표시 될 지도
+                map: map,
+                //마커가 표시 될 위치
+                position: new kakao.maps.LatLng(ping.placeY, ping.placeX)
+            });
 
-        //     marker.setMap(map);
+            marker.setMap(map);
 
-        //     var infowindow = new kakao.maps.InfoWindow({
-        //         content: ping.placeName, // 인포윈도우에 표시할 내용
-        //     });
+            var infowindow = new kakao.maps.InfoWindow({
+                content: ping.placeName, // 인포윈도우에 표시할 내용
+            });
             
-        //     kakao.maps.event.addListener(
-        //         marker,
-        //         "click",
-        //         makeOverListener(map, marker, infowindow)
-        //     );
+            kakao.maps.event.addListener(
+                marker,
+                "click",
+                makeOverListener(map, marker, infowindow)
+            );
 
-        //     function makeOverListener(map, marker, infowindow) {
-        //         return function () {
-        //             infowindow.open(map, marker);
-        //             setData(ping.Data);
-        //             // console.log(data)
-        //             setOpen2(true)
-        //         };
-        //     };
-        // });
-    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, myPlace])
+            function makeOverListener(map, marker, infowindow) {
+                return function () {
+                    infowindow.open(map, marker);
+                    setData(ping.Data);
+                    // console.log(data)
+                    setOpen2(true)
+                };
+            };
+        });
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, myPingID])
 
     useEffect(() => {
         getPlaceAll();

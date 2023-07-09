@@ -29,7 +29,7 @@ const Router = ({mainPing}) => {
 
             <Route path="/profile/:id" element={
               <ProtectedRoute>
-                <ProfileData mainPing={mainPing}/>
+                <ProfileData mainPing={mainPing} />
               </ProtectedRoute> } />
                             
             <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />

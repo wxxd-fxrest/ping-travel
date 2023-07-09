@@ -27,8 +27,9 @@ const SignUp = () => {
                 uid: authData.user.uid,
                 email: email, 
                 ID: email.split('@')[0],
-                displayName: "Unkown",
+                displayName: 'Unkown',
                 attachmentUrl: signupImg,
+                postID: [], 
             })
             navigate("/");
             alert("회원가입 완료") ;

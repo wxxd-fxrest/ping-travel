@@ -24,7 +24,6 @@ const Home = ({mainPing}) => {
     let currentID ;
 
     const getMainPing = useCallback(async () => {
-
         let container = document.getElementById("map");
         let options = {
             center: new kakao.maps.LatLng(37.45978574975834, 126.9511239870991),
