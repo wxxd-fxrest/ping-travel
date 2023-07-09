@@ -19,6 +19,7 @@ const MainPing = ({id}) => {
                 })
             });
             setDocData(feedArray) ;
+            console.log(feedArray)
         });
     }, [id]);
 

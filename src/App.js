@@ -19,6 +19,7 @@ const App = () => {
             })
         });
         setMainPing(feedArray);
+        console.log(mainPing)
     });
   }, []); 
 

@@ -24,7 +24,7 @@ const PlacePage = ({mainPing}) => {
     const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
     let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
-    console.log(placeData)
+    // console.log(placeData)
     // console.log("pathUID =>", pathUID);
     // console.log("state: ", state);
     // console.log(places);
@@ -67,11 +67,6 @@ const PlacePage = ({mainPing}) => {
             placeAddress: state.address,
             placeRoadAddress: state.roadAdrees
         });
-        await updateDoc(doc(db, "UserInfo", `${currentUser.uid}`), {
-            postID: arrayUnion(
-               state.id
-            )
-        });
         if(type === true) {
             await addDoc(collection(db, "MainPing", DocName, "about"), {
                 UID: currentUser.uid,
@@ -84,8 +79,30 @@ const PlacePage = ({mainPing}) => {
                 placeY: state.placey,
                 placeX: state.placex,
             });
+            await addDoc(collection(db, "UserInfo", `${currentUser.uid}`, "about"), {
+                UID: currentUser.uid,
+                userID: profileData.ID,
+                date: Timestamp.now(),
+                about: text, 
+                type: 'question', 
+                placeID: state.id,
+                placeName: state.name, 
+                placeY: state.placey,
+                placeX: state.placex,
+            });
         } else if(type === false) {
             await addDoc(collection(db, "MainPing", DocName, "about"), {
+                UID: currentUser.uid,
+                userID: profileData.ID,
+                date: Timestamp.now(),
+                about: text, 
+                type: 'review',
+                placeID: state.id,
+                placeName: state.name, 
+                placeY: state.placey,
+                placeX: state.placex,
+            });
+            await addDoc(collection(db, "UserInfo", `${currentUser.uid}`, "about"), {
                 UID: currentUser.uid,
                 userID: profileData.ID,
                 date: Timestamp.now(),

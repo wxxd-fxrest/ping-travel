@@ -1,6 +1,6 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
@@ -12,7 +12,7 @@ import questionMarker from '../../img/question_marker.png';
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
 
-const Profile = ({mainPing, myPingID}) => {
+const Profile = ({mainPing}) => {
     const { kakao } = window;
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
@@ -22,7 +22,7 @@ const Profile = ({mainPing, myPingID}) => {
     const pathUID = (pathname.split('/')[2]);
     const [profileData, setProfileData] = useState([]); 
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [pingData, setPingData] = useState([]);
     const [open2, setOpen2] = useState(false);
     // const [markerData, setMarkerData] = useState([]);
     // console.log(pathUID)
@@ -47,6 +47,25 @@ const Profile = ({mainPing, myPingID}) => {
         ProfileUserInfo();
     }, [pathUID]);
 
+    const [myPingID, setMyPingID] = useState([]);
+
+    useEffect(() => {
+        const FeedCollection = query(
+            collection(db, "UserInfo", `${currentUser.uid}`, "about"));
+          onSnapshot(FeedCollection, (querySnapshot) => {
+            let feedArray = []
+            querySnapshot.forEach((doc) => {
+                feedArray.push({
+                    DocID: doc.id, 
+                    Data: doc.data(),
+                })
+            });
+            setMyPingID(feedArray);
+            // console.log(feedArray)
+        });
+    }, [currentUser.uid]);
+
+
     const getPlaceAll = useCallback(() => {
         setOpen(false);
         setOpen2(false);
@@ -61,19 +80,19 @@ const Profile = ({mainPing, myPingID}) => {
 
         // let myPing = mainPing.filter((ping) => ping.Data.UID === currentUser.uid);
         myPingID.forEach((ping) => {
-  
+            console.log(ping)
             // 마커를 생성합니다
             const marker = new kakao.maps.Marker({
                 //마커가 표시 될 지도
                 map: map,
                 //마커가 표시 될 위치
-                position: new kakao.maps.LatLng(ping.placeY, ping.placeX)
+                position: new kakao.maps.LatLng(ping.Data.placeY, ping.Data.placeX)
             });
 
             marker.setMap(map);
 
             var infowindow = new kakao.maps.InfoWindow({
-                content: ping.placeName, // 인포윈도우에 표시할 내용
+                content: ping.Data.placeName, // 인포윈도우에 표시할 내용
             });
             
             kakao.maps.event.addListener(
@@ -85,8 +104,8 @@ const Profile = ({mainPing, myPingID}) => {
             function makeOverListener(map, marker, infowindow) {
                 return function () {
                     infowindow.open(map, marker);
-                    setData(ping.Data);
-                    // console.log(data)
+                    setPingData(ping.Data);
+                    // console.log(pingData)
                     setOpen2(true)
                 };
             };
@@ -97,7 +116,7 @@ const Profile = ({mainPing, myPingID}) => {
         getPlaceAll();
     }, [getPlaceAll]);
 
-    const onClick = (e) => {
+    const onClick = useCallback(async(e) => {
         setOpen(false);
         setOpen2(false);
         let all = (e.target.innerHTML);
@@ -105,7 +124,9 @@ const Profile = ({mainPing, myPingID}) => {
         let placex = all.split(',')[1];
         let placetype = all.split(',')[2];
         let placename = all.split(',')[3];
-        console.log("placey => ", placey, "placex => ", placex, "placetype =>", placetype);
+        let placeClickID = all.split(',')[4];
+        console.log(placeClickID)
+        // console.log("placey => ", placey, "placex => ", placex, "placetype =>", placetype);
 
         let container = document.getElementById("map");
         let options = {
@@ -124,7 +145,7 @@ const Profile = ({mainPing, myPingID}) => {
             // image: markerImage,
         });
         marker.setMap(map);
-
+    
         var infowindow = new kakao.maps.InfoWindow({
             content: placename, // 인포윈도우에 표시할 내용
         });
@@ -136,9 +157,8 @@ const Profile = ({mainPing, myPingID}) => {
             "click",
             makeOverListener(map, marker, infowindow),
         );
-
         function makeOverListener(map, marker, infowindow) {
-            return function () {
+            return async function () {
                 setOpen(true);
             };
         };
@@ -148,12 +168,13 @@ const Profile = ({mainPing, myPingID}) => {
         let coord = new kakao.maps.LatLng(placey, placex);
         let callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                setData(result);
-                console.log(data);
+                setPingData(result);
+                // console.log(pingData[0].road_address.building_name);
+                console.log(result)
             }
         }
         geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-    };
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, kakao.maps.services.Geocoder, kakao.maps.services.Status.OK])
 
     return (
         <div>
@@ -165,25 +186,55 @@ const Profile = ({mainPing, myPingID}) => {
             </button>
             <MapComponent />
             {open === true && <>
-                {data[0].address.address_name && <>
-                <h4> {data[0].address.address_name} </h4>
+                {pingData[0].road_address.building_name && <>
+                <h4> {pingData[0].road_address.building_name} </h4>
                 <p onClick={() => setOpen(false)}>x</p> </>}
             </>}
             {open2 === true && <>
-                {data && <> <h4> {data.placeName} </h4>
-                <p onClick={() => setOpen2(false)}>x</p> </>}
+                {pingData && <> <h4> {pingData.placeName} </h4>
+                <p onClick={() => setOpen2(false)}>x</p> 
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/place/${pingData.placeID}`, {
+                        state: {
+                            name: pingData.placeName,
+                            phone: pingData.placeNumber,
+                            id: pingData.placeID,
+                            placey: pingData.placeY,
+                            placex: pingData.placeX,
+                            address: pingData.placeAddress,
+                            roadAdrees: pingData.placeRoadAddress,
+                        }
+                    });
+                }}> 상세보기 </button></>}
             </>}
             <button onClick={getPlaceAll}> 전체보기 </button>
-            {/* {mainPing.map((m, i) => {
+            {myPingID.map((m, i) => {
+                // console.log(m)
                 return (
                 <div key={i}>
                     {m.Data.UID === currentUser.uid && <>
                         <h3>{m.Data.placeName}</h3>
                         <p>{m.Data.type}</p>
-                        <p onClick={onClick}> {m.Data.placeY}, {m.Data.placeX}, {m.Data.type}, {m.Data.placeName} </p>
+                        <h5>{m.Data.about}</h5>
+                        <p onClick={onClick}> {m.Data.placeY}, {m.Data.placeX}, {m.Data.type}, {m.Data.placeName}, {m.Data.placeID}</p>
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/place/${m.Data.placeID}`, {
+                                state: {
+                                    name: m.Data.placeName,
+                                    phone: m.Data.placeNumber,
+                                    id: m.Data.placeID,
+                                    placey: m.Data.placeY,
+                                    placex: m.Data.placeX,
+                                    address: m.Data.placeAddress,
+                                    roadAdrees: m.Data.placeRoadAddress,
+                                }
+                            });
+                        }}> 상세보기 </button>
                     </>}
                 </div>); 
-            })} */}
+            })}
         </div>
     )
 };
