@@ -29,7 +29,7 @@ const SignUp = () => {
                 ID: email.split('@')[0],
                 displayName: 'Unkown',
                 attachmentUrl: signupImg,
-                postID: [], 
+                friendID: [], 
             })
             navigate("/");
             alert("회원가입 완료") ;

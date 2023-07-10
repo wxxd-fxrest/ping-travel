@@ -1,10 +1,12 @@
 /* eslint-disable no-redeclare */
 import { signOut } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { AuthContext } from '../AuthContext';
+import FriendRequest from '../components/friend/FriendRequest';
+import FriendSearchID from '../components/friend/FriendSearchID';
 import MainPing from '../components/MainPing';
 import MapComponent from '../components/MapComponent';
 import { auth, db } from '../firebase';
@@ -21,7 +23,26 @@ const Home = ({mainPing}) => {
 
     const [open, setOpen] = useState(false);
     const [select, setSelect] = useState([]);
-    let currentID ;
+    const [loginUserData, setLoginUserData] = useState([]);
+    const [friendRequest, setFriendRequest] = useState([]);
+    const [friendIDList, setFriendIDList] = useState([]);
+    const [requestAlert, setRequestAlert] = useState(false);
+
+    useEffect(() => {
+        const getLoginUserData = async() => {
+            const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setLoginUserData(docSnap.data());
+                setFriendRequest(docSnap.data().friendRequest);
+                setFriendIDList(docSnap.data().friendID);
+                // console.log(docSnap.data())
+            } else {
+                console.log("No such document!");
+            }
+        };
+        getLoginUserData();
+    }, [currentUser.uid, friendRequest]);
 
     const getMainPing = useCallback(async () => {
         let container = document.getElementById("map");
@@ -70,32 +91,36 @@ const Home = ({mainPing}) => {
 
     return (
         <Container>
+            <h5 onClick={() => {
+                setRequestAlert(!requestAlert)
+                console.log(requestAlert)
+            }}> 💡 </h5>
+            {requestAlert === true && <>
+                {friendRequest.map((f, i) => (
+                    <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
+                ))}
+            </>}
             <button onClick={(e) => {
                     e.preventDefault();
                     navigate('/search')}}> 
                 검색 
             </button>
-            {currentUser ? <>
-                <button onClick={() => {
-                    signOut(auth) 
-                    navigate("/")
-                    alert("로그아웃 되었습니다.")}}> 
-                    로그아웃
-                </button> 
-            </> : <>
-                <button onClick={(e) => {
-                        e.preventDefault();
-                        navigate('/auth')}}> 
-                    로그인 / 회원가입 
-                </button>
-            </>}
-            {currentUser &&
-                <button onClick={(e) => {
-                        e.preventDefault();
-                        currentID = currentUser.email.split('@')[0];
-                        navigate(`/profile/${currentID}`)}}> 
-                        프로필
-                </button>}
+            <button onClick={() => {
+                signOut(auth) 
+                navigate("/")
+                alert("로그아웃 되었습니다.")}}> 
+                로그아웃
+            </button> 
+            <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/profile/${loginUserData.ID}`, {
+                        state: {
+                            friend: friendIDList,
+                        }
+                    })}}> 
+                    프로필
+            </button>
+            <FriendSearchID loginUserData={loginUserData}/>
             <MapComponent />
             {open === true ? 
                 <div>

@@ -23,16 +23,16 @@ const Router = ({mainPing}) => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Home mainPing={mainPing}/>}  />
             <Route path='/auth' element={<Auth />}  />
             <Route path='/search' element={<Search />}  />
 
-            <Route path="/profile/:id" element={
+            <Route index element={
               <ProtectedRoute>
-                <ProfileData mainPing={mainPing} />
+                <Home mainPing={mainPing}/>
               </ProtectedRoute> } />
                             
             <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />
+            <Route path="/profile/:id" element={<ProfileData mainPing={mainPing} />} />
         </Routes>
     </BrowserRouter>
   );

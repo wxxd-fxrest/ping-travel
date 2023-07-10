@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { db } from "./firebase";
@@ -19,7 +19,6 @@ const App = () => {
             })
         });
         setMainPing(feedArray);
-        console.log(mainPing)
     });
   }, []); 
 

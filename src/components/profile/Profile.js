@@ -12,7 +12,7 @@ import questionMarker from '../../img/question_marker.png';
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
 
-const Profile = ({mainPing}) => {
+const Profile = () => {
     const { kakao } = window;
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
@@ -24,15 +24,25 @@ const Profile = ({mainPing}) => {
     const [open, setOpen] = useState(false);
     const [pingData, setPingData] = useState([]);
     const [open2, setOpen2] = useState(false);
-    // const [markerData, setMarkerData] = useState([]);
-    // console.log(pathUID)
-    // console.log(myPing)
-    // console.log(myPingID)
-    // const [myPlace, setMyPlace] = useState([]);
+    const [myPingID, setMyPingID] = useState([]);
+    const [friendAlert, setFriendAlert] = useState(false);
+    let friend = location.state.friend; 
+    console.log(friend)
+    const friendList = () => {
+        let IDlist = [] ; 
+        for(let i = 0; i < friend.length; i++) {
+            IDlist.push(
+                <div key={i}>
+                {friendAlert === true &&
+                    <li> 
+                        {friend[i]}
+                    </li>}
+                </div>
+            )
+        }
+        return IDlist; 
+    } ; 
 
-    // for(let i = 0; i < myPingID.length; i++) {
-    //     console.log(myPingID[i]);
-    // }
     useEffect(() => {
         const ProfileUserInfo = async () => {
             const getUserData = query(
@@ -47,7 +57,6 @@ const Profile = ({mainPing}) => {
         ProfileUserInfo();
     }, [pathUID]);
 
-    const [myPingID, setMyPingID] = useState([]);
 
     useEffect(() => {
         const FeedCollection = query(
@@ -179,6 +188,8 @@ const Profile = ({mainPing}) => {
     return (
         <div>
             <h3><img src={profileData.attachmentUrl} alt="#" width="100px" height="100px" style={{borderRadius:"100px"}}/>{profileData.ID}</h3>
+            <h5 onClick={() => setFriendAlert(!friendAlert)}> 💡 </h5> 
+            {friendList()}
             <button onClick={(e) => {
                     e.preventDefault();
                     navigate('/')}}> 
