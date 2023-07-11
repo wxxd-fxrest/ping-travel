@@ -1,6 +1,5 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import React, {useEffect, useState } from "react";
 import { db } from "./firebase";
 import Router from "./Router";
 
@@ -22,6 +21,7 @@ const App = () => {
     });
   }, []); 
 
+  
   return (
     <>
       <Router mainPing={mainPing} />

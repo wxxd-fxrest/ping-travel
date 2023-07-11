@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from "styled-components";
-import MapComponent from '../MapComponent';
-import SearchList from './SearchList';
+import React, { useState } from "react";
+import MapComponent from "../MapComponent";
+import RecordSearchList from "./RecordSearchList";
 
-const Search = () => {
-    const navigate = useNavigate();
+const RecordSearch = () => {
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
     const { kakao } = window;
@@ -75,36 +72,18 @@ const Search = () => {
             // console.log(places);
         });
     };
-   
+
     return (
-        <Container>
-            <button onClick={() => navigate("/")}> back </button>
+        <div>
+            <button type="button"> ok </button>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
             <MapComponent />
-            {/* <Map id='map' 
-                center={{ lat: 37.566826, lng: 126.9786567 }}
-                level={3}
-                style={{ width: '100%', height: '400px' }}>
-                {places.map((place, index) => (
-                    <MapMarker key={index}
-                        position={{ lat: place.y, lng: place.x }}/>
-                ))}
-            </Map> */}
-            {/* {placeList()} */}
-
             {places.map((p, i) => (
-                <SearchList key={i} places={p}/>
+                <RecordSearchList key={i} places={p}/>
             ))}
-            
-    {/* <Container>
-      <div id="map" style={{ width: '100%', height: '500px' }}></div>
-    </Container> */}
+        </div>
+    )
+}; 
 
-        </Container>
-    );
-};
-
-const Container = styled.div``;
-
-export default Search;
+export default RecordSearch;

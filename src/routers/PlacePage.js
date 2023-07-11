@@ -2,13 +2,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "react-kakao-maps-sdk";
-import { addDoc, arrayUnion, collection, doc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../AuthContext";
-import MARKER from '..//img/marker.png';
-import questionMarker from '..//img/question_marker.png';
-import nullMarker from '..//img/location-pin.png';
 import MainPing from "../components/MainPing";
+
+// import MARKER from '..//img/marker.png';
+// import questionMarker from '..//img/question_marker.png';
+// import nullMarker from '..//img/location-pin.png';
 
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
@@ -21,9 +22,9 @@ const PlacePage = ({mainPing}) => {
     const state = location.state;
     const {currentUser} = useContext(AuthContext);
     const [profileData, setProfileData] = useState([]); 
-    const pathname = location.pathname; 
-    const pathUID = (pathname.split('/')[2]);
-    let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
+    // const pathname = location.pathname; 
+    // const pathUID = (pathname.split('/')[2]);
+    // let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
     // console.log(placeData)
     // console.log("pathUID =>", pathUID);
     // console.log("state: ", state);

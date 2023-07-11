@@ -1,6 +1,6 @@
 /* eslint-disable no-redeclare */
 import { signOut } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
@@ -10,8 +10,8 @@ import FriendSearchID from '../components/friend/FriendSearchID';
 import MainPing from '../components/MainPing';
 import MapComponent from '../components/MapComponent';
 import { auth, db } from '../firebase';
-import MARKER from '../img/marker.png';
-import questionMarker from '../img/question_marker.png';
+// import MARKER from '../img/marker.png';
+// import questionMarker from '../img/question_marker.png';
 
 // MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
@@ -23,26 +23,29 @@ const Home = ({mainPing}) => {
 
     const [open, setOpen] = useState(false);
     const [select, setSelect] = useState([]);
+    const [requestAlert, setRequestAlert] = useState(false);
     const [loginUserData, setLoginUserData] = useState([]);
     const [friendRequest, setFriendRequest] = useState([]);
-    const [friendIDList, setFriendIDList] = useState([]);
-    const [requestAlert, setRequestAlert] = useState(false);
 
     useEffect(() => {
-        const getLoginUserData = async() => {
-            const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
+        const getLoginUserData = async () => {
+            if(currentUser.uid) {
+                const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
                 setLoginUserData(docSnap.data());
                 setFriendRequest(docSnap.data().friendRequest);
-                setFriendIDList(docSnap.data().friendID);
                 // console.log(docSnap.data())
-            } else {
+                } else {
                 console.log("No such document!");
+                }
+            }else {
+                return;
             }
         };
         getLoginUserData();
-    }, [currentUser.uid, friendRequest]);
+    }, [currentUser.uid]); 
+    
 
     const getMainPing = useCallback(async () => {
         let container = document.getElementById("map");
@@ -93,13 +96,14 @@ const Home = ({mainPing}) => {
         <Container>
             <h5 onClick={() => {
                 setRequestAlert(!requestAlert)
-                console.log(requestAlert)
             }}> 💡 </h5>
-            {requestAlert === true && <>
-                {friendRequest.map((f, i) => (
-                    <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
-                ))}
-            </>}
+            {requestAlert === true ? <>
+                {friendRequest.length !== 0 ? <>
+                    {friendRequest.map((f, i) => (
+                        <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
+                    ))}
+                </> : <p> 요청이 없습니다. </p>}
+            </> : null }
             <button onClick={(e) => {
                     e.preventDefault();
                     navigate('/search')}}> 
@@ -113,11 +117,7 @@ const Home = ({mainPing}) => {
             </button> 
             <button onClick={(e) => {
                     e.preventDefault();
-                    navigate(`/profile/${loginUserData.ID}`, {
-                        state: {
-                            friend: friendIDList,
-                        }
-                    })}}> 
+                    navigate(`/profile/${loginUserData.ID}`)}}> 
                     프로필
             </button>
             <FriendSearchID loginUserData={loginUserData}/>

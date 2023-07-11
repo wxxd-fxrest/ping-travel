@@ -25,15 +25,19 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
 
     const onClickAccept = async (e) => {
         e.preventDefault();
-        await updateDoc(doc(db, "UserInfo", currentUser.uid), {
-            friendID: arrayUnion(friendRequest),
-        }); // 수락 시 내 데이터 베이스에 상대방 추가
-        await updateDoc(doc(db, "UserInfo", requestUserData.uid), {
-            friendID: arrayUnion(loginUserData.ID)
-        }); // 수락 시 상대 데이터 베이스에 나(login햔 user) 추가
-        await updateDoc(doc(db, "UserInfo", currentUser.uid), {
-            friendRequest: arrayRemove(friendRequest),
-        }); // 수락 시 요청 데이터 삭제 
+        const request = window.confirm("요청을 수락하시겠습니까?"); 
+        if(request) {
+            await updateDoc(doc(db, "UserInfo", currentUser.uid), {
+                friendID: arrayUnion(friendRequest),
+            }); // 수락 시 내 데이터 베이스에 상대방 추가
+            await updateDoc(doc(db, "UserInfo", requestUserData.uid), {
+                friendID: arrayUnion(loginUserData.ID)
+            }); // 수락 시 상대 데이터 베이스에 나(login햔 user) 추가
+            await updateDoc(doc(db, "UserInfo", currentUser.uid), {
+                friendRequest: arrayRemove(friendRequest),
+            }); // 수락 시 요청 데이터 삭제 
+            alert("수락 되었습니다."); 
+        }
     };
     
     const onClickRefuse = async (e) => {
