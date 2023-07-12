@@ -19,8 +19,8 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
                 setRequestUserData(doc.data());
                 console.log(doc.id, " => ", doc.data());
             });
-        }
-        get()
+        };
+        get();
     }, [friendRequest]);
 
     const onClickAccept = async (e) => {

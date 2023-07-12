@@ -25,7 +25,7 @@ const SecondTab = ({profileUser}) => {
     return (
         <div>
             {recordData.map((r, i) => (
-                <Record key={i} recordData={r}/>
+                <Record key={i} recordData={r} profileUser={profileUser}/>
             ))}
         </div>
     )

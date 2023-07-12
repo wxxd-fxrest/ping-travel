@@ -35,7 +35,7 @@ const Router = ({mainPing, loginUserData}) => {
             <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />
             <Route path="/profile/:id" element={<ProfileData mainPing={mainPing} />} />
             <Route path="/record/save/:id" element={<RecordSave />} />
-            <Route path="/record/:id" element={<RecordDetail />} />
+            <Route path="/record/:uid/:id" element={<RecordDetail />} />
         </Routes>
     </BrowserRouter>
   );
