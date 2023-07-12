@@ -36,7 +36,7 @@ const RecordSave = () => {
                     shareUserData = doc.data()
                     console.log(shareUserData)
                     // console.log(doc.id, " => ", doc.data());
-                    await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "sharedRecords"), {
+                    await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
                         placeName: state.name, 
                         placeY: state.placey,
                         placeX: state.placex,

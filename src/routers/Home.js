@@ -1,6 +1,6 @@
 /* eslint-disable no-redeclare */
 import { signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { arrayRemove, doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
@@ -26,6 +26,9 @@ const Home = ({mainPing}) => {
     const [requestAlert, setRequestAlert] = useState(false);
     const [loginUserData, setLoginUserData] = useState([]);
     const [friendRequest, setFriendRequest] = useState([]);
+    const [share, setShare] = useState([]);
+
+    let ownerRecordID ;
 
     useEffect(() => {
         const getLoginUserData = async () => {
@@ -35,7 +38,8 @@ const Home = ({mainPing}) => {
                 if (docSnap.exists()) {
                 setLoginUserData(docSnap.data());
                 setFriendRequest(docSnap.data().friendRequest);
-                // console.log(docSnap.data())
+                setShare(docSnap.data().shareAlert);
+                console.log(docSnap.data())
                 } else {
                 console.log("No such document!");
                 }
@@ -98,11 +102,30 @@ const Home = ({mainPing}) => {
                 setRequestAlert(!requestAlert)
             }}> 💡 </h5>
             {requestAlert === true ? <>
+                <h5> 친구요청 </h5>            
                 {friendRequest.length !== 0 ? <>
                     {friendRequest.map((f, i) => (
                         <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
                     ))}
                 </> : <p> 요청이 없습니다. </p>}
+                <h5> 알림 </h5>            
+                {share.length !== 0 ? <>
+                    {share.map((s, i) => {
+                        ownerRecordID = s.ownerRecord.split('@')[0];
+                        return(
+                            <div key={i}>
+                                <p> 
+                                    "{ownerRecordID}"(이)가 기록을 공유했습니다. 
+                                    <button onClick={async() => {
+                                        await updateDoc(doc(db, "UserInfo", currentUser.uid), {
+                                            shareAlert: arrayRemove(s),
+                                        }); // 수락 시 요청 데이터 삭제 
+                                    }}> 확인 </button>
+                                </p>
+                            </div>
+                        )
+                    })}
+                </> : <p> 알림이 없습니다. </p>}
             </> : null }
             <button onClick={(e) => {
                     e.preventDefault();

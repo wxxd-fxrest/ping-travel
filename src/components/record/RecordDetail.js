@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, onSnapshot, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { db } from "../../firebase";
@@ -64,14 +64,18 @@ const RecordDetail = () => {
             RecordDetail
             <MapComponent />
             <h3> 장소 : {recordData.placeName} </h3>
-            <p> 함께 공유한 user </p>
-            {share.map((r, i) => {
-                return (
-                    <div key={i}>
-                        <p> {r} </p>
-                    </div>
-                )
-            })}
+            {share ? <>
+                <p> 함께 공유한 user </p>
+                {share.map((r, i) => {
+                    return (
+                        <div key={i}>
+                            <p> {r} </p>
+                        </div>
+                    )
+                })}
+            </> : <>
+                <p> 공유해준 user : {recordData.ownerRecord} </p>
+            </>}
             <p> 기록 : {recordData.record} </p>
             {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
         </div>

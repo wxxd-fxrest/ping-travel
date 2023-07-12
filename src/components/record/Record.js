@@ -18,18 +18,34 @@ const Record = ({recordData, profileUser}) => {
         if(`${recordData.Data.selectFriend}`.length !== 0) {
             setShare(true);
         } 
+        console.log(recordData.Data.ownerRecord)
     }, [recordData, share]); 
-    
+    console.log(recordData)
+
     return (
         <div style={{borderBottom: "1px solid"}}>
-            {share === true && <h4> 공유된 기록 </h4>}
-            <h3> 장소 : {recordData.Data.placeName} </h3>
-            <p> 기록 : {recordData.Data.record} </p>
-            {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
-            <button onClick={(e) => {
-                e.preventDefault();
-                navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
-            }}> 상세보기 </button>
+            {/* {share === true && <h4> 공유된 기록 </h4>} */}
+            {recordData.Data.ownerRecord !== undefined && <>
+                <p> 공유한 친구 : {recordData.Data.ownerRecord} </p>
+                <h3> 장소 : {recordData.Data.placeName} </h3>
+                <p> 기록 : {recordData.Data.record} </p>
+                <p> {recordData.Data.ownerRecord} </p>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
+                }}> 상세보기 </button>
+            </>}
+            {recordData.Data.selectFriend !== undefined && <>
+                <p> 함께한 친구 : {recordData.Data.selectFriend} </p>
+                <h3> 장소 : {recordData.Data.placeName} </h3>
+                <p> 기록 : {recordData.Data.record} </p>
+                <p> {profileUser.uid} </p>
+                {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p>  */}
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
+                }}> 상세보기 </button>
+            </>}
         </div>
     )
 };
