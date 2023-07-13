@@ -9,6 +9,7 @@ import MapComponent from "../MapComponent";
 import Friend from "./Friend";
 import FirstTab from "./tabComponent/FirstTab";
 import SecondTab from "./tabComponent/SecondTab";
+import ThirdTab from "./tabComponent/ThirdTab";
 
 // import MARKER from '../../img/marker.png';
 // import questionMarker from '../../img/question_marker.png';
@@ -93,6 +94,7 @@ const Profile = ({profileUser, friendID}) => {
             </>}
             {tab === 2 && <>
                 <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
+                <ThirdTab />
             </>}
         </div>
     )
