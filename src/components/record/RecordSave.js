@@ -16,7 +16,9 @@ const RecordSave = () => {
     let checkName ; 
     let checkValue ;
     let shareUserData ;
-
+    let shareUserDocID ; 
+    let shareID = (state.state.share); 
+    // console.log(state)
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
         if(name === "text") {
@@ -25,49 +27,105 @@ const RecordSave = () => {
     };
 
     const onClickSave = async () => {
-        if(selected) {
-            selected.forEach(async (data) => {
-                // console.log(data)
-                const q = query(
-                    collection(db, "UserInfo"), 
-                    where("ID", "==", `${data}`));
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach(async (doc) => {
-                    shareUserData = doc.data()
-                    console.log(shareUserData)
-                    // console.log(doc.id, " => ", doc.data());
-                    await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
-                        placeName: state.name, 
-                        placeY: state.placey,
-                        placeX: state.placex,
-                        placeID: state.id,
-                        placeNumber: state.phone,
-                        placeAddress: state.address,
-                        placeRoadAddress: state.roadAdrees,
-                        record: text,
-                        ownerRecord: currentUser.uid,
-                    }); 
-                });     
-                await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
-                    shareAlert: arrayUnion({
-                        ownerRecord: currentUser.email,
-                        placeName: state.name, 
-                        record: text,
-                    })
-                });   
-            })
+        if(state.addPathDocID) {
+            // 기록 추가 시 데이터 저장 
+            if(shareID) {
+                shareID.forEach(async (data) => {
+                    // console.log(data)
+                    const q = query(
+                        collection(db, "UserInfo"), 
+                        where("ID", "==", `${data}`));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach(async (doc) => {
+                        shareUserData = doc.data()
+                        // console.log(shareUserData.uid)
+                        // console.log(doc.id, " => ", doc.data());
+                    });     
+                    const e = query(
+                        collection(db, "UserInfo", shareUserData.uid, "record"), 
+                        where("placeID", "==", `${state.state.placeID}`),
+                        where("placeX", "==", `${state.state.placeX}`),
+                        where("placeY", "==", `${state.state.placeY}`),
+                        where("ownerRecord", "==", `${currentUser.uid}`),
+                        );
+                    const querySnapshot2 = await getDocs(e);
+                    querySnapshot2.forEach(async (doc) => {
+                        shareUserDocID = doc.id; 
+                        // console.log(shareUserDocID)
+                        // console.log(doc.id, " => ", doc.data());
+                    });  
+                    await updateDoc(doc(db, "UserInfo", shareUserData.uid, "record", shareUserDocID), {
+                        addRecord: arrayUnion({
+                            placeName: state.name, 
+                            placeY: state.placey,
+                            placeX: state.placex,
+                            placeID: state.id,
+                            placeNumber: state.phone,
+                            placeAddress: state.address,
+                            placeRoadAddress: state.roadAdrees,
+                            record: text,
+                        })
+                    });   
+                })
+            }
+            await updateDoc(doc(db, "UserInfo", currentUser.uid, "record", state.addPathDocID), {
+                addRecord: arrayUnion({
+                    placeName: state.name, 
+                    placeY: state.placey,
+                    placeX: state.placex,
+                    placeID: state.id,
+                    placeNumber: state.phone,
+                    placeAddress: state.address,
+                    placeRoadAddress: state.roadAdrees,
+                    record: text,
+                })
+            });
+        } else {
+            // 초기 기록 업로드 시 데이터 저장 
+            if(selected) {
+                selected.forEach(async (data) => {
+                    // console.log(data)
+                    const q = query(
+                        collection(db, "UserInfo"), 
+                        where("ID", "==", `${data}`));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach(async (doc) => {
+                        shareUserData = doc.data()
+                        // console.log(shareUserData)
+                        // console.log(doc.id, " => ", doc.data());
+                        await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
+                            placeName: state.name, 
+                            placeY: state.placey,
+                            placeX: state.placex,
+                            placeID: state.id,
+                            placeNumber: state.phone,
+                            placeAddress: state.address,
+                            placeRoadAddress: state.roadAdrees,
+                            record: text,
+                            ownerRecord: currentUser.uid,
+                        }); 
+                    });     
+                    await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
+                        shareAlert: arrayUnion({
+                            ownerRecord: currentUser.email,
+                            placeName: state.name, 
+                            record: text,
+                        })
+                    });   
+                })
+            }
+            await addDoc(collection(db, "UserInfo", currentUser.uid, "record"), {
+                placeName: state.name, 
+                placeY: state.placey,
+                placeX: state.placex,
+                placeID: state.id,
+                placeNumber: state.phone,
+                placeAddress: state.address,
+                placeRoadAddress: state.roadAdrees,
+                record: text,
+                selectFriend: selected,
+            });
         }
-        await addDoc(collection(db, "UserInfo", currentUser.uid, "record"), {
-            placeName: state.name, 
-            placeY: state.placey,
-            placeX: state.placex,
-            placeID: state.id,
-            placeNumber: state.phone,
-            placeAddress: state.address,
-            placeRoadAddress: state.roadAdrees,
-            record: text,
-            selectFriend: selected,
-        });
         navigate('/');
     };
     
@@ -105,17 +163,20 @@ const RecordSave = () => {
         <div>
             <p> 장소 : {state.name} </p>
             <p> 함께 공유하고 싶은 사람이 있다면 선택하세요. </p>
-            {friendList.map((f, i) => {
-                return(
-                    <div key={i}>
-                        <input type="checkbox" 
-                            id={f} 
-                            name={f} 
-                            onChange={handleSelect}/>
-                        <label htmlFor={f}> {f} </label>
-                    </div>
-                )
-            })}
+            {!shareID && <>
+                {friendList.map((f, i) => {
+                    return(
+                        <div key={i}>
+                            <input type="checkbox" 
+                                id={f} 
+                                name={f} 
+                                onChange={handleSelect}/>
+                            <label htmlFor={f}> {f} </label>
+                        </div>
+                    )
+                })}
+            </>}
+
             <input type="text" 
                     name="text"
                     placeholder="내용을 입력해주세요" 

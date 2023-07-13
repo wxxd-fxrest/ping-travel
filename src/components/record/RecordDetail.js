@@ -1,16 +1,19 @@
 import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import MapComponent from "../MapComponent";
+import AddRecordDetail from "./AddRecordDetail";
 
 const RecordDetail = () => {
     const { kakao } = window;
     const location = useLocation() ;
+    const navigate = useNavigate();
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
     const [recordData, setRecordData] = useState([]);
+    const [addRecordData, setAddRecordData] = useState([]);
     const [share, setShare] = useState([]);
     // let saveDate = recordData.recordDate.toDate();
     // let Year = saveDate.getFullYear();
@@ -26,6 +29,7 @@ const RecordDetail = () => {
             if (docSnap.exists()) {
                 setRecordData(docSnap.data());
                 setShare(docSnap.data().selectFriend);
+                setAddRecordData(docSnap.data().addRecord);
                 console.log(docSnap.data())
             } else {
                 console.log("No such document!");
@@ -77,6 +81,22 @@ const RecordDetail = () => {
                 <p> 공유해준 user : {recordData.ownerRecord} </p>
             </>}
             <p> 기록 : {recordData.record} </p>
+            {addRecordData && <>
+                {addRecordData.map((r, i) => (
+                    <AddRecordDetail key={i} addRecordData={r}/>
+                ))}
+            </>}
+
+            <button onClick={() => {
+                navigate(`/addrecord/${pathUID}/${pathDocID}`, {
+                    state: {
+                        share,
+                        placeY: recordData.placeY,
+                        placeX: recordData.placeX,
+                        placeID: recordData.placeID
+                    }
+                });
+            }}> 기록 추가하기 </button>
             {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
         </div>
     )

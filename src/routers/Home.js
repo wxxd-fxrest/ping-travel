@@ -48,7 +48,7 @@ const Home = ({mainPing}) => {
             }
         };
         getLoginUserData();
-    }, [currentUser.uid]); 
+    }, [currentUser.uid]);
     
 
     const getMainPing = useCallback(async () => {

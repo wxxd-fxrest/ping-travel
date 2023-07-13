@@ -9,6 +9,7 @@ import ProfileData from "./components/profile/ProfileData";
 import RecordSave from "./components/record/RecordSave";
 import RecordSearch from "./components/record/RecordSearch";
 import RecordDetail from "./components/record/RecordDetail";
+import AddRecord from "./components/record/AddRecord";
 
 const Router = ({mainPing, loginUserData}) => {
   const {currentUser} = useContext(AuthContext); 
@@ -36,6 +37,7 @@ const Router = ({mainPing, loginUserData}) => {
             <Route path="/profile/:id" element={<ProfileData mainPing={mainPing} />} />
             <Route path="/record/save/:id" element={<RecordSave />} />
             <Route path="/record/:uid/:id" element={<RecordDetail />} />
+            <Route path="/addrecord/:uid/:id" element={<AddRecord />} />
         </Routes>
     </BrowserRouter>
   );
