@@ -11,11 +11,10 @@ const MenuBar = ({loginUserData, friendRequest, share}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
     const [requestAlert, setRequestAlert] = useState(false);
-    let setOwnerUID ;
 
     console.log(share)
     return (
-        <div>
+        <div style={{borderBottom: "solid 1px"}}>
             <h5 onClick={() => {
                 setRequestAlert(!requestAlert)
             }}> 💡 </h5>
@@ -29,17 +28,17 @@ const MenuBar = ({loginUserData, friendRequest, share}) => {
                 <h5> 알림 </h5>            
                 {share !== undefined ? <>
                     {share.map((s, i) => {
-                        setOwnerUID = s.ownerUID.split('@')[0];
                         return(
-                            <div key={i}>
-                                <p> 
-                                    "{setOwnerUID}"(이)가 기록을 공유했습니다. 
-                                    <button onClick={async() => {
-                                        await updateDoc(doc(db, "UserInfo", currentUser.uid), {
-                                            shareAlert: arrayRemove(s),
-                                        }); // 수락 시 요청 데이터 삭제 
-                                    }}> 확인 </button>
-                                </p>
+                            <div key={i} style={{borderBottom: "solid 1px"}}>
+                                <p> {s.alert} </p>
+                                <h6> 장소: "{s.placeName}" </h6>
+                                <button onClick={async() => {
+                                    await updateDoc(doc(db, "UserInfo", currentUser.uid), {
+                                        shareAlert: arrayRemove(s),
+                                    }); // 수락 시 요청 데이터 삭제 
+                                    navigate(`/profile/${loginUserData.ID}`)
+                                    window.location.reload() 
+                                }}> 확인 </button>
                             </div>
                         )
                     })}

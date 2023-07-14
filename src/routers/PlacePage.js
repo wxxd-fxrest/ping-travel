@@ -22,6 +22,7 @@ const PlacePage = ({mainPing}) => {
     const state = location.state;
     const {currentUser} = useContext(AuthContext);
     const [profileData, setProfileData] = useState([]); 
+
     // const pathname = location.pathname; 
     // const pathUID = (pathname.split('/')[2]);
     // let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
@@ -115,6 +116,7 @@ const PlacePage = ({mainPing}) => {
                 placeX: state.placex,
             });
         }
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -152,30 +154,22 @@ const PlacePage = ({mainPing}) => {
                 style={{ width: '100%', height: '400px' }}>
             </Map>
             <h4> {state.name} </h4>
-            <MainPing mainPing={mainPing} id={state.id}/>
-            <div>
+            <div style={{borderBottom: "solid 1px"}}>
+                <h3> 질문/리뷰를 등록하세요. </h3>
                 {currentUser ? <>
+                    <input type="text" 
+                        name="text"
+                        placeholder="내용을 입력해주세요" 
+                        value={text} 
+                        onChange={onChange}/>
                     <input type="checkbox" 
-                        value={write} 
-                        onChange={() => setWrite(!write)}/>
-                    {write === true && <>
-                        <input type="text" 
-                            name="text"
-                            placeholder="내용을 입력해주세요" 
-                            value={text} 
-                            onChange={onChange}/>
-                        <input type="checkbox" 
-                            value={type} 
-                            onChange={() => setType(!type)}/>
-                        {type === false ? <>
-                            <h4> 리뷰 </h4>
-                        </> : <>
-                            <h4> 질문 </h4>
-                        </>}
-                        <button type="button" onClick={onSaveBtn}> ok </button>
-                    </>}
+                        value={type} 
+                        onChange={() => setType(!type)}/>
+                    {type === false ? <h4> 리뷰 </h4> : <h4> 질문 </h4>}
+                    <button type="button" onClick={onSaveBtn}> ok </button>
                 </> : <p>  로그인 후 남길 수 있습니다. </p> }
             </div>
+            <MainPing mainPing={mainPing} id={state.id}/>
         </div>
     )
 };

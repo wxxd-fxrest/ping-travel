@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
@@ -12,6 +12,7 @@ const RecordDetail = () => {
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
+    console.log(pathDocID)
     const [recordData, setRecordData] = useState([]);
     const [addRecordData, setAddRecordData] = useState([]);
     const [share, setShare] = useState([]);
@@ -37,6 +38,15 @@ const RecordDetail = () => {
         };
         getLoginUserData();
     }, [pathDocID, pathUID]);
+
+    const onDelete = async() => {
+        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
+        const ok = window.confirm("그럼에도 게시글을 삭제하시겠습니까?")
+        if(ok) {
+            await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "record", `${pathDocID}`)); 
+            navigate("/") ;
+        }
+    } ;
 
     useEffect(() => {
         let container = document.getElementById("map");
@@ -66,6 +76,7 @@ const RecordDetail = () => {
     return (
         <div>
             RecordDetail
+            <button onClick={onDelete}> 삭제 </button>
             <MapComponent />
             <h3> 장소 : {recordData.placeName} </h3>
             {share ? <>
@@ -78,12 +89,12 @@ const RecordDetail = () => {
                     )
                 })}
             </> : <>
-                <p> 공유해준 user : {recordData.ownerUID} </p>
+                <p> 공유해준 user : {recordData.ownerID} </p>
             </>}
             <p> 기록 : {recordData.record} </p>
             {addRecordData && <>
                 {addRecordData.map((r, i) => (
-                    <AddRecordDetail key={i} addRecordData={r}/>
+                    <AddRecordDetail key={i} addRecordData={r} pathUID={pathUID} pathDocID={pathDocID}/>
                 ))}
             </>}
 

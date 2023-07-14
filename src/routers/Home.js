@@ -1,6 +1,6 @@
 /* eslint-disable no-redeclare */
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from "styled-components";
 import { AuthContext } from '../AuthContext';
 import ReviewQuestion from '../components/ReviewQuestion';
@@ -18,25 +18,26 @@ const Home = ({mainPing}) => {
     const [friendRequest, setFriendRequest] = useState([]);
     const [share, setShare] = useState([]);
 
-    useEffect(() => {
-        const getLoginUserData = async () => {
-            if(currentUser.uid) {
-                const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                setLoginUserData(docSnap.data());
-                setFriendRequest(docSnap.data().friendRequest);
-                setShare(docSnap.data().shareAlert);
-                console.log(docSnap.data())
-                } else {
-                console.log("No such document!");
-                }
-            }else {
-                return;
+    const getLoginUserData = useCallback(async () =>  {
+        if(currentUser.uid) {
+            const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+            setLoginUserData(docSnap.data());
+            setFriendRequest(docSnap.data().friendRequest);
+            setShare(docSnap.data().shareAlert);
+            console.log(docSnap.data())
+            } else {
+            console.log("No such document!");
             }
-        };
+        } else {
+            return;
+        }
+    }, [currentUser.uid])
+
+    useEffect(() => {
         getLoginUserData();
-    }, [currentUser.uid]);
+    }, [currentUser.uid, getLoginUserData]);
 
     return (
         <Container>

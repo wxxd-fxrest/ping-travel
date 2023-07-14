@@ -1,6 +1,8 @@
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import React, { useCallback, useEffect, useState } from "react";
+import { addDoc, arrayUnion, collection, doc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { AuthContext } from "../AuthContext";
 import { db } from "../firebase";
+import MainPingMap from "./MainPingMap";
 
 const MainPing = ({id}) => {
     const [docData, setDocData] = useState([]);
@@ -19,32 +21,12 @@ const MainPing = ({id}) => {
                 })
             });
             setDocData(feedArray) ;
-            console.log(feedArray)
         });
     }, [id]);
 
     useEffect(() => {
         getAbout();
     }, [getAbout]);
-
-    const musicList = () => {
-        let serchList = [] ; 
-        console.log(docData)
-        for(let i = 0; i < docData.length; i++) {
-            serchList.push(
-                <div key={i}>
-                    {type === true ? <>
-                        {docData[i].Data.type === "review" && <>
-                        <h4>{docData[i].Data.about}</h4> </>}
-                    </> : <>
-                    {docData[i].Data.type === "question" && <>
-                        <h4>{docData[i].Data.about}</h4> </>}
-                    </>}
-                </div>
-            )
-        }
-        return serchList; 
-    } ; 
 
     return (
         <div>
@@ -54,7 +36,9 @@ const MainPing = ({id}) => {
                 }}> 
                 {type === true ? <p>리뷰</p> : <p>질문</p>} 
             </button>
-            <h5> {musicList()} </h5>
+            {docData.map((m, i) => (
+                <MainPingMap key={i} docData={m} type={type}/>
+            ))}
         </div>
     )
 }

@@ -22,6 +22,8 @@ const RecordSave = () => {
     let ownerUserID ;
     let ownerUserDocID; 
 
+    let currentUserID;
+
     let shareID = state.state
     console.log(state)
     const onChange = (event) => {
@@ -32,6 +34,7 @@ const RecordSave = () => {
     };
 
     const onClickSave = async () => {
+        currentUserID = `${currentUser.email}`.split('@')[0];
         if(state.addPathDocID) {
             shareID = shareID.share; 
             // 기록 추가 시 데이터 저장 
@@ -131,7 +134,7 @@ const RecordSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         // console.log(shareUserData)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log(doc.id, " => ", doc.data());
                         await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
                             placeName: state.name, 
                             placeY: state.placey,
@@ -142,13 +145,16 @@ const RecordSave = () => {
                             placeRoadAddress: state.roadAdrees,
                             record: text,
                             ownerUID: currentUser.uid,
+                            ownerID: currentUserID, 
                         }); 
                     });     
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
                         shareAlert: arrayUnion({
-                            ownerUID: currentUser.email,
+                            ownerUID: currentUser.uid,
+                            ownerEmail: currentUser.email, 
+                            ownerID: currentUserID, 
                             placeName: state.name, 
-                            record: text,
+                            alert: `${currentUserID}(이)가 기록을 공유했습니다.`
                         })
                     });   
                 })

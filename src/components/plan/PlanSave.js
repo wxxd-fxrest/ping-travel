@@ -23,6 +23,8 @@ const PlanSave = () => {
     let ownerUserID ;
     let ownerUserDocID; 
 
+    let currentUserID ;
+
     let shareID = state.state;
     console.log(state.state)
 
@@ -48,6 +50,7 @@ const PlanSave = () => {
     };
 
     const onClickSave = async () => {
+        currentUserID = `${currentUser.email}`.split('@')[0];
         if(state.addPathDocID) {
             shareID = shareID.share; 
             // 기록 추가 시 데이터 저장 
@@ -135,8 +138,7 @@ const PlanSave = () => {
                     plan: text,
                 })
             });
-        } 
-        else {
+        } else {
             // 초기 기록 업로드 시 데이터 저장 
             if(selected) {
                 selected.forEach(async (data) => {
@@ -148,7 +150,7 @@ const PlanSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         // console.log(shareUserData)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log(doc.id, " => ", doc.data());
                         await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "plan"), {
                             placeName: state.name, 
                             placeY: state.placey,
@@ -159,13 +161,16 @@ const PlanSave = () => {
                             placeRoadAddress: state.roadAdrees,
                             plan: text,
                             ownerUID: currentUser.uid,
+                            ownerID: currentUserID, 
                         }); 
                     });     
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
                         shareAlert: arrayUnion({
-                            ownerUID: currentUser.email,
+                            ownerUID: currentUser.uid,
+                            ownerEmail: currentUser.email, 
+                            ownerID: currentUserID, 
                             placeName: state.name, 
-                            record: text,
+                            alert: `${currentUserID}(이)가 계획을 공유했습니다.`
                         })
                     });   
                 })

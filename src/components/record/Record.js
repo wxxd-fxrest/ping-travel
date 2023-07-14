@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthContext";
 
 const Record = ({recordData, profileUser}) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const {currentUser} = useContext(AuthContext);
+
+    const pathname = location.pathname ; 
+    const pathUID = (pathname.split('/')[2]);
+    console.log(pathUID)
+    let currentUserID = currentUser.email.split('@')[0]
+    console.log(currentUserID)
+
     const [share, setShare] = useState(false);
     // let saveDate ;
     // if(recordData !== ) {
@@ -30,10 +40,11 @@ const Record = ({recordData, profileUser}) => {
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 기록 : {recordData.Data.record} </p>
                 <p> {recordData.Data.ownerUID} </p>
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
-                }}> 상세보기 </button>
+                {currentUserID === pathUID && 
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
+                    }}> 상세보기 </button>}
             </>}
             {recordData.Data.selectFriend !== undefined && <>
                 <p> 함께한 친구 : {recordData.Data.selectFriend} </p>
@@ -41,10 +52,11 @@ const Record = ({recordData, profileUser}) => {
                 <p> 기록 : {recordData.Data.record} </p>
                 <p> {profileUser.uid} </p>
                 {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p>  */}
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
-                }}> 상세보기 </button>
+                {currentUserID === pathUID && 
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
+                    }}> 상세보기 </button>}
             </>}
         </div>
     )

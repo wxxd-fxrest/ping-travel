@@ -87,7 +87,7 @@ const ReviewQuestion = ({mainPing}) => {
                                     address: select.placeAddress,
                                     roadAdrees: select.placeRoadAddress,
                                 }
-                            }) ; 
+                            }); 
                         }}> 상세보기 </button>
                 </div> : <h4> null </h4>}
                 {mainPing.map((m, i) => {

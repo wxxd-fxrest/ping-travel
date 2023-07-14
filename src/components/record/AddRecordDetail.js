@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import MapComponent from "../MapComponent";
 import { Map } from "react-kakao-maps-sdk";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
-const AddRecordDetail = ({addRecordData}) => {
+const AddRecordDetail = ({addRecordData, pathUID, pathDocID}) => {
     const { kakao } = window;
 
     const getAddData = useCallback(() => {
@@ -39,6 +41,16 @@ const AddRecordDetail = ({addRecordData}) => {
     return (
         <div>
             {/* <MapComponent /> */}
+            <button onClick={async () => {
+                alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
+                const ok = window.confirm("게시글을 삭제하시겠습니까?")
+                if(ok) {
+                    await updateDoc(doc(db, "UserInfo", `${pathUID}`, "record", `${pathDocID}`), {
+                        addRecord: arrayRemove(addRecordData),
+                    }); // 수락 시 요청 데이터 삭제 
+                    window.location.reload() 
+                }
+            }}> 삭제 </button>
             <Map id='map' 
                 center={{ lat: addRecordData.placeY, lng: addRecordData.placeX }}
                 level={3}

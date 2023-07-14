@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { arrayRemove, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
@@ -12,6 +12,7 @@ const PlanDetail = () => {
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
+    console.log(pathDocID)
     const [planData, setPlanData] = useState([]);
     const [addPlanData, setAddPlanData] = useState([]);
     const [share, setShare] = useState([]);
@@ -37,6 +38,15 @@ const PlanDetail = () => {
         };
         getLoginUserData();
     }, [pathDocID, pathUID]);
+
+    const onDelete = async() => {
+        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
+        const ok = window.confirm("게시글을 삭제하시겠습니까?")
+        if(ok) {
+            await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`)); 
+            navigate("/") ;
+        }
+    } ;
 
     useEffect(() => {
         let container = document.getElementById("map");
@@ -66,6 +76,7 @@ const PlanDetail = () => {
     return (
         <div>
             PlanDetail
+            <button onClick={onDelete}> 삭제 </button>
             <MapComponent />
             <h3> 장소 : {planData.placeName} </h3>
             {share ? <>
@@ -78,12 +89,12 @@ const PlanDetail = () => {
                     )
                 })}
             </> : <>
-                <p> 공유해준 user : {planData.ownerUID} </p>
+                <p> 공유해준 user : {planData.ownerID} </p>
             </>}
             <p> 계획 : {planData.plan} </p>
             {addPlanData && <>
                 {addPlanData.map((r, i) => (
-                    <AddPlanDetail key={i} addPlanData={r}/>
+                    <AddPlanDetail key={i} addPlanData={r} pathUID={pathUID} pathDocID={pathDocID}/>
                 ))}
             </>}
 

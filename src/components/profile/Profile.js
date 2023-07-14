@@ -26,7 +26,7 @@ const Profile = ({profileUser, friendID}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
 
-    const [tab, setTab] = useState(2);
+    const [tab, setTab] = useState(0);
     const [myPingID, setMyPingID] = useState([]);
 
     useEffect(() => {
@@ -84,19 +84,19 @@ const Profile = ({profileUser, friendID}) => {
             </div>
 
             {tab === 0 && <>
-                <h4 style={{color:"green", margin: "10px"}}> 내가 남긴 질문/리뷰 </h4>
-                <MapComponent />
-                <FirstTab myPingID={myPingID} profileUser={profileUser}/>
-            </>}
-            {tab === 1 && <>
                 <h4 style={{color:"green", margin: "10px"}}> 여행 기록 (with. friend) </h4>
                 <button onClick={() => navigate('/record/search')}> 기록하기 </button>
                 <SecondTab profileUser={profileUser}/>
             </>}
-            {tab === 2 && <>
+            {tab === 1 && <>
                 <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
                 <button onClick={() => navigate('/plan/search')}> 계획하기 </button>
                 <ThirdTab profileUser={profileUser} />
+            </>}
+            {tab === 2 && <>
+                <h4 style={{color:"green", margin: "10px"}}> 내가 남긴 질문/리뷰 </h4>
+                <MapComponent />
+                <FirstTab myPingID={myPingID} profileUser={profileUser}/>
             </>}
         </div>
     )
