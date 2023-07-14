@@ -3,7 +3,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from "styled-components";
 import { AuthContext } from '../AuthContext';
-import ThirdTab from '../components/profile/tabComponent/ThirdTab';
 import ReviewQuestion from '../components/ReviewQuestion';
 import { db } from '../firebase';
 import MenuBar from './MenuBar';
@@ -15,7 +14,6 @@ import MenuBar from './MenuBar';
 
 const Home = ({mainPing}) => {
     const {currentUser} = useContext(AuthContext);
-    const [tab, setTab] = useState(1);
     const [loginUserData, setLoginUserData] = useState([]);
     const [friendRequest, setFriendRequest] = useState([]);
     const [share, setShare] = useState([]);
@@ -43,18 +41,8 @@ const Home = ({mainPing}) => {
     return (
         <Container>
             <MenuBar friendRequest={friendRequest} loginUserData={loginUserData} share={share}/>
-            <div>
-                <h3 onClick={() => setTab(0)}> tab 1 </h3>
-                <h3 onClick={() => setTab(1)}> tab 2 </h3>
-            </div>
-            {tab === 0 && <>
-                <h4 style={{color:"green", margin: "10px"}}> ThirdTab </h4>
-                <ThirdTab />
-            </>}
-            {tab === 1 && <>
-                <h4 style={{color:"green", margin: "10px"}}> ReviewQuestion </h4>
-                <ReviewQuestion mainPing={mainPing} />
-            </>}
+            <h4 style={{color:"green", margin: "10px"}}> ReviewQuestion </h4>
+            <ReviewQuestion mainPing={mainPing} />
         </Container>
     );
 };

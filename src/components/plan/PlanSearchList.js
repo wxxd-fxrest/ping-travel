@@ -2,12 +2,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
+const PlanSearchList = ({places, pathUID, pathDocID, state}) => {
     const navigate = useNavigate();
     const location = useLocation() ;
     const pathname = location.pathname ; 
-    const addPathUID = (pathname.split('/')[2]);
-    const addPathDocID = (pathname.split('/')[3]);
+    // const addPathUID = (pathname.split('/')[2]);
+    // const addPathDocID = (pathname.split('/')[3]);
+    const addPathUID = pathUID
+    const addPathDocID = pathDocID
 
     const { kakao } = window;
     const [select, setSelect] = useState(false);
@@ -24,6 +26,7 @@ const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
         setSelect(!select);
         // placeid = all.split(',')[2];
         // placename = all.split(',')[3];
+        console.log("placey=> ", placey, "placex=>", placex);
 
         let container = document.getElementById("map");
         let options = {
@@ -71,7 +74,7 @@ const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
                     {state ? <>
                         <button onClick={(e) => {
                             e.preventDefault();
-                            navigate(`/record/save/${places.id}`, {
+                            navigate(`/plan/save/${places.id}`, {
                                 state: {
                                     state: state,
                                     addPathUID: addPathUID,
@@ -89,7 +92,7 @@ const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
                     </> : <>
                         <button onClick={(e) => {
                             e.preventDefault();
-                            navigate(`/record/save/${places.id}`, {
+                            navigate(`/plan/save/${places.id}`, {
                                 state: {
                                     name: places.place_name,
                                     phone: places.phone,
@@ -100,7 +103,7 @@ const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
                                     roadAdrees: places.road_address_name,
                                 }
                             }); 
-                        }}> 기록하기 </button>
+                        }}> 계획하기 </button>
                         </>}
                     </>}
                 </li>
@@ -109,4 +112,4 @@ const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
     )
 };
 
-export default RecordSearchList;
+export default PlanSearchList;

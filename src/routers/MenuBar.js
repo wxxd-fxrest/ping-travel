@@ -11,7 +11,9 @@ const MenuBar = ({loginUserData, friendRequest, share}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
     const [requestAlert, setRequestAlert] = useState(false);
-    let ownerRecordID ;
+    let setOwnerUID ;
+
+    console.log(share)
     return (
         <div>
             <h5 onClick={() => {
@@ -25,13 +27,13 @@ const MenuBar = ({loginUserData, friendRequest, share}) => {
                     ))}
                 </> : <p> 요청이 없습니다. </p>}
                 <h5> 알림 </h5>            
-                {share.length !== 0 ? <>
+                {share !== undefined ? <>
                     {share.map((s, i) => {
-                        ownerRecordID = s.ownerRecord.split('@')[0];
+                        setOwnerUID = s.ownerUID.split('@')[0];
                         return(
                             <div key={i}>
                                 <p> 
-                                    "{ownerRecordID}"(이)가 기록을 공유했습니다. 
+                                    "{setOwnerUID}"(이)가 기록을 공유했습니다. 
                                     <button onClick={async() => {
                                         await updateDoc(doc(db, "UserInfo", currentUser.uid), {
                                             shareAlert: arrayRemove(s),

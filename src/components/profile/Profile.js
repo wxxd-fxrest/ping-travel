@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
+import Home from "../../routers/Home";
 import MapComponent from "../MapComponent";
 import Friend from "./Friend";
 import FirstTab from "./tabComponent/FirstTab";
@@ -25,7 +26,7 @@ const Profile = ({profileUser, friendID}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
 
-    const [tab, setTab] = useState(1);
+    const [tab, setTab] = useState(2);
     const [myPingID, setMyPingID] = useState([]);
 
     useEffect(() => {
@@ -94,7 +95,8 @@ const Profile = ({profileUser, friendID}) => {
             </>}
             {tab === 2 && <>
                 <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
-                <ThirdTab />
+                <button onClick={() => navigate('/plan/search')}> 계획하기 </button>
+                <ThirdTab profileUser={profileUser} />
             </>}
         </div>
     )

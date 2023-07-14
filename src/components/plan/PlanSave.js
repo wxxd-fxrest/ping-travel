@@ -1,10 +1,10 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 
-const RecordSave = () => {
+const PlanSave = () => {
     const location = useLocation();
     const {currentUser} = useContext(AuthContext);
     const state = location.state;
@@ -13,6 +13,7 @@ const RecordSave = () => {
     const [text, setText] = useState("");
     const [friendList, setFriendList] = useState([]);
     const [selected, setSelected] = useState([]);
+
     let checkName ; 
     let checkValue ;
 
@@ -22,8 +23,23 @@ const RecordSave = () => {
     let ownerUserID ;
     let ownerUserDocID; 
 
-    let shareID = state.state
-    console.log(state)
+    let shareID = state.state;
+    console.log(state.state)
+
+    useEffect(() => {
+        const getLoginUserData = async () => {
+            const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setFriendList(docSnap.data().friendID);
+                // console.log(docSnap.data())
+            } else {
+                console.log("No such document!");
+            }
+        };
+        getLoginUserData();
+    }, [currentUser.uid]);
+
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
         if(name === "text") {
@@ -45,10 +61,10 @@ const RecordSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         // console.log(shareUserData.uid)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log(doc.id, " => ", doc.data());
                     });     
                     const e = query(
-                        collection(db, "UserInfo", shareUserData.uid, "record"), 
+                        collection(db, "UserInfo", shareUserData.uid, "plan"), 
                         where("placeID", "==", `${state.state.placeID}`),
                         where("placeX", "==", `${state.state.placeX}`),
                         where("placeY", "==", `${state.state.placeY}`),
@@ -58,10 +74,10 @@ const RecordSave = () => {
                     querySnapshot2.forEach(async (doc) => {
                         shareUserDocID = doc.id; 
                         // console.log(shareUserDocID)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log(doc.id, " => ", doc.data());
                     });  
-                    await updateDoc(doc(db, "UserInfo", shareUserData.uid, "record", shareUserDocID), {
-                        addRecord: arrayUnion({
+                    await updateDoc(doc(db, "UserInfo", shareUserData.uid, "plan", shareUserDocID), {
+                        addPlan: arrayUnion({
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -69,12 +85,12 @@ const RecordSave = () => {
                             placeNumber: state.phone,
                             placeAddress: state.address,
                             placeRoadAddress: state.roadAdrees,
-                            record: text,
+                            plan: text,
                         })
                     });   
                 })
             } else {
-                const docRef = doc(db, "UserInfo", `${currentUser.uid}`, "record", `${state.addPathDocID}`);
+                const docRef = doc(db, "UserInfo", `${currentUser.uid}`, "plan", `${state.addPathDocID}`);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     ownerUserID = docSnap.data(); 
@@ -84,7 +100,7 @@ const RecordSave = () => {
                 }
 
                 const e = query(
-                    collection(db, "UserInfo", ownerUserID.ownerUID, "record"), 
+                    collection(db, "UserInfo", ownerUserID.ownerUID, "plan"), 
                     where("placeID", "==", `${state.state.placeID}`),
                     where("placeX", "==", `${state.state.placeX}`),
                     where("placeY", "==", `${state.state.placeY}`),
@@ -94,8 +110,8 @@ const RecordSave = () => {
                     ownerUserDocID = doc.id; 
                     console.log(doc.id, " => ", doc.data());
                 });  
-                await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "record", ownerUserDocID), {
-                    addRecord: arrayUnion({
+                await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "plan", ownerUserDocID), {
+                    addPlan: arrayUnion({
                         placeName: state.name, 
                         placeY: state.placey,
                         placeX: state.placex,
@@ -103,12 +119,12 @@ const RecordSave = () => {
                         placeNumber: state.phone,
                         placeAddress: state.address,
                         placeRoadAddress: state.roadAdrees,
-                        record: text,
+                        plan: text,
                     })
                 });   
             }
-            await updateDoc(doc(db, "UserInfo", currentUser.uid, "record", state.addPathDocID), {
-                addRecord: arrayUnion({
+            await updateDoc(doc(db, "UserInfo", currentUser.uid, "plan", state.addPathDocID), {
+                addPlan: arrayUnion({
                     placeName: state.name, 
                     placeY: state.placey,
                     placeX: state.placex,
@@ -116,10 +132,11 @@ const RecordSave = () => {
                     placeNumber: state.phone,
                     placeAddress: state.address,
                     placeRoadAddress: state.roadAdrees,
-                    record: text,
+                    plan: text,
                 })
             });
-        } else {
+        } 
+        else {
             // 초기 기록 업로드 시 데이터 저장 
             if(selected) {
                 selected.forEach(async (data) => {
@@ -132,7 +149,7 @@ const RecordSave = () => {
                         shareUserData = doc.data()
                         // console.log(shareUserData)
                         // console.log(doc.id, " => ", doc.data());
-                        await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
+                        await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "plan"), {
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -140,7 +157,7 @@ const RecordSave = () => {
                             placeNumber: state.phone,
                             placeAddress: state.address,
                             placeRoadAddress: state.roadAdrees,
-                            record: text,
+                            plan: text,
                             ownerUID: currentUser.uid,
                         }); 
                     });     
@@ -153,7 +170,7 @@ const RecordSave = () => {
                     });   
                 })
             }
-            await addDoc(collection(db, "UserInfo", currentUser.uid, "record"), {
+            await addDoc(collection(db, "UserInfo", currentUser.uid, "plan"), {
                 placeName: state.name, 
                 placeY: state.placey,
                 placeX: state.placex,
@@ -161,7 +178,7 @@ const RecordSave = () => {
                 placeNumber: state.phone,
                 placeAddress: state.address,
                 placeRoadAddress: state.roadAdrees,
-                record: text,
+                plan: text,
                 selectFriend: selected,
             });
         }
@@ -169,20 +186,6 @@ const RecordSave = () => {
     };
     
     // console.log(state)
-
-    useEffect(() => {
-        const getLoginUserData = async () => {
-            const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                setFriendList(docSnap.data().friendID);
-                // console.log(docSnap.data())
-            } else {
-                console.log("No such document!");
-            }
-        };
-        getLoginUserData();
-    }, [currentUser.uid]);
 
     const handleSelect = (e) => {
         checkName = e.target.name;
@@ -201,20 +204,20 @@ const RecordSave = () => {
     return (
         <div>
             <p> 장소 : {state.name} </p>
-            <p> 함께 공유하고 싶은 사람이 있다면 선택하세요. </p>
-            {!shareID && <>
-                {friendList.map((f, i) => {
-                    return(
-                        <div key={i}>
-                            <input type="checkbox" 
-                                id={f} 
-                                name={f} 
-                                onChange={handleSelect}/>
-                            <label htmlFor={f}> {f} </label>
-                        </div>
-                    )
-                })}
-            </>}
+            <p> 함께 계획하고 싶은 사람이 있다면 선택하세요. </p>
+                {shareID === undefined && <>
+                    {friendList.map((f, i) => {
+                        return(
+                            <div key={i}>
+                                <input type="checkbox" 
+                                    id={f} 
+                                    name={f} 
+                                    onChange={handleSelect}/>
+                                <label htmlFor={f}> {f} </label>
+                            </div>
+                        )
+                    })}
+                </>}
 
             <input type="text" 
                     name="text"
@@ -226,4 +229,4 @@ const RecordSave = () => {
     )
 };
 
-export default RecordSave;
+export default PlanSave;

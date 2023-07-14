@@ -27,7 +27,6 @@ const SecondTab = ({profileUser}) => {
             {recordData.map((r, i) => (
                 <Record key={i} recordData={r} profileUser={profileUser}/>
             ))}
-
         </div>
     )
 };

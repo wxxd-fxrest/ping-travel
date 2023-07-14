@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import MapComponent from "../MapComponent";
-import RecordSearchList from "./RecordSearchList";
+import PlanSearchList from "./PlanSearchList";
 
-const RecordSearch = ({pathUID, pathDocID, state}) => {
+const PlanSearch = ({pathUID, pathDocID, state}) => {
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
     const { kakao } = window;
@@ -63,22 +63,21 @@ const RecordSearch = ({pathUID, pathDocID, state}) => {
                 } else if (status === window.kakao.maps.services.Status.ERROR) {
                     alert('검색 결과 중 오류가 발생했습니다.');
                 }
-                // console.log(places);
+                console.log(places);
             });
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, keyword, places]);
 
     return (
         <div>
-            <button type="button"> ok </button>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
             <MapComponent />
             {places.map((p, i) => (
-                <RecordSearchList key={i} places={p} 
-                    pathUID={pathUID} pathDocID={pathDocID} state={state}  /* record */ /> 
+                <PlanSearchList key={i} places={p} 
+                    pathUID={pathUID} pathDocID={pathDocID} state={state} /* record */ />
             ))}
         </div>
     )
 }; 
 
-export default RecordSearch;
+export default PlanSearch;

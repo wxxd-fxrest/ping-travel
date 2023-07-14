@@ -3,17 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import MapComponent from "../MapComponent";
-import AddRecordDetail from "./AddRecordDetail";
+import AddPlanDetail from "./AddPlanDetail";
 
-const RecordDetail = () => {
+const PlanDetail = () => {
     const { kakao } = window;
     const location = useLocation() ;
     const navigate = useNavigate();
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
-    const [recordData, setRecordData] = useState([]);
-    const [addRecordData, setAddRecordData] = useState([]);
+    const [planData, setPlanData] = useState([]);
+    const [addPlanData, setAddPlanData] = useState([]);
     const [share, setShare] = useState([]);
     // let saveDate = recordData.recordDate.toDate();
     // let Year = saveDate.getFullYear();
@@ -24,12 +24,12 @@ const RecordDetail = () => {
 
     useEffect(() => {
         const getLoginUserData = async () => {
-            const docRef = doc(db, "UserInfo", `${pathUID}`, "record", `${pathDocID}`);
+            const docRef = doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setRecordData(docSnap.data());
+                setPlanData(docSnap.data());
                 setShare(docSnap.data().selectFriend);
-                setAddRecordData(docSnap.data().addRecord);
+                setAddPlanData(docSnap.data().addPlan);
                 console.log(docSnap.data())
             } else {
                 console.log("No such document!");
@@ -41,7 +41,7 @@ const RecordDetail = () => {
     useEffect(() => {
         let container = document.getElementById("map");
         let options = {
-            center: new kakao.maps.LatLng(recordData.placeY, recordData.placeX),
+            center: new kakao.maps.LatLng(planData.placeY, planData.placeX),
             level: 6,
         };
         //map
@@ -52,12 +52,12 @@ const RecordDetail = () => {
             //마커가 표시 될 지도
             map: map,
             //마커가 표시 될 위치
-            position:  new kakao.maps.LatLng(recordData.placeY, recordData.placeX)
+            position:  new kakao.maps.LatLng(planData.placeY, planData.placeX)
         });
         marker.setMap(map);
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: recordData.placeName, // 인포윈도우에 표시할 내용
+            content: planData.placeName, // 인포윈도우에 표시할 내용
         });
         
         infowindow.open(map, marker);
@@ -65,9 +65,9 @@ const RecordDetail = () => {
 
     return (
         <div>
-            RecordDetail
+            PlanDetail
             <MapComponent />
-            <h3> 장소 : {recordData.placeName} </h3>
+            <h3> 장소 : {planData.placeName} </h3>
             {share ? <>
                 <p> 함께 공유한 user </p>
                 {share.map((r, i) => {
@@ -78,28 +78,28 @@ const RecordDetail = () => {
                     )
                 })}
             </> : <>
-                <p> 공유해준 user : {recordData.ownerUID} </p>
+                <p> 공유해준 user : {planData.ownerUID} </p>
             </>}
-            <p> 기록 : {recordData.record} </p>
-            {addRecordData && <>
-                {addRecordData.map((r, i) => (
-                    <AddRecordDetail key={i} addRecordData={r}/>
+            <p> 계획 : {planData.plan} </p>
+            {addPlanData && <>
+                {addPlanData.map((r, i) => (
+                    <AddPlanDetail key={i} addPlanData={r}/>
                 ))}
             </>}
 
             <button onClick={() => {
-                navigate(`/addrecord/${pathUID}/${pathDocID}`, {
+                navigate(`/addplan/${pathUID}/${pathDocID}`, {
                     state: {
                         share,
-                        placeY: recordData.placeY,
-                        placeX: recordData.placeX,
-                        placeID: recordData.placeID
+                        placeY: planData.placeY,
+                        placeX: planData.placeX,
+                        placeID: planData.placeID
                     }
                 });
-            }}> 기록 추가하기 </button>
+            }}> 계획 추가하기 </button>
             {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
         </div>
     )
 };
 
-export default RecordDetail;
+export default PlanDetail;

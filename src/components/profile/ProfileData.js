@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
+import Home from "../../routers/Home";
 import Profile from "../profile/Profile.js";
 
 const ProfileData = ({mainPing}) => {
