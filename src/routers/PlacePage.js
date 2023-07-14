@@ -1,10 +1,10 @@
 /* eslint-disable no-redeclare */
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Map } from "react-kakao-maps-sdk";
-import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
-import { db } from "../firebase";
 import { AuthContext } from "../AuthContext";
+import { Map } from "react-kakao-maps-sdk";
+import { db } from "../firebase";
+import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import MainPing from "../components/MainPing";
 
 // import MARKER from '..//img/marker.png';
@@ -33,7 +33,8 @@ const PlacePage = ({mainPing}) => {
     // console.log(mainPing)
     // placey: m.Data.placeY,
     // placex: m.Data.placeX,
-    const [write, setWrite] = useState(false);
+    // const [write, setWrite] = useState(false);
+
     const [type, setType] = useState(false);
     const [text, setText] = useState("");
   
@@ -54,7 +55,7 @@ const PlacePage = ({mainPing}) => {
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
         if(name === "text") {
-            setText(value) ; 
+            setText(value); 
         } 
     };
 

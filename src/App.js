@@ -23,9 +23,7 @@ const App = () => {
 
   
   return (
-    <>
-      <Router mainPing={mainPing} />
-    </>
+    <Router mainPing={mainPing} />
   );
 };
 

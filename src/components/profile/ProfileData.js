@@ -1,15 +1,14 @@
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
-import Home from "../../routers/Home";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import MenuBar from "../../routers/MenuBar";
 import Profile from "../profile/Profile.js";
 
 const ProfileData = ({mainPing}) => {
     const {currentUser} = useContext(AuthContext); 
-    const location = useLocation() ;
+    const location = useLocation();
 
     const [profileUser, setProfileUser] = useState([]);
     const [friendID, setFriendID] = useState([]);
@@ -17,7 +16,7 @@ const ProfileData = ({mainPing}) => {
     const [friendRequest, setFriendRequest] = useState([]);
     const [share, setShare] = useState([]);
 
-    const pathname = location.pathname ; 
+    const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
 
     useEffect(() => {

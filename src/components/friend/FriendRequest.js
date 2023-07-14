@@ -1,7 +1,7 @@
-import { arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
+import { arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 
 const FriendRequest = ({friendRequest, loginUserData}) => {
     const {currentUser} = useContext(AuthContext); 
@@ -17,7 +17,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 setRequestUserData(doc.data());
-                console.log(doc.id, " => ", doc.data());
+                // console.log(doc.id, " => ", doc.data());
             });
         };
         get();

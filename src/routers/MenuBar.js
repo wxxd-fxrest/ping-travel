@@ -1,18 +1,18 @@
-import { signOut } from "firebase/auth";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import { auth, db } from "../firebase";
+import { signOut } from "firebase/auth";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import FriendRequest from "../components/friend/FriendRequest";
 import FriendSearchID from "../components/friend/FriendSearchID";
-import { auth, db } from "../firebase";
 
 const MenuBar = ({loginUserData, friendRequest, share}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
     const [requestAlert, setRequestAlert] = useState(false);
 
-    console.log(share)
+    // console.log(share)
     return (
         <div style={{borderBottom: "solid 1px"}}>
             <h5 onClick={() => {

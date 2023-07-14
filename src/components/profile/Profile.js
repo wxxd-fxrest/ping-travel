@@ -1,11 +1,10 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
-import { arrayRemove, collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
-import Home from "../../routers/Home";
+import { arrayRemove, collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore";
 import MapComponent from "../MapComponent";
 import Friend from "./Friend";
 import FirstTab from "./tabComponent/FirstTab";

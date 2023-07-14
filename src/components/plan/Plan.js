@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 
@@ -7,11 +7,12 @@ const Plan = ({planData, profileUser}) => {
     const location = useLocation();
     const {currentUser} = useContext(AuthContext);
 
-    const pathname = location.pathname ; 
+    const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
-    console.log(pathUID)
-    let currentUserID = currentUser.email.split('@')[0]
-    console.log(currentUserID)
+    // console.log(pathUID)
+    let currentUserID = currentUser.email.split('@')[0];
+    // console.log(currentUserID)
+
     // currentUserID = `${currentUser.email}`.split('@')[0];
 
     // let saveDate ;
@@ -30,8 +31,9 @@ const Plan = ({planData, profileUser}) => {
     //         setShare(true);
     //     } 
     //     // console.log(planData.Data.ownerUID)
-    // }, [planData, share]); 
-    console.log(planData)
+    // }, [planData, share]);
+
+    // console.log(planData)
 
     return (
         <div style={{borderBottom: "1px solid"}}>

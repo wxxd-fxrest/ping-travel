@@ -1,13 +1,14 @@
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { db } from "../firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 const MainPingMap = ({docData, type}) => {
     const {currentUser} = useContext(AuthContext);
     const [answer, setAnswer] = useState(false);
     const [text, setText] = useState("");
+
+    let answerData = docData.Data.answer;
 
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
@@ -15,8 +16,8 @@ const MainPingMap = ({docData, type}) => {
             setText(value) ; 
         } 
     };
-    let answerData = docData.Data.answer;
-    console.log(docData)
+
+    // console.log(docData)
 
     return(
         <div>

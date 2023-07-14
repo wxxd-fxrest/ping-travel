@@ -1,8 +1,8 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 
 const PlanSave = () => {
     const location = useLocation();
@@ -14,19 +14,19 @@ const PlanSave = () => {
     const [friendList, setFriendList] = useState([]);
     const [selected, setSelected] = useState([]);
 
-    let checkName ; 
-    let checkValue ;
+    let checkName; 
+    let checkValue;
 
-    let shareUserData ;
-    let shareUserDocID ; 
+    let shareUserData;
+    let shareUserDocID; 
 
-    let ownerUserID ;
+    let ownerUserID;
     let ownerUserDocID; 
 
-    let currentUserID ;
+    let currentUserID;
 
     let shareID = state.state;
-    console.log(state.state)
+    // console.log(state.state)
 
     useEffect(() => {
         const getLoginUserData = async () => {
@@ -43,7 +43,7 @@ const PlanSave = () => {
     }, [currentUser.uid]);
 
     const onChange = (event) => {
-        const {target : {name, value}} = event ; 
+        const {target : {name, value}} = event; 
         if(name === "text") {
             setText(value) ; 
         } 
@@ -51,6 +51,7 @@ const PlanSave = () => {
 
     const onClickSave = async () => {
         currentUserID = `${currentUser.email}`.split('@')[0];
+
         if(state.addPathDocID) {
             shareID = shareID.share; 
             // 기록 추가 시 데이터 저장 
@@ -64,7 +65,7 @@ const PlanSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         // console.log(shareUserData.uid)
-                        console.log(doc.id, " => ", doc.data());
+                        // console.log(doc.id, " => ", doc.data());
                     });     
                     const e = query(
                         collection(db, "UserInfo", shareUserData.uid, "plan"), 
@@ -77,7 +78,7 @@ const PlanSave = () => {
                     querySnapshot2.forEach(async (doc) => {
                         shareUserDocID = doc.id; 
                         // console.log(shareUserDocID)
-                        console.log(doc.id, " => ", doc.data());
+                        // console.log(doc.id, " => ", doc.data());
                     });  
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "plan", shareUserDocID), {
                         addPlan: arrayUnion({
@@ -97,7 +98,7 @@ const PlanSave = () => {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     ownerUserID = docSnap.data(); 
-                    console.log(docSnap.data())
+                    // console.log(docSnap.data())
                 } else {
                     console.log("No such document!");
                 }
@@ -111,7 +112,7 @@ const PlanSave = () => {
                 const querySnapshot2 = await getDocs(e);
                 querySnapshot2.forEach(async (doc) => {
                     ownerUserDocID = doc.id; 
-                    console.log(doc.id, " => ", doc.data());
+                    // console.log(doc.id, " => ", doc.data());
                 });  
                 await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "plan", ownerUserDocID), {
                     addPlan: arrayUnion({
@@ -150,7 +151,7 @@ const PlanSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         // console.log(shareUserData)
-                        console.log(doc.id, " => ", doc.data());
+                        // console.log(doc.id, " => ", doc.data());
                         await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "plan"), {
                             placeName: state.name, 
                             placeY: state.placey,

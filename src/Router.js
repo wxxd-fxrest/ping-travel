@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 import Home from "./routers/Home";
 import PlacePage from "./routers/PlacePage";
 import Search from "./components/search/Search.js";
 import Auth from "./routers/Auth";
-import { AuthContext } from "./AuthContext";
 import ProfileData from "./components/profile/ProfileData";
 import RecordSave from "./components/record/RecordSave";
 import RecordSearch from "./components/record/RecordSearch";
@@ -15,7 +15,7 @@ import PlanSave from "./components/plan/PlanSave";
 import PlanDetail from "./components/plan/PlanDetail";
 import AddPlan from "./components/plan/AddPlan";
 
-const Router = ({mainPing, loginUserData}) => {
+const Router = ({mainPing}) => {
   const {currentUser} = useContext(AuthContext); 
 
   const ProtectedRoute = ({children}) => {

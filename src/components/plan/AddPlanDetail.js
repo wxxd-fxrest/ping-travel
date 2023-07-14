@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from "react";
-import MapComponent from "../MapComponent";
 import { Map } from "react-kakao-maps-sdk";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 
 const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
     const { kakao } = window;
+
     const getAddData = useCallback(() => {
-        console.log(addPlanData)
+        // console.log(addPlanData)
         let container = document.getElementById("map");
         let options = {
             center: new kakao.maps.LatLng(addPlanData.placeY, addPlanData.placeX),
@@ -30,7 +30,7 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
         });
         
         infowindow.open(map, marker);
-    }, [addPlanData, kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker])
+    }, [addPlanData, kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker]);
 
     useEffect(() => {
         getAddData();
@@ -38,7 +38,6 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
 
     return (
         <div>
-            {/* <MapComponent /> */}
             <button onClick={async () => {
                 alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
                 const ok = window.confirm("게시글을 삭제하시겠습니까?")
@@ -46,7 +45,7 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
                     await updateDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`), {
                         addPlan: arrayRemove(addPlanData),
                     }); // 수락 시 요청 데이터 삭제 
-                    window.location.reload() 
+                    window.location.reload();
                 }}}> 삭제 </button>
             <Map id='map' 
                 center={{ lat: addPlanData.placeY, lng: addPlanData.placeX }}

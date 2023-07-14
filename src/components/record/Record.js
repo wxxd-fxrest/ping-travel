@@ -7,11 +7,11 @@ const Record = ({recordData, profileUser}) => {
     const location = useLocation();
     const {currentUser} = useContext(AuthContext);
 
-    const pathname = location.pathname ; 
+    const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
-    console.log(pathUID)
-    let currentUserID = currentUser.email.split('@')[0]
-    console.log(currentUserID)
+    // console.log(pathUID)
+    let currentUserID = currentUser.email.split('@')[0];
+    // console.log(currentUserID)
 
     const [share, setShare] = useState(false);
     // let saveDate ;

@@ -1,21 +1,24 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import MapComponent from "../MapComponent";
 import AddRecordDetail from "./AddRecordDetail";
 
 const RecordDetail = () => {
     const { kakao } = window;
-    const location = useLocation() ;
+    const location = useLocation();
     const navigate = useNavigate();
-    const pathname = location.pathname ; 
+
+    const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
-    console.log(pathDocID)
+    // console.log(pathDocID)
+
     const [recordData, setRecordData] = useState([]);
     const [addRecordData, setAddRecordData] = useState([]);
     const [share, setShare] = useState([]);
+
     // let saveDate = recordData.recordDate.toDate();
     // let Year = saveDate.getFullYear();
     // let Month = saveDate.getMonth()+1;
@@ -31,7 +34,7 @@ const RecordDetail = () => {
                 setRecordData(docSnap.data());
                 setShare(docSnap.data().selectFriend);
                 setAddRecordData(docSnap.data().addRecord);
-                console.log(docSnap.data())
+                // console.log(docSnap.data())
             } else {
                 console.log("No such document!");
             }
@@ -40,13 +43,13 @@ const RecordDetail = () => {
     }, [pathDocID, pathUID]);
 
     const onDelete = async() => {
-        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
-        const ok = window.confirm("그럼에도 게시글을 삭제하시겠습니까?")
+        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.");
+        const ok = window.confirm("그럼에도 게시글을 삭제하시겠습니까?");
         if(ok) {
             await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "record", `${pathDocID}`)); 
-            navigate("/") ;
+            navigate("/");
         }
-    } ;
+    };
 
     useEffect(() => {
         let container = document.getElementById("map");
@@ -71,7 +74,7 @@ const RecordDetail = () => {
         });
         
         infowindow.open(map, marker);
-    });
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, recordData.placeName, recordData.placeX, recordData.placeY]);
 
     return (
         <div>

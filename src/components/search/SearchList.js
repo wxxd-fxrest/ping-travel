@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 const SearchList = ({places}) => {
     const { kakao } = window;
-    const [select, setSelect] = useState(false);
     const navigate = useNavigate();
+    const [select, setSelect] = useState(false);
 
     const onClick = (e) => {
         let all = (e.target.innerHTML);
         setSelect(!select);
         let placey = all.split(',')[0];
         let placex = all.split(',')[1];
-        console.log("placey => ", placey, "placex => ", placex);
+        // console.log("placey => ", placey, "placex => ", placex);
 
         let container = document.getElementById("map");
         let options = {
@@ -40,7 +40,7 @@ const SearchList = ({places}) => {
         geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     };
 
-    console.log(places)
+    // console.log(places)
     return (
         <div>
             <ul>

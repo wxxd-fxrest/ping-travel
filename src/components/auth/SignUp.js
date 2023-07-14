@@ -1,14 +1,14 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import signupImg  from '../../img/signupImg.jpeg'; 
 
 const SignUp = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(""); 
-    const [password, setPassword] = useState("") ;
+    const [password, setPassword] = useState("");
 
     const onChange = (event) => {
         const {target : {name, value}} = event; 
@@ -32,8 +32,8 @@ const SignUp = () => {
                 friendID: [], 
             })
             navigate("/");
-            alert("회원가입 완료") ;
-            console.log("가입")
+            alert("회원가입 완료");
+            console.log("가입");
         } catch(error) {
             switch (error.code) {
                 case "auth/user-not-found" || "auth/wrong-password":

@@ -5,10 +5,10 @@ import MapComponent from '../MapComponent';
 import SearchList from './SearchList';
 
 const Search = () => {
+    const { kakao } = window;
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
-    const { kakao } = window;
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -82,25 +82,9 @@ const Search = () => {
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
             <MapComponent />
-            {/* <Map id='map' 
-                center={{ lat: 37.566826, lng: 126.9786567 }}
-                level={3}
-                style={{ width: '100%', height: '400px' }}>
-                {places.map((place, index) => (
-                    <MapMarker key={index}
-                        position={{ lat: place.y, lng: place.x }}/>
-                ))}
-            </Map> */}
-            {/* {placeList()} */}
-
             {places.map((p, i) => (
                 <SearchList key={i} places={p}/>
             ))}
-            
-    {/* <Container>
-      <div id="map" style={{ width: '100%', height: '500px' }}></div>
-    </Container> */}
-
         </Container>
     );
 };

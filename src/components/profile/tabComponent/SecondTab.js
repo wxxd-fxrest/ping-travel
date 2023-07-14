@@ -1,6 +1,6 @@
-import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import Record from "../../record/Record";
 
 const SecondTab = ({profileUser}) => {

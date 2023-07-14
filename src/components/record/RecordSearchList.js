@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const RecordSearchList = ({places, pathUID, pathDocID, state}) => {
+const RecordSearchList = ({places, state}) => {
+    const { kakao } = window;
     const navigate = useNavigate();
-    const location = useLocation() ;
-    const pathname = location.pathname ; 
+    const location = useLocation();
+
+    const pathname = location.pathname; 
     const addPathUID = (pathname.split('/')[2]);
     const addPathDocID = (pathname.split('/')[3]);
 
-    const { kakao } = window;
     const [select, setSelect] = useState(false);
 
-    let placey ;
-    let placex ;
+    let placey;
+    let placex;
     // let placeid ;
     // let placename ;
 

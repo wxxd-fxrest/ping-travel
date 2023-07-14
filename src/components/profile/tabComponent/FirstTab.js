@@ -23,7 +23,8 @@ const FirstTab = ({myPingID, profileUser}) => {
 
         // let myPing = mainPing.filter((ping) => ping.Data.UID === currentUser.uid);
         myPingID.forEach((ping) => {
-            console.log(ping)
+            // console.log(ping)
+
             // 마커를 생성합니다
             const marker = new kakao.maps.Marker({
                 //마커가 표시 될 지도
@@ -53,7 +54,7 @@ const FirstTab = ({myPingID, profileUser}) => {
                 };
             };
         });
-    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, myPingID])
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, myPingID]);
 
     useEffect(() => {
         getPlaceAll();

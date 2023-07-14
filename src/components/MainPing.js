@@ -1,7 +1,6 @@
-import { addDoc, arrayUnion, collection, doc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthContext";
+import React, { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import MainPingMap from "./MainPingMap";
 
 const MainPing = ({id}) => {

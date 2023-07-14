@@ -1,10 +1,10 @@
 /* eslint-disable no-redeclare */
-import { doc, getDoc } from 'firebase/firestore';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import styled from "styled-components";
 import { AuthContext } from '../AuthContext';
-import ReviewQuestion from '../components/ReviewQuestion';
+import styled from "styled-components";
 import { db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import ReviewQuestion from '../components/ReviewQuestion';
 import MenuBar from './MenuBar';
 // import MARKER from '../img/marker.png';
 // import questionMarker from '../img/question_marker.png';
@@ -26,14 +26,14 @@ const Home = ({mainPing}) => {
             setLoginUserData(docSnap.data());
             setFriendRequest(docSnap.data().friendRequest);
             setShare(docSnap.data().shareAlert);
-            console.log(docSnap.data())
+            // console.log(docSnap.data())
             } else {
             console.log("No such document!");
             }
         } else {
             return;
         }
-    }, [currentUser.uid])
+    }, [currentUser.uid]);
 
     useEffect(() => {
         getLoginUserData();

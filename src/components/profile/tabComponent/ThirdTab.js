@@ -1,6 +1,5 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { AuthContext } from "../../../AuthContext";
 import { db } from "../../../firebase";
 import Plan from "../../plan/Plan";
 
@@ -19,7 +18,7 @@ const ThirdTab = ({profileUser}) => {
                 })
             });
             setPlanData(feedArray);
-            console.log(feedArray)
+            // console.log(feedArray)
         });
     }, [profileUser.uid]);
 

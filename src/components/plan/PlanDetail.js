@@ -1,18 +1,18 @@
-import { arrayRemove, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import MapComponent from "../MapComponent";
 import AddPlanDetail from "./AddPlanDetail";
 
 const PlanDetail = () => {
     const { kakao } = window;
-    const location = useLocation() ;
+    const location = useLocation();
     const navigate = useNavigate();
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
-    console.log(pathDocID)
+    // console.log(pathDocID)
     const [planData, setPlanData] = useState([]);
     const [addPlanData, setAddPlanData] = useState([]);
     const [share, setShare] = useState([]);
@@ -31,7 +31,7 @@ const PlanDetail = () => {
                 setPlanData(docSnap.data());
                 setShare(docSnap.data().selectFriend);
                 setAddPlanData(docSnap.data().addPlan);
-                console.log(docSnap.data())
+                // console.log(docSnap.data())
             } else {
                 console.log("No such document!");
             }
@@ -40,11 +40,11 @@ const PlanDetail = () => {
     }, [pathDocID, pathUID]);
 
     const onDelete = async() => {
-        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
-        const ok = window.confirm("게시글을 삭제하시겠습니까?")
+        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.");
+        const ok = window.confirm("게시글을 삭제하시겠습니까?");
         if(ok) {
             await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`)); 
-            navigate("/") ;
+            navigate("/");
         }
     } ;
 
@@ -71,7 +71,7 @@ const PlanDetail = () => {
         });
         
         infowindow.open(map, marker);
-    });
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, planData.placeName, planData.placeX, planData.placeY]);
 
     return (
         <div>

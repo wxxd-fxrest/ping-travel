@@ -1,9 +1,8 @@
-import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { useCallback, useState } from "react";
 import { db } from "../../firebase";
+import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 
 const FriendSearchID = ({loginUserData}) => {
-
     const [keyword, setKeyword] = useState("");
     const [searchData, setSearchData] = useState([]);
     const [open, setOpen] = useState(false); 
@@ -29,7 +28,7 @@ const FriendSearchID = ({loginUserData}) => {
             where("ID", "==", `${keyword}`));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => ", doc.data());
             setSearchData(doc.data());
             if(`${loginUserData.friendID}`.includes(keyword) === true) {
                 setIDinclude(true); 

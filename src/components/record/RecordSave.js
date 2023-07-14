@@ -1,8 +1,8 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 
 const RecordSave = () => {
     const location = useLocation();
@@ -13,6 +13,7 @@ const RecordSave = () => {
     const [text, setText] = useState("");
     const [friendList, setFriendList] = useState([]);
     const [selected, setSelected] = useState([]);
+
     let checkName ; 
     let checkValue ;
 
@@ -24,8 +25,9 @@ const RecordSave = () => {
 
     let currentUserID;
 
-    let shareID = state.state
-    console.log(state)
+    let shareID = state.state;
+    // console.log(state)
+
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
         if(name === "text") {
@@ -193,12 +195,12 @@ const RecordSave = () => {
     const handleSelect = (e) => {
         checkName = e.target.name;
         checkValue = e.target.checked; 
-        console.log(checkValue, checkName);
+        // console.log(checkValue, checkName);
         if(checkValue) {
             setSelected((prev) => [...prev, checkName]);
             return; 
         } else if(!checkValue && selected.includes(checkName)) {
-            setSelected(selected.filter((item) => item !== checkName))
+            setSelected(selected.filter((item) => item !== checkName));
             return; 
         }
         return;

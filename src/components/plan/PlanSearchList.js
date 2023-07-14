@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PlanSearchList = ({places, pathUID, pathDocID, state}) => {
     const navigate = useNavigate();
-    const location = useLocation() ;
-    const pathname = location.pathname ; 
+    // const location = useLocation() ;
+    // const pathname = location.pathname ; 
     // const addPathUID = (pathname.split('/')[2]);
     // const addPathDocID = (pathname.split('/')[3]);
-    const addPathUID = pathUID
-    const addPathDocID = pathDocID
+    const addPathUID = pathUID;
+    const addPathDocID = pathDocID;
 
     const { kakao } = window;
     const [select, setSelect] = useState(false);
 
-    let placey ;
-    let placex ;
+    let placey;
+    let placex;
     // let placeid ;
     // let placename ;
 
@@ -26,7 +26,7 @@ const PlanSearchList = ({places, pathUID, pathDocID, state}) => {
         setSelect(!select);
         // placeid = all.split(',')[2];
         // placename = all.split(',')[3];
-        console.log("placey=> ", placey, "placex=>", placex);
+        // console.log("placey=> ", placey, "placex=>", placex);
 
         let container = document.getElementById("map");
         let options = {

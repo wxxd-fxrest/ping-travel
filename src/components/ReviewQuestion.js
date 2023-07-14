@@ -52,11 +52,11 @@ const ReviewQuestion = ({mainPing}) => {
                 return function () {
                     setOpen(true);
                     setSelect(data.Data);
-                    console.log(select);
+                    // console.log(select);
                 };
             };
         });
-    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, mainPing, select])
+    }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, mainPing]);
     
     useEffect(() => {
         getMainPing()
