@@ -148,7 +148,10 @@ const PlacePage = ({mainPing}) => {
 
     return(
         <div>
-            <button onClick={() => navigate("/")}> back </button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+            }}> 뒤로가기 </button>
             <Map id='map' 
                 center={{ lat: state.placey, lng: state.placex }}
                 level={3}

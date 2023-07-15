@@ -1,63 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { AuthContext } from "../../AuthContext";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
-import MenuBar from "../../routers/MenuBar";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Profile from "../profile/Profile.js";
 
-const ProfileData = ({mainPing}) => {
-    const {currentUser} = useContext(AuthContext); 
+const ProfileData = ({mainPing, loginUserData}) => {
+    const navigate = useNavigate();
     const location = useLocation();
 
     const [profileUser, setProfileUser] = useState([]);
     const [friendID, setFriendID] = useState([]);
-    const [loginUserData, setLoginUserData] = useState([]);
-    const [friendRequest, setFriendRequest] = useState([]);
-    const [share, setShare] = useState([]);
 
     const pathname = location.pathname; 
     const pathUID = (pathname.split('/')[2]);
-
-    useEffect(() => {
-        const getLoginUserData = async () => {
-            if(currentUser.uid) {
-                const docRef = doc(db, "UserInfo", `${currentUser.uid}`);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                setLoginUserData(docSnap.data());
-                setFriendRequest(docSnap.data().friendRequest);
-                setShare(docSnap.data().shareAlert);
-                console.log(docSnap.data())
-                } else {
-                console.log("No such document!");
-                }
-            }else {
-                return;
-            }
-        };
-        getLoginUserData();
-    }, [currentUser.uid]);
-
+    let ID;
+    // console.log(loginUserData);
 
     useEffect(() => {
         const getLoginUserData = async() => {
-            const q = query(
-                collection(db, "UserInfo"), 
-                where("ID", "==", `${pathUID}`));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                setProfileUser(doc.data());
-                setFriendID(doc.data().friendID);
-                console.log(doc.id, " => ", doc.data());
-            });        
+            if(pathUID) {
+                const q = query(
+                    collection(db, "UserInfo"), 
+                    where("ID", "==", `${pathUID}`));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    setProfileUser(doc.data());
+                    setFriendID(doc.data().friendID);
+                    // console.log(doc.id, " => ", doc.data());
+                });     
+            } else if(!pathUID) {
+                ID = loginUserData.ID;
+                const q = query(
+                    collection(db, "UserInfo"), 
+                    where("ID", "==", `${ID}`));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    setProfileUser(doc.data());
+                    setFriendID(doc.data().friendID);
+                    // console.log(doc.id, " => ", doc.data());
+                });     
+            }
         };
         getLoginUserData();
-    }, [pathUID]); 
+    }, [loginUserData, pathUID]); 
 
     return (
         <div>
-            <MenuBar friendRequest={friendRequest} loginUserData={loginUserData} share={share} />
+            {pathUID &&
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(-1);
+                }}> 뒤로가기 </button>}
             <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID}/>
         </div>
     )

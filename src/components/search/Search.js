@@ -78,7 +78,10 @@ const Search = () => {
    
     return (
         <Container>
-            <button onClick={() => navigate("/")}> back </button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+            }}> 뒤로가기 </button>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
             <MapComponent />

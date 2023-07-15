@@ -40,7 +40,7 @@ const Record = ({recordData, profileUser}) => {
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 기록 : {recordData.Data.record} </p>
                 <p> {recordData.Data.ownerUID} </p>
-                {currentUserID === pathUID && 
+                {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
                         e.preventDefault();
                         navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
@@ -52,7 +52,7 @@ const Record = ({recordData, profileUser}) => {
                 <p> 기록 : {recordData.Data.record} </p>
                 <p> {profileUser.uid} </p>
                 {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p>  */}
-                {currentUserID === pathUID && 
+                {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
                         e.preventDefault();
                         navigate(`/record/${profileUser.uid}/${recordData.DocID}`);

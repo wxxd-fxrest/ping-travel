@@ -42,7 +42,7 @@ const Plan = ({planData, profileUser}) => {
                 <h3> 장소 : {planData.Data.placeName} </h3>
                 <p> 계획 : {planData.Data.plan} </p>
                 <p> {planData.Data.ownerUID} </p>
-                {currentUserID === pathUID && 
+                {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
                         e.preventDefault();
                         navigate(`/plan/${profileUser.uid}/${planData.DocID}`);
@@ -54,7 +54,7 @@ const Plan = ({planData, profileUser}) => {
                 <p> 계획 : {planData.Data.plan} </p>
                 <p> {profileUser.uid} </p>
                 {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p>  */}
-                {currentUserID === pathUID && 
+                {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
                         e.preventDefault();
                         navigate(`/plan/${profileUser.uid}/${planData.DocID}`);

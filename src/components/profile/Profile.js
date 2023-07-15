@@ -62,11 +62,11 @@ const Profile = ({profileUser, friendID}) => {
 
     return (
         <div>
-            <button onClick={(e) => {
+            {/* <button onClick={(e) => {
                     e.preventDefault();
                     navigate('/')}}> 
                 Home
-            </button>
+            </button> */}
             <h3 style={{borderBottom: "solid 1px"}}>
                 <img src={profileUser.attachmentUrl} alt="#" width="100px" height="100px" style={{borderRadius:"100px"}}/>
                 {profileUser.ID}

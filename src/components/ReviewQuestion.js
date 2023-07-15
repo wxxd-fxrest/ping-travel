@@ -2,7 +2,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import MainPing from '../components/MainPing';
 import MapComponent from '../components/MapComponent';
 // import MARKER from '../img/marker.png';
 // import questionMarker from '../img/question_marker.png';
@@ -65,8 +64,8 @@ const ReviewQuestion = ({mainPing}) => {
     return (
         <Container>
             <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate('/search')}}> 
+                e.preventDefault();
+                navigate('/search')}}> 
                 검색 
             </button>
 
@@ -74,7 +73,7 @@ const ReviewQuestion = ({mainPing}) => {
             {open === true ? 
                 <div>
                     <h4> {select.placeName} </h4> 
-                    <MainPing mainPing={mainPing} id={select.placeID}/>
+                    {/* <MainPing mainPing={mainPing} id={select.placeID}/> */}
                     <button onClick={(e) => {
                             e.preventDefault();
                             navigate(`/place/${select.placeID}`, {

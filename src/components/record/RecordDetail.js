@@ -78,6 +78,10 @@ const RecordDetail = () => {
 
     return (
         <div>
+            <button onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+            }}> 뒤로가기 </button>
             RecordDetail
             <button onClick={onDelete}> 삭제 </button>
             <MapComponent />

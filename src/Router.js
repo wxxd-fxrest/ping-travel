@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
-import Home from "./routers/Home";
 import PlacePage from "./routers/PlacePage";
 import Search from "./components/search/Search.js";
 import Auth from "./routers/Auth";
@@ -14,6 +13,7 @@ import PlanSearch from "./components/plan/PlanSearch";
 import PlanSave from "./components/plan/PlanSave";
 import PlanDetail from "./components/plan/PlanDetail";
 import AddPlan from "./components/plan/AddPlan";
+import MenuBar from "./routers/MenuBar";
 
 const Router = ({mainPing}) => {
   const {currentUser} = useContext(AuthContext); 
@@ -22,7 +22,7 @@ const Router = ({mainPing}) => {
     if(!currentUser) {
       return <Navigate to="/auth" /> 
     }
-    return children ;
+    return children;
   }; 
 
   return (
@@ -35,7 +35,7 @@ const Router = ({mainPing}) => {
 
             <Route index element={
               <ProtectedRoute>
-                <Home mainPing={mainPing} />
+                <MenuBar mainPing={mainPing} />
               </ProtectedRoute> } />
               
             <Route path="/place/:id" element={<PlacePage mainPing={mainPing} />} />

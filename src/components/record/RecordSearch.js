@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MenuBar from "../../routers/MenuBar";
 import MapComponent from "../MapComponent";
 import RecordSearchList from "./RecordSearchList";
 
 const RecordSearch = ({pathUID, pathDocID, state}) => {
     const { kakao } = window;
+    const navigate = useNavigate();
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
 
@@ -69,7 +72,10 @@ const RecordSearch = ({pathUID, pathDocID, state}) => {
 
     return (
         <div>
-            <button type="button"> ok </button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+            }}> 뒤로가기 </button>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
             <MapComponent />
