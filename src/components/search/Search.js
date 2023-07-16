@@ -7,6 +7,7 @@ import SearchList from './SearchList';
 const Search = () => {
     const { kakao } = window;
     const navigate = useNavigate();
+    
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
 
@@ -82,9 +83,12 @@ const Search = () => {
                 e.preventDefault();
                 navigate(-1);
             }}> 뒤로가기 </button>
+
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
+
             <MapComponent />
+            
             {places.map((p, i) => (
                 <SearchList key={i} places={p}/>
             ))}

@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { db } from "../../firebase";
 import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import styled from "styled-components";
 
 const FriendSearchID = ({loginUserData}) => {
     const [keyword, setKeyword] = useState("");
@@ -54,17 +55,16 @@ const FriendSearchID = ({loginUserData}) => {
 
 
     return (
-        <div>
-            <div>
-                <input type="text" 
-                    placeholder='아이디를 입력하세요.' 
-                    value={keyword} 
-                    onChange={(e) => {
-                        setKeyword(e.target.value);
-                        setOpen(false);
-                    }}/>
-                <button onClick={handleSearch}> 검색 </button>
-            </div>
+        <Container>
+            <input type="text" 
+                placeholder='아이디를 입력하세요.' 
+                value={keyword} 
+                onChange={(e) => {
+                    setKeyword(e.target.value);
+                    setOpen(false);
+                }}/>
+            <button onClick={handleSearch}> 검색 </button>
+
             {open === true && <>
                 <li>
                     <img src={searchData.attachmentUrl} alt="#" width="30px" height="30px" style={{borderRadius:"100px"}}/> 
@@ -75,8 +75,10 @@ const FriendSearchID = ({loginUserData}) => {
                     </> : <p> 이미 요청한 친구입니다. </p>}
                 </li>   
             </>} 
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default FriendSearchID;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import Record from "../../record/Record";
+import styled from "styled-components";
 
 const SecondTab = ({profileUser}) => {
     const [recordData, setRecordData] = useState([]);
@@ -23,12 +24,14 @@ const SecondTab = ({profileUser}) => {
     }, [profileUser.uid]);
 
     return (
-        <div>
+        <Container>
             {recordData.map((r, i) => (
                 <Record key={i} recordData={r} profileUser={profileUser}/>
             ))}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default SecondTab;

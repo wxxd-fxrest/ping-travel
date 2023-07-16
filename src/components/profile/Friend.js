@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { AuthContext } from "../../AuthContext";
 
 const Friend = ({profileUser, friendID}) => {
@@ -30,11 +31,13 @@ const Friend = ({profileUser, friendID}) => {
     }; 
 
     return(
-        <div style={{borderBottom: "solid 1px"}}>
+        <Container style={{borderBottom: "solid 1px"}}>
             <h3> friendID </h3>
             {friendList()}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default Friend;

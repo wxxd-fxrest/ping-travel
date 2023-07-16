@@ -4,6 +4,7 @@ import { auth, db } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import signupImg  from '../../img/signupImg.jpeg'; 
+import styled from 'styled-components';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -55,7 +56,7 @@ const SignUp = () => {
     }; 
     
     return(
-        <div className="ComponentContainer">
+        <Container className="ComponentContainer">
             <p> 회원가입을 진행해주세요. </p>
             <form onSubmit={onSubmit} className="ComponentForm">
                 <input type="email"
@@ -72,8 +73,10 @@ const SignUp = () => {
                         onChange={onChange} />
                 <button> 가입하기 </button>
             </form>
-        </div>
+        </Container>
     )
-}
+};
+
+const Container = styled.div``;
 
 export default SignUp; 

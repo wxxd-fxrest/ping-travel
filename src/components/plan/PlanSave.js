@@ -3,10 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import styled from "styled-components";
 
 const PlanSave = () => {
-    const location = useLocation();
     const {currentUser} = useContext(AuthContext);
+    const location = useLocation();
     const state = location.state;
     const navigate = useNavigate();
 
@@ -27,6 +28,17 @@ const PlanSave = () => {
 
     let shareID = state.state;
     // console.log(state.state)
+
+    let timestamp = Date.now();
+    let date = new Date(timestamp);
+    let saveDate = (
+        date.getFullYear()+ "년 "+
+        (date.getMonth()+1)+ "월 " +
+        date.getDate()+ "일 " +
+        date.getHours()+ ":"+ 
+        date.getMinutes());
+
+    // console.log(saveDate);
 
     useEffect(() => {
         const getLoginUserData = async () => {
@@ -82,6 +94,7 @@ const PlanSave = () => {
                     });  
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "plan", shareUserDocID), {
                         addPlan: arrayUnion({
+                            date: saveDate,
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -116,6 +129,7 @@ const PlanSave = () => {
                 });  
                 await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "plan", ownerUserDocID), {
                     addPlan: arrayUnion({
+                        date: saveDate,
                         placeName: state.name, 
                         placeY: state.placey,
                         placeX: state.placex,
@@ -129,6 +143,7 @@ const PlanSave = () => {
             }
             await updateDoc(doc(db, "UserInfo", currentUser.uid, "plan", state.addPathDocID), {
                 addPlan: arrayUnion({
+                    date: saveDate,
                     placeName: state.name, 
                     placeY: state.placey,
                     placeX: state.placex,
@@ -153,6 +168,7 @@ const PlanSave = () => {
                         // console.log(shareUserData)
                         // console.log(doc.id, " => ", doc.data());
                         await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "plan"), {
+                            date: saveDate,
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -167,6 +183,7 @@ const PlanSave = () => {
                     });     
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
                         shareAlert: arrayUnion({
+                            date: saveDate,
                             ownerUID: currentUser.uid,
                             ownerEmail: currentUser.email, 
                             ownerID: currentUserID, 
@@ -177,6 +194,7 @@ const PlanSave = () => {
                 })
             }
             await addDoc(collection(db, "UserInfo", currentUser.uid, "plan"), {
+                date: saveDate,
                 placeName: state.name, 
                 placeY: state.placey,
                 placeX: state.placex,
@@ -208,7 +226,7 @@ const PlanSave = () => {
     };
 
     return (
-        <div>
+        <Container>
             <p> 장소 : {state.name} </p>
             <p> 함께 계획하고 싶은 사람이 있다면 선택하세요. </p>
                 {shareID === undefined && <>
@@ -231,8 +249,10 @@ const PlanSave = () => {
                     value={text} 
                     onChange={onChange}/>
             <button type="button" onClick={onClickSave}> ok </button>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default PlanSave;

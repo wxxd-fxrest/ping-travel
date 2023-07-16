@@ -3,12 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import styled from "styled-components";
 
 const RecordSave = () => {
-    const location = useLocation();
     const {currentUser} = useContext(AuthContext);
-    const state = location.state;
     const navigate = useNavigate();
+    const location = useLocation();
+    const state = location.state;
 
     const [text, setText] = useState("");
     const [friendList, setFriendList] = useState([]);
@@ -27,6 +28,17 @@ const RecordSave = () => {
 
     let shareID = state.state;
     // console.log(state)
+
+    let timestamp = Date.now();
+    let date = new Date(timestamp);
+    let saveDate = (
+        date.getFullYear()+ "년 "+
+        (date.getMonth()+1)+ "월 " +
+        date.getDate()+ "일 " +
+        date.getHours()+ ":"+ 
+        date.getMinutes());
+
+    // console.log(saveDate);
 
     const onChange = (event) => {
         const {target : {name, value}} = event ; 
@@ -67,6 +79,7 @@ const RecordSave = () => {
                     });  
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "record", shareUserDocID), {
                         addRecord: arrayUnion({
+                            date: saveDate,
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -101,6 +114,7 @@ const RecordSave = () => {
                 });  
                 await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "record", ownerUserDocID), {
                     addRecord: arrayUnion({
+                        date: saveDate,
                         placeName: state.name, 
                         placeY: state.placey,
                         placeX: state.placex,
@@ -114,6 +128,7 @@ const RecordSave = () => {
             }
             await updateDoc(doc(db, "UserInfo", currentUser.uid, "record", state.addPathDocID), {
                 addRecord: arrayUnion({
+                    date: saveDate,
                     placeName: state.name, 
                     placeY: state.placey,
                     placeX: state.placex,
@@ -138,6 +153,7 @@ const RecordSave = () => {
                         // console.log(shareUserData)
                         console.log(doc.id, " => ", doc.data());
                         await addDoc(collection(db, "UserInfo", `${shareUserData.uid}`, "record"), {
+                            date: saveDate,
                             placeName: state.name, 
                             placeY: state.placey,
                             placeX: state.placex,
@@ -152,6 +168,7 @@ const RecordSave = () => {
                     });     
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid), {
                         shareAlert: arrayUnion({
+                            date: saveDate,
                             ownerUID: currentUser.uid,
                             ownerEmail: currentUser.email, 
                             ownerID: currentUserID, 
@@ -162,6 +179,7 @@ const RecordSave = () => {
                 })
             }
             await addDoc(collection(db, "UserInfo", currentUser.uid, "record"), {
+                date: saveDate,
                 placeName: state.name, 
                 placeY: state.placey,
                 placeX: state.placex,
@@ -207,9 +225,10 @@ const RecordSave = () => {
     };
 
     return (
-        <div>
+        <Container>
             <p> 장소 : {state.name} </p>
             <p> 함께 공유하고 싶은 사람이 있다면 선택하세요. </p>
+
             {!shareID && <>
                 {friendList.map((f, i) => {
                     return(
@@ -230,8 +249,10 @@ const RecordSave = () => {
                     value={text} 
                     onChange={onChange}/>
             <button type="button" onClick={onClickSave}> ok </button>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default RecordSave;

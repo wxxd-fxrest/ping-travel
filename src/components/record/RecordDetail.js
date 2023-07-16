@@ -4,6 +4,7 @@ import { db } from "../../firebase";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import MapComponent from "../MapComponent";
 import AddRecordDetail from "./AddRecordDetail";
+import styled from "styled-components";
 
 const RecordDetail = () => {
     const { kakao } = window;
@@ -18,13 +19,6 @@ const RecordDetail = () => {
     const [recordData, setRecordData] = useState([]);
     const [addRecordData, setAddRecordData] = useState([]);
     const [share, setShare] = useState([]);
-
-    // let saveDate = recordData.recordDate.toDate();
-    // let Year = saveDate.getFullYear();
-    // let Month = saveDate.getMonth()+1;
-    // let Date = saveDate.getDate();
-    // let Hours = saveDate.getHours();
-    // let Minutes = saveDate.getMinutes(); 
 
     useEffect(() => {
         const getLoginUserData = async () => {
@@ -77,14 +71,17 @@ const RecordDetail = () => {
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, recordData.placeName, recordData.placeX, recordData.placeY]);
 
     return (
-        <div>
+        <Container>
             <button onClick={(e) => {
                 e.preventDefault();
                 navigate(-1);
             }}> 뒤로가기 </button>
+
             RecordDetail
             <button onClick={onDelete}> 삭제 </button>
+
             <MapComponent />
+
             <h3> 장소 : {recordData.placeName} </h3>
             {share ? <>
                 <p> 함께 공유한 user </p>
@@ -98,7 +95,10 @@ const RecordDetail = () => {
             </> : <>
                 <p> 공유해준 user : {recordData.ownerID} </p>
             </>}
+
+            <p> 날짜 : {recordData.date} </p>
             <p> 기록 : {recordData.record} </p>
+
             {addRecordData && <>
                 {addRecordData.map((r, i) => (
                     <AddRecordDetail key={i} addRecordData={r} pathUID={pathUID} pathDocID={pathDocID}/>
@@ -115,9 +115,10 @@ const RecordDetail = () => {
                     }
                 });
             }}> 기록 추가하기 </button>
-            {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default RecordDetail;

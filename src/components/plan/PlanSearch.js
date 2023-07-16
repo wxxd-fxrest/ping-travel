@@ -1,11 +1,15 @@
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import MapComponent from "../MapComponent";
 import PlanSearchList from "./PlanSearchList";
 
 const PlanSearch = ({pathUID, pathDocID, state}) => {
+    const { kakao } = window;
+    const navigate = useNavigate();
+
     const [keyword, setKeyword] = useState('');
     const [places, setPlaces] = useState([]);
-    const { kakao } = window;
 
     const handleSearch = useCallback((e) => {
         e.preventDefault();
@@ -66,16 +70,24 @@ const PlanSearch = ({pathUID, pathDocID, state}) => {
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, keyword, places]);
 
     return (
-        <div>
+        <Container>
+            <button onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+            }}> 뒤로가기 </button>
             <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
             <button onClick={handleSearch}> 검색 </button>
+            
             <MapComponent />
+
             {places.map((p, i) => (
                 <PlanSearchList key={i} places={p} 
                     pathUID={pathUID} pathDocID={pathDocID} state={state} /* record */ />
             ))}
-        </div>
+        </Container>
     )
 }; 
+
+const Container = styled.div``;
 
 export default PlanSearch;

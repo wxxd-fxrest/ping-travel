@@ -6,6 +6,7 @@ import { Map } from "react-kakao-maps-sdk";
 import { db } from "../firebase";
 import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import MainPing from "../components/MainPing";
+import styled from "styled-components";
 
 // import MARKER from '..//img/marker.png';
 // import questionMarker from '..//img/question_marker.png';
@@ -16,25 +17,13 @@ import MainPing from "../components/MainPing";
 // nullMarker <a href="https://www.flaticon.com/free-icons/unavailable" title="unavailable icons">Unavailable icons created by exomoon design studio - Flaticon</a> 
             
 const PlacePage = ({mainPing}) => {
-    const navigate = useNavigate();
+    const {currentUser} = useContext(AuthContext);
     const { kakao } = window;
+    const navigate = useNavigate();
     const location = useLocation();
     const state = location.state;
-    const {currentUser} = useContext(AuthContext);
+    
     const [profileData, setProfileData] = useState([]); 
-
-    // const pathname = location.pathname; 
-    // const pathUID = (pathname.split('/')[2]);
-    // let placeData = mainPing.filter((ping) => ping.Data.placeID === pathUID);
-    // console.log(placeData)
-    // console.log("pathUID =>", pathUID);
-    // console.log("state: ", state);
-    // console.log(places);
-    // console.log(mainPing)
-    // placey: m.Data.placeY,
-    // placex: m.Data.placeX,
-    // const [write, setWrite] = useState(false);
-
     const [type, setType] = useState(false);
     const [text, setText] = useState("");
   
@@ -117,7 +106,8 @@ const PlacePage = ({mainPing}) => {
                 placeX: state.placex,
             });
         }
-        window.location.reload();
+        setType(false);
+        setText("");
     };
 
     useEffect(() => {
@@ -147,19 +137,22 @@ const PlacePage = ({mainPing}) => {
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, mainPing, state.name, state.placex, state.placey, state.type]);
 
     return(
-        <div>
+        <Container>
             <button onClick={(e) => {
                 e.preventDefault();
                 navigate(-1);
             }}> 뒤로가기 </button>
+
             <Map id='map' 
                 center={{ lat: state.placey, lng: state.placex }}
                 level={3}
                 style={{ width: '100%', height: '400px' }}>
             </Map>
+
             <h4> {state.name} </h4>
             <div style={{borderBottom: "solid 1px"}}>
                 <h3> 질문/리뷰를 등록하세요. </h3>
+
                 {currentUser ? <>
                     <input type="text" 
                         name="text"
@@ -173,9 +166,12 @@ const PlacePage = ({mainPing}) => {
                     <button type="button" onClick={onSaveBtn}> ok </button>
                 </> : <p>  로그인 후 남길 수 있습니다. </p> }
             </div>
+
             <MainPing mainPing={mainPing} id={state.id}/>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default PlacePage;

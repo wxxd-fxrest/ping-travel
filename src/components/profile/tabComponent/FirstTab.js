@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const FirstTab = ({myPingID, profileUser}) => {
     const { kakao } = window;
@@ -21,7 +22,6 @@ const FirstTab = ({myPingID, profileUser}) => {
         //map
         const map = new kakao.maps.Map(container, options);
 
-        // let myPing = mainPing.filter((ping) => ping.Data.UID === currentUser.uid);
         myPingID.forEach((ping) => {
             // console.log(ping)
 
@@ -68,8 +68,8 @@ const FirstTab = ({myPingID, profileUser}) => {
         let placex = all.split(',')[1];
         // let placetype = all.split(',')[2];
         let placename = all.split(',')[3];
-        let placeClickID = all.split(',')[4];
-        console.log(placeClickID)
+        // let placeClickID = all.split(',')[4];
+        // console.log(placeClickID)
         // console.log("placey => ", placey, "placex => ", placex, "placetype =>", placetype);
 
         let container = document.getElementById("map");
@@ -121,15 +121,17 @@ const FirstTab = ({myPingID, profileUser}) => {
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, kakao.maps.services.Geocoder, kakao.maps.services.Status.OK]);
 
     return (
-        <div>
+        <Container>
             {open === true && <>
                 {pingData[0].road_address.building_name && <>
                 <h4> {pingData[0].road_address.building_name} </h4>
                 <p onClick={() => setOpen(false)}>x</p> </>}
             </>}
+
             {open2 === true && <>
                 {pingData && <> <h4> {pingData.placeName} </h4>
                 <p onClick={() => setOpen2(false)}>x</p> 
+
                 <button onClick={(e) => {
                     e.preventDefault();
                     navigate(`/place/${pingData.placeID}`, {
@@ -145,6 +147,7 @@ const FirstTab = ({myPingID, profileUser}) => {
                     });
                 }}> 상세보기 </button></>}
             </>}
+
             <button onClick={getPlaceAll}> 전체보기 </button>
             {myPingID.map((m, i) => {
                 // console.log(m)
@@ -173,8 +176,10 @@ const FirstTab = ({myPingID, profileUser}) => {
                     </div>
                 ); 
             })}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default FirstTab;

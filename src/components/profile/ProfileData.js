@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Profile from "../profile/Profile.js";
+import styled from "styled-components";
 
 const ProfileData = ({mainPing, loginUserData}) => {
     const navigate = useNavigate();
@@ -46,15 +47,18 @@ const ProfileData = ({mainPing, loginUserData}) => {
     }, [loginUserData, pathUID]); 
 
     return (
-        <div>
+        <Container>
             {pathUID &&
                 <button onClick={(e) => {
                     e.preventDefault();
                     navigate(-1);
                 }}> 뒤로가기 </button>}
+
             <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID}/>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default ProfileData;

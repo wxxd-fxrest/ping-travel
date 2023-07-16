@@ -10,6 +10,7 @@ import Friend from "./Friend";
 import FirstTab from "./tabComponent/FirstTab";
 import SecondTab from "./tabComponent/SecondTab";
 import ThirdTab from "./tabComponent/ThirdTab";
+import styled from "styled-components";
 
 // import MARKER from '../../img/marker.png';
 // import questionMarker from '../../img/question_marker.png';
@@ -18,10 +19,6 @@ import ThirdTab from "./tabComponent/ThirdTab";
 // questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
 
 const Profile = ({profileUser, friendID}) => {
-    // const location = useLocation() ;
-
-    // const pathname = location.pathname ; 
-    // const pathUID = (pathname.split('/')[2]);
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
 
@@ -61,12 +58,7 @@ const Profile = ({profileUser, friendID}) => {
     };
 
     return (
-        <div>
-            {/* <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate('/')}}> 
-                Home
-            </button> */}
+        <Container>
             <h3 style={{borderBottom: "solid 1px"}}>
                 <img src={profileUser.attachmentUrl} alt="#" width="100px" height="100px" style={{borderRadius:"100px"}}/>
                 {profileUser.ID}
@@ -82,23 +74,25 @@ const Profile = ({profileUser, friendID}) => {
                 <h3 onClick={() => setTab(2)}> tab 3 </h3>
             </div>
 
-            {tab === 0 && <>
-                <h4 style={{color:"green", margin: "10px"}}> 여행 기록 (with. friend) </h4>
-                <button onClick={() => navigate('/record/search')}> 기록하기 </button>
-                <SecondTab profileUser={profileUser}/>
-            </>}
-            {tab === 1 && <>
-                <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
-                <button onClick={() => navigate('/plan/search')}> 계획하기 </button>
-                <ThirdTab profileUser={profileUser} />
-            </>}
-            {tab === 2 && <>
-                <h4 style={{color:"green", margin: "10px"}}> 내가 남긴 질문/리뷰 </h4>
-                <MapComponent />
-                <FirstTab myPingID={myPingID} profileUser={profileUser}/>
-            </>}
-        </div>
+                {tab === 0 && <>
+                    <h4 style={{color:"green", margin: "10px"}}> 여행 기록 (with. friend) </h4>
+                    <button onClick={() => navigate('/record/search')}> 기록하기 </button>
+                    <SecondTab profileUser={profileUser}/>
+                </>}
+                {tab === 1 && <>
+                    <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
+                    <button onClick={() => navigate('/plan/search')}> 계획하기 </button>
+                    <ThirdTab profileUser={profileUser} />
+                </>}
+                {tab === 2 && <>
+                    <h4 style={{color:"green", margin: "10px"}}> 내가 남긴 질문/리뷰 </h4>
+                    <MapComponent />
+                    <FirstTab myPingID={myPingID} profileUser={profileUser}/>
+                </>}
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default Profile; 

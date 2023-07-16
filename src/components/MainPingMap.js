@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import { db } from "../firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import styled from "styled-components";
 
 const MainPingMap = ({docData, type}) => {
     const {currentUser} = useContext(AuthContext);
@@ -20,13 +21,14 @@ const MainPingMap = ({docData, type}) => {
     // console.log(docData)
 
     return(
-        <div>
+        <Container>
             {type === true ? <>
                 {docData.Data.type === "review" && <>
                     <h4>{docData.Data.about}</h4> </>} 
                 </> : <>
                 {docData.Data.type === "question" && <>
                     <h4>{docData.Data.about}</h4> 
+
                     {answerData !== undefined && <>
                         {answerData.map((a, i) => {
                             let answerDocID = docData.DocID; 
@@ -46,35 +48,42 @@ const MainPingMap = ({docData, type}) => {
                             )
                         })}
                     </>} 
+
                     <button onClick={() => setAnswer(!answer)}> 답변달기 </button> 
+
                         {answer === true && <>
                             <input type="text" 
                                 name="text"
                                 placeholder="내용을 입력해주세요" 
                                 value={text} 
                                 onChange={onChange}/>
+
                             <button type="button" 
                                 onClick={async () => {
                                     let answerDocID = docData.DocID; 
-                                    console.log(answerDocID)
-                                    console.log(docData.placeID)
+                                    // console.log(answerDocID);
+                                    // console.log(docData.placeID);
+
                                     if(answerDocID) {
                                         await updateDoc(doc(db, "MainPing", `${docData.Data.placeID}`, "about", answerDocID), {
                                             answer: arrayUnion({
                                                 text: text,
                                                 UID: currentUser.uid,
                                             })
-                                        })
+                                        });
                                     } else {
                                         return ;
                                     }
                                 }}> ok 
                             </button>
+
                         </>} 
                     </>}
                 </>}
-        </div> 
+        </Container> 
     )
 };
+
+const Container = styled.div``;
 
 export default MainPingMap;

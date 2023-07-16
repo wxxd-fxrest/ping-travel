@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { db } from "../../firebase";
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import styled from "styled-components";
 
 const AddRecordDetail = ({addRecordData, pathUID, pathDocID}) => {
     const { kakao } = window;
@@ -37,8 +38,7 @@ const AddRecordDetail = ({addRecordData, pathUID, pathDocID}) => {
     }, [getAddData]);
 
     return (
-        <div>
-            {/* <MapComponent /> */}
+        <Container>
             <button onClick={async () => {
                 alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.");
                 const ok = window.confirm("게시글을 삭제하시겠습니까?");
@@ -49,15 +49,20 @@ const AddRecordDetail = ({addRecordData, pathUID, pathDocID}) => {
                     window.location.reload() 
                 }
             }}> 삭제 </button>
+
             <Map id='map' 
                 center={{ lat: addRecordData.placeY, lng: addRecordData.placeX }}
                 level={3}
                 style={{ width: '100%', height: '400px' }}>
             </Map>
+
             <p> {addRecordData.placeName} </p>
+            <p> {addRecordData.date} </p>
             <p> {addRecordData.record} </p>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default AddRecordDetail;

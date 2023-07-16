@@ -1,5 +1,6 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { db } from "../../../firebase";
 import Plan from "../../plan/Plan";
 
@@ -23,12 +24,14 @@ const ThirdTab = ({profileUser}) => {
     }, [profileUser.uid]);
 
     return (
-        <div>
+        <Container>
             {planData.map((p, i) => (
                 <Plan key={i} planData={p} profileUser={profileUser}/>
             ))}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default ThirdTab;

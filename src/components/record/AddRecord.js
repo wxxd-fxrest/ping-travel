@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import RecordSearch from "./RecordSearch";
 
 const AddRecord = () => {
@@ -7,15 +8,16 @@ const AddRecord = () => {
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
-    // console.log(location.state)
     const state = (location.state);
 
     return(
-        <div>
+        <Container>
             AddRecord
             <RecordSearch pathUID={pathUID} pathDocID={pathDocID} state={state}/>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default AddRecord;

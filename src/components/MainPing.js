@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import MainPingMap from "./MainPingMap";
+import styled from "styled-components";
 
 const MainPing = ({id}) => {
     const [docData, setDocData] = useState([]);
@@ -28,18 +29,21 @@ const MainPing = ({id}) => {
     }, [getAbout]);
 
     return (
-        <div>
+        <Container>
             <button onClick={(e) => {
                     e.preventDefault();
                     setType(!type);
                 }}> 
                 {type === true ? <p>리뷰</p> : <p>질문</p>} 
             </button>
+
             {docData.map((m, i) => (
                 <MainPingMap key={i} docData={m} type={type}/>
             ))}
-        </div>
+        </Container>
     )
 }
+
+const Container = styled.div``;
 
 export default MainPing;

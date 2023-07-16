@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import styled from "styled-components";
 
 const FriendRequest = ({friendRequest, loginUserData}) => {
     const {currentUser} = useContext(AuthContext); 
@@ -17,7 +18,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 setRequestUserData(doc.data());
-                // console.log(doc.id, " => ", doc.data());
+                console.log(doc.id, " => ", doc.data());
             });
         };
         get();
@@ -37,6 +38,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
                 friendRequest: arrayRemove(friendRequest),
             }); // 수락 시 요청 데이터 삭제 
             alert("수락 되었습니다."); 
+            window.location.reload();
         }
     };
     
@@ -48,18 +50,21 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
                 friendRequest: arrayRemove(friendRequest),
             }); // 거절 시 요청 데이터 삭제 
             alert("거절 되었습니다."); 
+            window.location.reload();
         }
     };
 
     return(
-        <ul>
+        <Container>
             <li> 
                 {friendRequest} 
                 <button onClick={onClickAccept}> 수락 </button> 
                 <button onClick={onClickRefuse}> 거절 </button> 
             </li>
-        </ul>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default FriendRequest;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import styled from "styled-components";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -44,7 +45,7 @@ const Login = () => {
     }; 
 
     return(
-        <div className="ComponentContainer">
+        <Container className="ComponentContainer">
             <p> 로그인을 진행해주세요. </p>
             <form onSubmit={onSubmit} className="ComponentForm">
                 <input type="email"
@@ -61,8 +62,10 @@ const Login = () => {
                         onChange={onChange} />
                 <button> 로그인 </button>
             </form>
-        </div>
+        </Container>
     )
-}
+};
+
+const Container = styled.div``;
 
 export default Login; 

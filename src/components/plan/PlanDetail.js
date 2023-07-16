@@ -4,24 +4,20 @@ import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import MapComponent from "../MapComponent";
 import AddPlanDetail from "./AddPlanDetail";
+import styled from "styled-components";
 
 const PlanDetail = () => {
     const { kakao } = window;
     const location = useLocation();
     const navigate = useNavigate();
+
     const pathname = location.pathname ; 
     const pathUID = (pathname.split('/')[2]);
     const pathDocID = (pathname.split('/')[3]);
     // console.log(pathDocID)
     const [planData, setPlanData] = useState([]);
     const [addPlanData, setAddPlanData] = useState([]);
-    const [share, setShare] = useState([]);
-    // let saveDate = recordData.recordDate.toDate();
-    // let Year = saveDate.getFullYear();
-    // let Month = saveDate.getMonth()+1;
-    // let Date = saveDate.getDate();
-    // let Hours = saveDate.getHours();
-    // let Minutes = saveDate.getMinutes(); 
+    const [share, setShare] = useState([]); 
 
     useEffect(() => {
         const getLoginUserData = async () => {
@@ -38,15 +34,6 @@ const PlanDetail = () => {
         };
         getLoginUserData();
     }, [pathDocID, pathUID]);
-
-    const onDelete = async() => {
-        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.");
-        const ok = window.confirm("게시글을 삭제하시겠습니까?");
-        if(ok) {
-            await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`)); 
-            navigate("/");
-        }
-    } ;
 
     useEffect(() => {
         let container = document.getElementById("map");
@@ -73,15 +60,26 @@ const PlanDetail = () => {
         infowindow.open(map, marker);
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, planData.placeName, planData.placeX, planData.placeY]);
 
+    const onDelete = async() => {
+        alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.");
+        const ok = window.confirm("게시글을 삭제하시겠습니까?");
+        if(ok) {
+            await deleteDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`)); 
+            navigate("/");
+        }
+    };
+
     return (
-        <div>
+        <Container>
             <button onClick={(e) => {
                 e.preventDefault();
                 navigate(-1);
             }}> 뒤로가기 </button>
             PlanDetail
             <button onClick={onDelete}> 삭제 </button>
+
             <MapComponent />
+
             <h3> 장소 : {planData.placeName} </h3>
             {share ? <>
                 <p> 함께 공유한 user </p>
@@ -95,6 +93,7 @@ const PlanDetail = () => {
             </> : <>
                 <p> 공유해준 user : {planData.ownerID} </p>
             </>}
+            <p> 날짜 : {planData.date} </p>
             <p> 계획 : {planData.plan} </p>
             {addPlanData && <>
                 {addPlanData.map((r, i) => (
@@ -112,9 +111,10 @@ const PlanDetail = () => {
                     }
                 });
             }}> 계획 추가하기 </button>
-            {/* <p> 시간 : {Year}-{Month}-{Date} / {Hours} : {Minutes} </p> */}
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default PlanDetail;

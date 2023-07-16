@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const SearchList = ({places}) => {
     const { kakao } = window;
     const navigate = useNavigate();
+
     const [select, setSelect] = useState(false);
 
     const onClick = (e) => {
@@ -42,7 +44,7 @@ const SearchList = ({places}) => {
 
     // console.log(places)
     return (
-        <div>
+        <Container>
             <ul>
                 <li>
                     <h3> {places.place_name} </h3>
@@ -50,6 +52,7 @@ const SearchList = ({places}) => {
                     <p> {places.phone} </p>
                     <p> {places.id} </p>
                     <p onClick={onClick}> {places.y}, {places.x} </p>
+
                     {select === true && <>
                         <button onClick={(e) => {
                             e.preventDefault();
@@ -67,10 +70,13 @@ const SearchList = ({places}) => {
                             }); 
                         }}> 상세보기 </button>
                     </>}
+
                 </li>
             </ul>
-        </div>
+        </Container>
     )
 };
+
+const Container = styled.div``;
 
 export default SearchList;
