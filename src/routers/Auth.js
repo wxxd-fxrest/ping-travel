@@ -2,23 +2,47 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Login from "../components/auth/Login";
 import SignUp from "../components/auth/SignUp";
+import AuthBackImg from '../img/ping-travel-auth-background.jpeg';
 
 const Auth = () => {
     const [open, setOpen] = useState(false); 
 
     return(
         <Container>
-            {open ? <div>
-                <SignUp />
-                <button onClick={() => {setOpen(!open)}}> 이미 계정이 있으신가요? </button>
-            </div> : <div>
-                <Login />
-                <button onClick={() => {setOpen(!open)}}> 계정이 없다면 회원가입을 진행해주세요. </button>
+            <img src={AuthBackImg} alt="#" />
+            {open ? <div className="authComponent"> 
+                <SignUp setOpen={setOpen} open={open}/>
+            </div> : <div className="authComponent">
+                <Login setOpen={setOpen} open={open}/>
             </div>}
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    background-color: #D4F4FA;
+    position: relative;
+    display: flex;
+    text-align: start;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+        img {
+            filter: brightness(55%);
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+        .authComponent {
+            position: absolute;
+            display: inline-block;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            width: 300px;
+        }
+`;
 
 export default Auth; 

@@ -5,8 +5,9 @@ import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import signupImg  from '../../img/signupImg.jpeg'; 
 import styled from 'styled-components';
+import { HiOutlineUser, HiOutlineLockClosed, HiOutlineUserCircle } from "react-icons/hi2";
 
-const SignUp = () => {
+const SignUp = ({setOpen, open}) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState("");
@@ -56,27 +57,135 @@ const SignUp = () => {
     }; 
     
     return(
-        <Container className="ComponentContainer">
-            <p> 회원가입을 진행해주세요. </p>
-            <form onSubmit={onSubmit} className="ComponentForm">
-                <input type="email"
+        <Container>
+            <div className="transform">
+                <h3 className="authTransform"> 이미 계정이 있으신가요? ▸▸ </h3>
+                <HiOutlineUserCircle size="25px" className="transformIcon"
+                    onClick={() => {setOpen(!open)}}/>
+            </div>
+            <div className="logo">
+                <h3> Ping Travel </h3>
+            </div>
+            <form onSubmit={onSubmit}>
+                <div className="loginInput">
+                    <HiOutlineUser size="18px" style={{color:"rgba(255, 255, 255, 0.9)", position:"absolute", top:"21px", left:"25px"}} />
+                    <input type="email"
                         name="email"
                         placeholder="이메일"
                         required 
                         value={email}
                         onChange={onChange} />
-                <input type="password"
+                </div>
+                <div className="loginInput">
+                    <HiOutlineLockClosed size="18px" style={{color:"rgba(255, 255, 255, 0.9)", position:"absolute", top:"21px", left:"25px"}} />
+                    <input type="password"
                         name="password"
                         placeholder="비밀번호"
                         required 
                         value={password}
                         onChange={onChange} />
-                <button> 가입하기 </button>
+                </div>
+                <button> Sign Up </button>
             </form>
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    position: relative;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    width: 300px;
+    .transform {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 25px;
+        .authTransform {
+            font-size: 12px;
+            margin-right: 5px;
+            color: white;
+        }
+        .transformIcon {
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 10px;
+            margin-left: 3px;
+            cursor: pointer;
+            &:hover {
+                color: rgba(0, 150, 138, 0.9);
+            }
+        }
+    }
+    .logo {
+        background-color: rgba(255, 255, 255, 0.1);
+        display: inline-flex;
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        border: 0.1px solid white;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        h3 {
+            font-size: 0.9rem;
+            font-weight: 100;
+            color: white;
+            &::first-letter {
+                font-size: 2.1rem;
+                letter-spacing: -8.5px;
+            }
+        }
+    }
+    form {
+        margin-top: 25px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        .loginInput {
+            position: relative;
+            input {
+                width: 60%;
+                height: 38px;
+                margin-top: 10px;
+                border-radius: 50px;
+                border: none;
+                background-color: rgba(255, 255, 255, 0.27);
+                /* background-color: rgba(255, 255, 255); */
+                padding-left: 50px;
+                padding-right: 50px;
+                color: rgba(255, 255, 255, 0.9);
+                outline: none;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.4);
+                }
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.7);
+                }
+                &:focus {
+                    background-color: rgba(255, 255, 255, 0.4);
+                }
+            }
+        }
+        button {
+            width: 95%;
+            height: 40px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
 
 export default SignUp; 

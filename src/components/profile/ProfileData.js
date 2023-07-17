@@ -48,17 +48,34 @@ const ProfileData = ({mainPing, loginUserData}) => {
 
     return (
         <Container>
-            {pathUID &&
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate(-1);
-                }}> 뒤로가기 </button>}
+            <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
+                {pathUID &&
+                    <button className="haveBackBtn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            navigate(-1);
+                        }}> 뒤로가기 </button>}
 
-            <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID}/>
+                <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID}/>
+            </div>
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    /* background-color: wheat; */
+        .pathUIDunHave {
+            height: 100vh;
+        }
+        .pathUIDhave {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            .haveBackBtn {
+                position: absolute;
+            }
+        }
+
+`;
 
 export default ProfileData;

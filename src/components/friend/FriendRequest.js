@@ -56,8 +56,8 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
 
     return(
         <Container>
-            <li> 
-                {friendRequest} 
+            <li className="friendRequestContainer"> 
+                <p> {friendRequest} </p>
                 <button onClick={onClickAccept}> 수락 </button> 
                 <button onClick={onClickRefuse}> 거절 </button> 
             </li>
@@ -65,6 +65,40 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    .friendRequestContainer {
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px;
+        list-style: none;
+        text-align: start;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding: 10px;
+        p {
+            color: white;
+            margin: 5px;
+        }
+        button {
+            width: 100%;
+            height: 25px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
 
 export default FriendRequest;
