@@ -66,6 +66,7 @@ const Container = styled.div`
     /* background-color: wheat; */
         .pathUIDunHave {
             height: 100vh;
+            width: 100%;
         }
         .pathUIDhave {
             width: 100vw;

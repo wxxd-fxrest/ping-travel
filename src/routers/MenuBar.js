@@ -110,11 +110,17 @@ const MenuBar = ({mainPing}) => {
 
             <div className="tab">
                 {tab === 0 && <> 
-                    <h4> 메인 </h4>
+                    <div div className="tabComponent">
+                        <HiOutlineDocumentText size="30px" className="tabHeaderIcon"/>
+                        <h4> 메인 </h4>
+                    </div>
                     <ProfileData mainPing={mainPing} loginUserData={loginUserData}/>
                 </>}
                 {tab === 1 && <>
-                    <h4> 리뷰 / 질문 </h4>
+                    <div className="tabComponent">
+                        <HiOutlineMapPin size="30px" className="tabHeaderIcon" />
+                        <h4> 리뷰 / 질문 </h4>
+                    </div>
                     <ReviewQuestion mainPing={mainPing} />
                 </>}
             </div>
@@ -123,16 +129,18 @@ const MenuBar = ({mainPing}) => {
 };
 
 const Container = styled.div`
-    background-color: #D4F4FA;
+    background-color: yellowgreen;
     display: flex;
     width: 100vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
+    flex: 1;
     .menubar {
         background-color: skyblue;
-        width: 180px;
+        /* width: 180px; */
         max-width: 180px;
+        flex: 0.2;
         min-width: 180px;
         padding: 15px;
         @media screen and (max-width: 500px) {
@@ -291,11 +299,25 @@ const Container = styled.div`
         /* background-color: yellow; */
         display: flex;
         flex-direction: column;
-        width: 100%;
+        /* align-items: center; */
         height: 100%;
-        padding: 30px 50px 0px 50px;
-        h4 {
-            font-size: 15px;
+        flex: 0.8;
+        padding: 15px 50px 0px 50px;
+        .tabComponent {
+            /* background-color: aliceblue; */
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            margin-bottom: 10px;
+            .tabHeaderIcon {
+                color: white;
+            }
+            h4 {
+                color: white;
+                font-size: 20px;
+                /* padding: 10px; */
+                /* margin: 10px; */
+            }
         }
     }
 `;

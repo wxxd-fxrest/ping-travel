@@ -68,24 +68,32 @@ const Profile = ({profileUser, friendID}) => {
                 </div>
 
                 <div className="profileTab">
-                    <h3 onClick={() => setTab(0)}> tab 1 </h3>
-                    <h3 onClick={() => setTab(1)}> tab 2 </h3>
-                    <h3 onClick={() => setTab(2)}> tab 3 </h3>
+                    <h3 className={tab === 0 ? "selectTab" : "unSelectTab"} onClick={() => setTab(0)}> 여행 기록 </h3>
+                    <h3 className={tab === 1 ? "selectTab" : "unSelectTab"} onClick={() => setTab(1)}> 여행 계획 </h3>
+                    <h3 className={tab === 2 ? "selectTab" : "unSelectTab"} onClick={() => setTab(2)}> 리뷰 / 질문 </h3>
                 </div>
 
                 <div className="profileTabComponent">
                     {tab === 0 && <>
-                        <h4 style={{color:"green", margin: "10px"}}> 여행 기록 (with. friend) </h4>
-                        <button onClick={() => navigate('/record/search')}> 기록하기 </button>
+                        <div className="tabComponent">
+                            <h4 className="wirteName"> 여행 기록 (with. friend) </h4>
+                            <button className="wirteBtn"
+                                onClick={() => navigate('/record/search')}> 기록하기 </button>
+                        </div>
                         <SecondTab profileUser={profileUser}/>
                     </>}
                     {tab === 1 && <>
-                        <h4 style={{color:"green", margin: "10px"}}> 여행 계획 (with. friend) </h4>
-                        <button onClick={() => navigate('/plan/search')}> 계획하기 </button>
+                        <div className="tabComponent">
+                            <h4 className="wirteName"> 여행 계획 (with. friend) </h4>
+                            <button className="wirteBtn"
+                                onClick={() => navigate('/plan/search')}> 계획하기 </button>
+                        </div>
                         <ThirdTab profileUser={profileUser} />
                     </>}
                     {tab === 2 && <>
-                        <h4 style={{color:"green", margin: "10px"}}> 내가 남긴 질문/리뷰 </h4>
+                        <div className="tabComponent">
+                            <h4 className="wirteName"> 내가 남긴 질문/리뷰 </h4>
+                        </div>
                         <MapComponent />
                         <FirstTab myPingID={myPingID} profileUser={profileUser}/>
                     </>}
@@ -124,10 +132,55 @@ const Container = styled.div`
             }
         }
         .profileTab {
+            background-color: aliceblue;
             display: flex;
             flex-direction: row;
+            /* padding-top: 10px; */
+            /* padding-bottom: 10px; */
+            flex: 1;
+            justify-content: center;
+            height: 40px;
+            align-items: end;
+            .unSelectTab {
+                background-color: green;
+                display: flex;
+                cursor: pointer;
+                flex: 0.34;
+                height: 32px;
+                margin-left: 1px;
+                margin-right: 1px;
+                font-size: 14px;
+                color: white;
+                align-items: end;
+                justify-content: center;
+                padding-bottom: 5px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                &:hover {
+                    background-color: grey;
+                }
+            }
+            .selectTab {
+                background-color: grey;
+                display: flex;
+                cursor: pointer;
+                flex: 0.34;
+                height: 32px;
+                margin-left: 1px;
+                font-size: 14px;
+                color: white;
+                align-items: end;
+                justify-content: center;
+                padding-bottom: 5px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                &:hover {
+                    background-color: grey;
+                }
+            }
         }
         .profileTabComponent {
+            background-color: grey;
             flex-direction: column;
             height: 100vh;
             overflow-y: scroll;
@@ -135,6 +188,37 @@ const Container = styled.div`
             scrollbar-width: none; /* 파이어폭스 */
             &::-webkit-scrollbar {
                 display: none;
+            }
+            .tabComponent {
+                background-color: skyblue;
+                display: flex;
+                flex-direction: row;
+                flex: 1;
+                align-items: center;
+                padding: 8px;
+                .wirteName {
+                    /* background-color: aquamarine; */
+                    display: flex;
+                    flex: 0.8;
+                    color: black;
+                    margin-right: 5px;
+                    font-size: 16px;
+                }
+                .wirteBtn {
+                    flex: 0.2;
+                    width: 100%;
+                    height: 25px;
+                    border-radius: 50px;
+                    border: none;
+                    background-color: rgba(0, 150, 138, 0.85);
+                    color: white;
+                    font-size: 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(0, 150, 138);
+                    }
+                }
             }
         }
         @media screen and (max-width: 700px) {
@@ -149,7 +233,7 @@ const Container = styled.div`
         @media screen and (max-width: 700px) {
             flex: 0;
             display: none;
-        }// 프로필 화면 디자인 해야 함
+        }
     }
 `;
 
