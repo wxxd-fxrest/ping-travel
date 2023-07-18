@@ -16,14 +16,22 @@ const MapComponent = () => {
     },[kakao.maps.LatLng, kakao.maps.Map]);
 
     return (
-        <Map id='map' 
-            center={{ lat: 37.566826, lng: 126.9786567 }}
-            level={3}
-            style={{ width: '100%', height: '400px' }}>
-        </Map>
+        <Container>
+            <Map id='map' 
+                center={{ lat: 37.566826, lng: 126.9786567 }}
+                level={3}
+                className="mapComponent">
+            </Map>
+        </Container>
     ) ;
 } ; 
 
-const Container = styled.div``;
+const Container = styled.div`
+    display: flex;
+    .mapComponent {
+        width: 100%;
+        height: 400px;
+    }
+`;
 
 export default MapComponent;

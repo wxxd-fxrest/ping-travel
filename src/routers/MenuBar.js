@@ -9,7 +9,8 @@ import FriendSearchID from "../components/friend/FriendSearchID";
 import ReviewQuestion from "../components/ReviewQuestion";
 import ProfileData from "../components/profile/ProfileData";
 import styled from "styled-components";
-import { HiOutlinePower, HiOutlineMapPin, HiOutlineDocumentText, HiBellAlert } from "react-icons/hi2";
+import { HiOutlinePower, HiOutlineMapPin, HiOutlineDocumentText, HiBellAlert, HiMiniMagnifyingGlass } from "react-icons/hi2";
+
 // HiBell
 
 const MenuBar = ({mainPing}) => {
@@ -117,9 +118,16 @@ const MenuBar = ({mainPing}) => {
                     <ProfileData mainPing={mainPing} loginUserData={loginUserData}/>
                 </>}
                 {tab === 1 && <>
-                    <div className="tabComponent">
-                        <HiOutlineMapPin size="30px" className="tabHeaderIcon" />
-                        <h4> 리뷰 / 질문 </h4>
+                    <div className="reviewQuestionTab">
+                        <div className="tabComponent">
+                            <HiOutlineMapPin size="30px" className="tabHeaderIcon" />
+                            <h4> 리뷰 / 질문 </h4>
+                        </div>
+                        <HiMiniMagnifyingGlass size="25px" className='searchIcon'
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/search');
+                            }} />
                     </div>
                     <ReviewQuestion mainPing={mainPing} />
                 </>}
@@ -138,18 +146,18 @@ const Container = styled.div`
     flex: 1;
     .menubar {
         background-color: skyblue;
-        /* width: 180px; */
+        width: 180px;
         max-width: 180px;
-        flex: 0.2;
         min-width: 180px;
+        flex: 0.2;
         padding: 15px;
-        @media screen and (max-width: 500px) {
-            width: 130px;
-            max-width: 130px;
-            min-width: 130px;
+        @media screen and (max-width: 600px) {
+            width: 50px;
+            max-width: 50px;
+            min-width: 50px;
         }
         .logoutContainer {
-            width: 100px;
+            /* width: 100px; */
             bottom: 10px;
             display: flex;
             align-items: center;
@@ -157,8 +165,10 @@ const Container = styled.div`
             position: absolute;
             margin: 10px 10px 20px 10px;
             cursor: pointer;
-            @media screen and (max-width: 500px) {
+            @media screen and (max-width: 600px) {
                 margin: 10px 10px 20px 0px;
+                justify-items: center;
+                left: 30px;
             }
             .logoutBtn{
                 color: white;
@@ -170,8 +180,8 @@ const Container = styled.div`
                 position: absolute;
                 left: 35px;
                 top: 10px;
-                @media screen and (max-width: 500px) {
-                    /* display: none; */
+                @media screen and (max-width: 600px) {
+                    display: none;
                 }
             }
         }
@@ -179,8 +189,8 @@ const Container = styled.div`
             color: white;
             font-size: 11px;
             margin: 20px 10px 2px 20px;
-            @media screen and (max-width: 500px) {
-                margin: 20px 10px 2px 0px;
+            @media screen and (max-width: 600px) {
+                display: none;
             }
         }
         .tabContainer {
@@ -190,8 +200,10 @@ const Container = styled.div`
             position: relative;
             margin: 10px 10px 20px 10px;
             cursor: pointer;
-            @media screen and (max-width: 500px) {
+            @media screen and (max-width: 600px) {
                 margin: 10px 10px 20px 0px;
+                justify-items: center;
+                left: 10px;
             }
             .tabBtn {
                 color: white;
@@ -202,8 +214,8 @@ const Container = styled.div`
                 position: absolute;
                 left: 35px;
                 top: 10px;
-                @media screen and (max-width: 500px) {
-                    /* display: none; */
+                @media screen and (max-width: 600px) {
+                    display: none;
                 }
             }
         }
@@ -221,6 +233,10 @@ const Container = styled.div`
                 position: relative;
                 margin-bottom: 10px;
                 cursor: pointer;
+                @media screen and (max-width: 600px) {
+                    justify-items: center;
+                    left: 0px;
+                }
                 .alertIcons {
                     color: white;
                 }
@@ -231,6 +247,9 @@ const Container = styled.div`
                     position: absolute;
                     left: 35px;
                     top: 10px;
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }
                 }
             }
             .alertScroll {
@@ -302,7 +321,13 @@ const Container = styled.div`
         /* align-items: center; */
         height: 100%;
         flex: 0.8;
-        padding: 15px 50px 0px 50px;
+        padding: 15px 30px 0px 30px;
+        @media screen and (max-width: 900px) {
+            padding: 15px 10px 0px 10px;
+        }
+        @media screen and (max-width: 600px) {
+            flex: 0.9;
+        }
         .tabComponent {
             /* background-color: aliceblue; */
             display: flex;
@@ -319,6 +344,34 @@ const Container = styled.div`
                 /* margin: 10px; */
             }
         }
+        .reviewQuestionTab {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .tabComponent {
+                /* background-color: aliceblue; */
+                display: flex;
+                flex-direction: row;
+                align-items: end;
+                margin-bottom: 10px;
+                .tabHeaderIcon {
+                    color: white;
+                }
+                h4 {
+                    color: white;
+                    font-size: 20px;
+                    /* padding: 10px; */
+                    /* margin: 10px; */
+                }
+            }
+            .searchIcon {
+                color: white;
+                cursor: pointer;
+                margin-top: 3px;
+                margin-right: 5px;
+            }
+        }
+        
     }
 `;
 

@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Profile from "../profile/Profile.js";
 import styled from "styled-components";
+import BackButton from "../modal/BackButton";
 
 const ProfileData = ({mainPing, loginUserData}) => {
-    const navigate = useNavigate();
     const location = useLocation();
 
     const [profileUser, setProfileUser] = useState([]);
@@ -50,33 +50,37 @@ const ProfileData = ({mainPing, loginUserData}) => {
         <Container>
             <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
                 {pathUID &&
-                    <button className="haveBackBtn"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            navigate(-1);
-                        }}> 뒤로가기 </button>}
+                    <BackButton />}
 
-                <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID}/>
+                <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID} pathUID={pathUID}/>
             </div>
         </Container>
     )
 };
 
 const Container = styled.div`
-    /* background-color: wheat; */
-        .pathUIDunHave {
-            height: 100vh;
-            width: 100%;
+    background-color: wheat;
+    .pathUIDunHave {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+    }
+    .pathUIDhave {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        /* text-align: start;
+        align-items: center;
+        justify-content: center; */
+        .haveBackBtn {
+            position: absolute;
+            z-index: 1;
+            color: white;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
         }
-        .pathUIDhave {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            .haveBackBtn {
-                position: absolute;
-            }
-        }
-
+    }
 `;
 
 export default ProfileData;

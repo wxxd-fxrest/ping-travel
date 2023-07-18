@@ -1,5 +1,5 @@
 html {
-    background-color: rgb(228, 184, 126);
+    /* background-color: rgb(228, 184, 126); */
     display: flex;
     text-align: start;
     align-items: center;
@@ -10,7 +10,7 @@ html {
 }
 
 body {  
-    background-color: rgb(200, 129, 37);
+    /* background-color: rgb(200, 129, 37); */
     display: flex;
     align-items: center;
     justify-content: center;

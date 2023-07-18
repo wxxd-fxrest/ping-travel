@@ -87,8 +87,8 @@ const Container = styled.div`
     display: block;
     position: relative;
     margin: 0px 10px 20px 10px;
-    @media screen and (max-width: 500px) {
-        margin: 0px 0px 20px -5px;
+    @media screen and (max-width: 600px) {
+        display: none;
     }
     input {
         width: 65%;

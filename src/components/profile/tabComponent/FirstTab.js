@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { HiMiniXMark, HiOutlineCursorArrowRays } from "react-icons/hi2";
 
 const FirstTab = ({myPingID, profileUser}) => {
     const { kakao } = window;
@@ -9,6 +10,8 @@ const FirstTab = ({myPingID, profileUser}) => {
     const [open, setOpen] = useState(false);
     const [pingData, setPingData] = useState([]);
     const [open2, setOpen2] = useState(false);
+
+    console.log(pingData)
 
     const getPlaceAll = useCallback(() => {
         setOpen(false);
@@ -122,44 +125,52 @@ const FirstTab = ({myPingID, profileUser}) => {
 
     return (
         <Container>
-            {open === true && <>
-                {pingData[0].road_address.building_name && <>
-                <h4> {pingData[0].road_address.building_name} </h4>
-                <p onClick={() => setOpen(false)}>x</p> </>}
-            </>}
+            {open === true && <div className="firstTabContainer">
+                {pingData[0].address.address_name && <div className="openContainer">
+                    <h4> {pingData[0].address.address_name} </h4>
+                    <HiMiniXMark size="22px" className="Xicon" onClick={() => setOpen(false)} />
+                </div>}
+            </div>}
 
-            {open2 === true && <>
-                {pingData && <> <h4> {pingData.placeName} </h4>
-                <p onClick={() => setOpen2(false)}>x</p> 
+            {open2 === true && <div className="firstTabContainer">
+                {pingData && <> 
+                    <div className="openContainer">
+                        <h4> {pingData.placeName} </h4>
+                        <HiMiniXMark size="22px" className="Xicon" onClick={() => setOpen2(false)} />
+                    </div>
 
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate(`/place/${pingData.placeID}`, {
-                        state: {
-                            name: pingData.placeName,
-                            phone: pingData.placeNumber,
-                            id: pingData.placeID,
-                            placey: pingData.placeY,
-                            placex: pingData.placeX,
-                            address: pingData.placeAddress,
-                            roadAdrees: pingData.placeRoadAddress,
-                        }
-                    });
-                }}> 상세보기 </button></>}
-            </>}
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        console.log(pingData)
+                        navigate(`/place/${pingData.placeID}`, {
+                            state: {
+                                name: pingData.placeName,
+                                phone: pingData.placeNumber,
+                                id: pingData.placeID,
+                                placey: pingData.placeY,
+                                placex: pingData.placeX,
+                                address: pingData.placeAddress,
+                                roadAdrees: pingData.placeRoadAddress,
+                            }
+                        });
+                    }}> 상세보기 </button>
+                </>}
+            </div>}
 
-            <button onClick={getPlaceAll}> 전체보기 </button>
+            <button className="placeAllBtn" onClick={getPlaceAll}> 전체보기 </button>
+
             {myPingID.map((m, i) => {
-                // console.log(m)
                 return (
-                    <div key={i}>
+                    <div key={i} className="myPingIDContainer">
                         {m.Data.UID === profileUser.uid && <>
                             <h3>{m.Data.placeName}</h3>
                             <p>{m.Data.type}</p>
                             <h5>{m.Data.about}</h5>
-                            <p onClick={onClick}> {m.Data.placeY}, {m.Data.placeX}, {m.Data.type}, {m.Data.placeName}, {m.Data.placeID}</p>
+                            <HiOutlineCursorArrowRays size="24px" className="clickMap"/>
+                            <p className="clickBtn" onClick={onClick}> {m.Data.placeY}, {m.Data.placeX}, {m.Data.type}, {m.Data.placeName}, {m.Data.placeID}</p>
                             <button onClick={(e) => {
                                 e.preventDefault();
+                                console.log(m)
                                 navigate(`/place/${m.Data.placeID}`, {
                                     state: {
                                         name: m.Data.placeName,
@@ -180,6 +191,121 @@ const FirstTab = ({myPingID, profileUser}) => {
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    .firstTabContainer {
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px;
+        list-style: none;
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        .openContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            h4 {    
+                font-size: 20px;
+                color: white;
+            }
+            .Xicon {
+                color: rgba(0, 150, 138, 0.85);
+                cursor: pointer;
+            }
+        }
+        button {
+            width: 100%;
+            height: 25px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+    .placeAllBtn {
+        width: 100%;
+        height: 25px;
+        border-radius: 50px;
+        border: none;
+        background-color: rgba(0, 150, 138, 0.85);
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        margin-top: 5px;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(0, 150, 138);
+        }
+    }
+    .myPingIDContainer {
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px;
+        list-style: none;
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        h3 {
+            width: 80%;
+            font-size: 13px;
+            color: white;
+        }
+        p {
+            width: 80%;
+            font-size: 13px;
+            color: white;
+        }
+        h5 {
+            width: 80%;
+            font-size: 13px;
+            color: white;
+        }
+        .clickBtn {
+            background-color: blue;
+            cursor: pointer;
+            position: absolute;
+            width: 50px;
+            height: 40px;
+            top: 0px;
+            right: 0px;
+            font-size: 1px;
+            opacity: 0;
+        }
+        .clickMap {
+            position: absolute;
+            color: white;
+            cursor: pointer;
+            top: 10px;
+            right: 15px;
+        }
+        button {
+            width: 100%;
+            height: 25px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
 
 export default FirstTab;

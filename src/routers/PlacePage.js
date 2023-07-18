@@ -1,12 +1,14 @@
 /* eslint-disable no-redeclare */
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { Map } from "react-kakao-maps-sdk";
 import { db } from "../firebase";
 import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import MainPing from "../components/MainPing";
+import BackButton from "../components/modal/BackButton";
 import styled from "styled-components";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 
 // import MARKER from '..//img/marker.png';
 // import questionMarker from '..//img/question_marker.png';
@@ -19,10 +21,9 @@ import styled from "styled-components";
 const PlacePage = ({mainPing}) => {
     const {currentUser} = useContext(AuthContext);
     const { kakao } = window;
-    const navigate = useNavigate();
     const location = useLocation();
     const state = location.state;
-    
+    // console.log(state)
     const [profileData, setProfileData] = useState([]); 
     const [type, setType] = useState(false);
     const [text, setText] = useState("");
@@ -68,6 +69,9 @@ const PlacePage = ({mainPing}) => {
                 type: 'question', 
                 placeID: state.id,
                 placeName: state.name, 
+                placeNumber: state.phone,
+                placeAddress: state.address,
+                placeRoadAddress: state.roadAdrees,
                 placeY: state.placey,
                 placeX: state.placex,
             });
@@ -79,6 +83,9 @@ const PlacePage = ({mainPing}) => {
                 type: 'question', 
                 placeID: state.id,
                 placeName: state.name, 
+                placeNumber: state.phone,
+                placeAddress: state.address,
+                placeRoadAddress: state.roadAdrees,
                 placeY: state.placey,
                 placeX: state.placex,
             });
@@ -91,6 +98,9 @@ const PlacePage = ({mainPing}) => {
                 type: 'review',
                 placeID: state.id,
                 placeName: state.name, 
+                placeNumber: state.phone,
+                placeAddress: state.address,
+                placeRoadAddress: state.roadAdrees,
                 placeY: state.placey,
                 placeX: state.placex,
             });
@@ -102,6 +112,9 @@ const PlacePage = ({mainPing}) => {
                 type: 'review',
                 placeID: state.id,
                 placeName: state.name, 
+                placeNumber: state.phone,
+                placeAddress: state.address,
+                placeRoadAddress: state.roadAdrees,
                 placeY: state.placey,
                 placeX: state.placex,
             });
@@ -136,42 +149,249 @@ const PlacePage = ({mainPing}) => {
         
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, mainPing, state.name, state.placex, state.placey, state.type]);
 
+
+    const [toggle, setToggle] = useState(false);
+
+    const handleClickToggle = () => {
+        setType(!type)
+        setToggle((prev) => !prev);
+    };
+  
+    const btnClassName = 
+    ["toggle-btn", toggle ? "toggle-btn-on" : "toggle-btn-off",].join(" ");
+
     return(
         <Container>
-            <button onClick={(e) => {
-                e.preventDefault();
-                navigate(-1);
-            }}> 뒤로가기 </button>
+            <div className="placeHeaderContainer">
+                <BackButton /> 
+                <div className='placeHeader'>
+                    <HiOutlinePencilSquare size="35px" className='searchIcon' />
+                    <h4> 리뷰 / 질문을 작성(확인) 하세요. </h4>
+                </div>
+            </div>
 
             <Map id='map' 
                 center={{ lat: state.placey, lng: state.placex }}
                 level={3}
-                style={{ width: '100%', height: '400px' }}>
-            </Map>
+                className="mapContainer">
+            </Map>      
 
-            <h4> {state.name} </h4>
-            <div style={{borderBottom: "solid 1px"}}>
-                <h3> 질문/리뷰를 등록하세요. </h3>
+            <div className="placeBody">
+                <h4> {state.name} </h4>
 
                 {currentUser ? <>
-                    <input type="text" 
+                    <div className="checkBoxContainer">
+                        <h3> 질문/리뷰를 등록하세요. </h3>
+                        <div className="checkBoxComponent">
+                            <label className="toggle-container" aria-label="Toggle">
+                                <input
+                                    className="toggle-input"
+                                    type="checkbox"
+                                    checked={toggle}
+                                    value={type} 
+                                    onChange={() => setType(!type)}
+                                    onClick={handleClickToggle}
+                                    data-testid="toggle-input" />
+                                <span className={btnClassName} />
+                            </label>
+                            {type === false ? <h6> 리뷰 </h6> : <h6> 질문 </h6>}
+                            <button type="button" onClick={onSaveBtn}> ok </button>
+                        </div>
+                    </div>
+                    <textarea type="text" 
                         name="text"
                         placeholder="내용을 입력해주세요" 
                         value={text} 
-                        onChange={onChange}/>
-                    <input type="checkbox" 
-                        value={type} 
-                        onChange={() => setType(!type)}/>
-                    {type === false ? <h4> 리뷰 </h4> : <h4> 질문 </h4>}
-                    <button type="button" onClick={onSaveBtn}> ok </button>
+                        onChange={onChange}
+                        className="placeInput"/>
                 </> : <p>  로그인 후 남길 수 있습니다. </p> }
             </div>
-
-            <MainPing mainPing={mainPing} id={state.id}/>
+            <div className="mapingComponent">
+                <MainPing mainPing={mainPing} id={state.id}/>
+            </div>
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    background-color: grey;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .placeHeaderContainer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        .haveBackBtn {
+            color: black;
+        }
+        .placeHeader {
+            display: flex;
+            align-items: center;
+            .searchIcon {
+                margin-right: 5px;
+            }
+            h4 {
+                font-size: 17px;
+            }
+        }
+    }
+    .mapContainer {
+        width: 100%;
+        height: 30vh;
+        max-height: 30vh;
+        min-height: 30vh;
+    }
+    .placeBody {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        h4 {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .checkBoxContainer {
+            display: flex;
+            justify-content: space-between;    
+            flex-direction: row;
+            align-items: center;
+            h3 {
+                font-size: 15px;
+                color: black;
+                color: white;
+            }
+            .checkBoxComponent {
+                align-items: center;
+                display: flex;
+                // 체크박스 디자인 시작
+                .toggle-container {
+                    display: flex;
+                    margin-right: 10px;
+                }
+                .toggle-btn {
+                    box-sizing: initial;
+                    display: inline-block;
+                    outline: 0;
+                    width: 2.5em;
+                    height: 1.3rem;
+                    position: relative;
+                    cursor: pointer;
+                    user-select: none;
+                    background: #fbfbfb;
+                    border-radius: 4em;
+                    padding: 4px;
+                    transition: all 0.4s ease;
+                    border: 1px solid #e8eae9;
+                }
+                .toggle-input:focus + .toggle-btn::after,
+                .toggle-btn:active::after {
+                    box-sizing: initial;
+                    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08),
+                        inset 0px 0px 0px 3px #9c9c9c;
+                }
+                .toggle-btn::after {
+                    left: 0;
+                    position: relative;
+                    display: block;
+                    content: "";
+                    width: 50%;
+                    height: 100%;
+                    border-radius: 4em;
+                    background: #fbfbfb;
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        padding 0.3s ease, margin 0.3s ease;
+                    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08);
+                }
+                .toggle-btn.toggle-btn-on::after {
+                    left: 50%;
+                }
+                .toggle-btn.toggle-btn-on {
+                    background: #00968A;
+                }
+                .toggle-btn.toggle-btn-on:active {
+                    box-shadow: none;
+                }
+                .toggle-btn.toggle-btn-on:active::after {
+                    margin-left: -1.6em;
+                }
+                .toggle-btn:active::after {
+                    padding-right: 1.6em;
+                }
+                .toggle-btn[disabled] {
+                    opacity: 0.7;
+                    cursor: auto;
+                }
+                .toggle-input {
+                    border: 0;
+                    clip: rect(0 0 0 0);
+                    height: 1px;
+                    margin: -1px;
+                    overflow: hidden;
+                    padding: 0;
+                    position: absolute;
+                    width: 1px;
+                    white-space: nowrap;
+                }
+                // 체크박스 디자인 끝
+                h6 {
+                    margin-right: 10px;
+                    font-size: 14px;
+                    color: white;
+                    border-right: solid 1px black;
+                    padding-right: 10px;
+                }
+                button {
+                    width: 60px;
+                    height: 30px;
+                    border-radius: 50px;
+                    border: none;
+                    background-color: rgba(0, 150, 138, 0.85);
+                    color: white;
+                    font-size: 13px;
+                    font-weight: bold;
+                    margin-right: 3px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(0, 150, 138);
+                    }
+                }
+            }
+        }
+        .placeInput {
+            height: 40px;
+            max-height: 40px;
+            min-height: 40px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.27);
+            /* background-color: rgba(255, 255, 255); */
+            color: rgba(255, 255, 255, 0.9);
+            outline: none;
+            padding: 10px;
+            margin-right: 5px;
+            margin-top: 5px;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+            &:focus {
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+    }
+    .mapingComponent {
+        padding: 20px;
+        overflow-y: scroll;
+        -ms-overflow-style: none; /* 인터넷 익스플로러 */
+        scrollbar-width: none; /* 파이어폭스 */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+`;
 
 export default PlacePage;

@@ -23,9 +23,9 @@ const Record = ({recordData, profileUser}) => {
     // console.log(recordData)
 
     return (
-        <Container style={{borderBottom: "1px solid"}}>
+        <Container>
 
-            {recordData.Data.ownerUID !== undefined && <>
+            {recordData.Data.ownerUID !== undefined && <div className="RecordContainer">
                 <p> 공유한 친구 : {recordData.Data.ownerUID} </p>
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 날짜 : {recordData.Data.date} </p>
@@ -37,9 +37,9 @@ const Record = ({recordData, profileUser}) => {
                         e.preventDefault();
                         navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
                     }}> 상세보기 </button>}
-            </>}
+            </div>}
 
-            {recordData.Data.selectFriend !== undefined && <>
+            {recordData.Data.selectFriend !== undefined && <div className="RecordContainer">
                 <p> 함께한 친구 : {recordData.Data.selectFriend} </p>
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 날짜 : {recordData.Data.date} </p>
@@ -51,12 +51,53 @@ const Record = ({recordData, profileUser}) => {
                         e.preventDefault();
                         navigate(`/record/${profileUser.uid}/${recordData.DocID}`);
                     }}> 상세보기 </button>}
-            </>}
+            </div>}
 
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    .RecordContainer {
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px;
+        list-style: none;
+        text-align: start;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        p {
+            color: rgba(0, 150, 138, 0.9);
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        h3 {
+            color: rgba(255, 255, 255);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            height: 25px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
 
 export default Record;
