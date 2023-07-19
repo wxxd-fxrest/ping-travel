@@ -1,17 +1,19 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { Map } from "react-kakao-maps-sdk";
+import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import styled from "styled-components";
 
 const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
     const { kakao } = window;
+    const {currentUser} = useContext(AuthContext);
 
     const getAddData = useCallback(() => {
         // console.log(addPlanData)
-        let container = document.getElementById("map");
+        let container = document.getElementById("addMap");
         let options = {
-            center: new kakao.maps.LatLng(addPlanData.placeY, addPlanData.placeX),
+            center: new kakao.maps.LatLng(addPlanData.addPlaceY, addPlanData.addPlaceX),
             level: 10,
         };
         //map
@@ -22,7 +24,7 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
             //마커가 표시 될 지도
             map: map,
             //마커가 표시 될 위치
-            position:  new kakao.maps.LatLng(addPlanData.placeY, addPlanData.placeX)
+            position:  new kakao.maps.LatLng(addPlanData.addPlaceY, addPlanData.addPlaceX)
         });
         marker.setMap(map);
 
@@ -38,31 +40,167 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
     }, [getAddData]);
 
     return (
-        <Container>
-            <button onClick={async () => {
-                alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
-                const ok = window.confirm("게시글을 삭제하시겠습니까?")
-                if(ok) {
-                    await updateDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`), {
-                        addPlan: arrayRemove(addPlanData),
-                    }); // 수락 시 요청 데이터 삭제 
-                    window.location.reload();
-                }}}> 삭제 
-            </button>
+        <div> 
+            {currentUser.uid === addPlanData.writeUID ? 
+            <Box>
+                <div className="addContainer">
+                    <Map id='addMap' 
+                        center={{ lat: addPlanData.addPlaceY, lng: addPlanData.addPlaceX }}
+                        level={3}
+                        style={{ width: '100%', height: '400px' }}>
+                    </Map>
 
-            <Map id='map' 
-                center={{ lat: addPlanData.placeY, lng: addPlanData.placeX }}
-                level={3}
-                style={{ width: '100%', height: '400px' }}>
-            </Map>
+                    <div className="recordMainContainer">
+                        <h3> {addPlanData.addPlaceName} </h3>
+                        <p> {addPlanData.addDate} </p>
+                        <p> {addPlanData.addPlan} </p>
+                    </div>
 
-            <p> {addPlanData.placeName} </p>
-            <p> {addPlanData.date} </p>
-            <p> {addPlanData.plan} </p>
-        </Container>
+
+                    {currentUser.uid === addPlanData.writeUID &&
+                        <button onClick={async () => {
+                            alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
+                            const ok = window.confirm("게시글을 삭제하시겠습니까?")
+                            if(ok) {
+                                await updateDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`), {
+                                    addPlan: arrayRemove(addPlanData),
+                                }); // 수락 시 요청 데이터 삭제 
+                                window.location.reload();
+                            }}}> 삭제 
+                        </button>}
+                </div>
+            </Box> : <Box2>
+                <div className="unAddContainer">
+                    <Map id='addMap' 
+                        center={{ lat: addPlanData.addPlaceY, lng: addPlanData.addPlaceX }}
+                        level={3}
+                        style={{ width: '100%', height: '400px' }}>
+                    </Map>
+
+                    <div className="recordMainContainer">
+                        <h3> {addPlanData.addPlaceName} </h3>
+                        <p> {addPlanData.addDate} </p>
+                        <p> {addPlanData.addPlan} </p>
+                    </div>
+
+
+                    {currentUser.uid === addPlanData.writeUID &&
+                        <button onClick={async () => {
+                            alert("해당 게시글은 내 프로필 내에서만 삭제되며 공유한 user나, 공유된 user에게서는 삭제되지 않습니다.")
+                            const ok = window.confirm("게시글을 삭제하시겠습니까?")
+                            if(ok) {
+                                await updateDoc(doc(db, "UserInfo", `${pathUID}`, "plan", `${pathDocID}`), {
+                                    addPlan: arrayRemove(addPlanData),
+                                }); // 수락 시 요청 데이터 삭제 
+                                window.location.reload();
+                            }}}> 삭제 
+                        </button>}
+                </div>
+            </Box2>}
+        </div>
     )
 };
 
-const Container = styled.div``;
+const Box = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;  
+    .addContainer {
+        width: 80%;
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px 10px 2px 10px;
+        list-style: none;
+        text-align: start;
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        .mapComponent {
+            width: 100%;
+            height: 30vh;
+            max-height: 30vh;
+            min-height: 30vh;
+        }
+        .recordMainContainer {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            h3 {
+                font-size: 18px;
+                color: white;
+                margin-bottom: 5px;
+            }
+            p {
+                font-size: 14px;
+                color: white;
+                margin-top: 5px;
+            }
+        }
+        button {
+            width: 100%;
+            height: 28px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
+
+const Box2 = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;  
+    .unAddContainer {
+        width: 80%;
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 10px 10px 10px 2px;
+        list-style: none;
+        text-align: start;
+        /* align-items: flex-start; */
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        .mapComponent {
+            width: 100%;
+            height: 30vh;
+            max-height: 30vh;
+            min-height: 30vh;
+        }
+        .recordMainContainer {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            h3 {
+                font-size: 18px;
+                color: white;
+                margin-bottom: 5px;
+            }
+            p {
+                font-size: 14px;
+                color: white;
+                margin-top: 5px;
+            }
+        }
+    }
+`;
+
 
 export default AddPlanDetail;

@@ -36,7 +36,6 @@ const ReviewQuestion = ({mainPing}) => {
                 position: new kakao.maps.LatLng(data.Data.placeY, data.Data.placeX),
             });
             marker.setMap(map);
-
             var infowindow = new kakao.maps.InfoWindow({
                 // content: data.Data.placeName, // 인포윈도우에 표시할 내용
                 content: `
@@ -46,7 +45,7 @@ const ReviewQuestion = ({mainPing}) => {
                 </div>
                 `
             });
-            
+
             kakao.maps.event.addListener(
                 marker,
                 "click",
@@ -196,7 +195,6 @@ const Container = styled.div`
             }
         }
     }
-
     .selectPlace {
         display: flex;
         padding: 10px;

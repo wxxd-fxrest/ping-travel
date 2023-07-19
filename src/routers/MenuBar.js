@@ -151,6 +151,11 @@ const Container = styled.div`
         min-width: 180px;
         flex: 0.2;
         padding: 15px;
+        @media screen and (max-width: 750px) {
+            width: 150px;
+            max-width: 150px;
+            min-width: 150px;
+        }
         @media screen and (max-width: 600px) {
             width: 50px;
             max-width: 50px;
@@ -311,6 +316,9 @@ const Container = styled.div`
                         }
                     }
                 }
+            }
+            @media screen and (max-width: 600px) {
+                display: none;
             }
         }
     }

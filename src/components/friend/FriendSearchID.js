@@ -124,8 +124,8 @@ const Container = styled.div`
         top: 7.5px;
         right: 10px;
         cursor: pointer;
-        @media screen and (max-width: 500px) {
-            right: 5px;
+        @media screen and (max-width: 750px) {
+            right: 0px;
         }
     }
     .searchIDList {

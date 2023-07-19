@@ -18,19 +18,19 @@ const Record = ({recordData, profileUser}) => {
         if(`${recordData.Data.selectFriend}`.length !== 0) {
             setShare(true);
         } 
-        // console.log(recordData.Data.ownerUID)
+        // console.log(recordData.Data.writeUID)
     }, [recordData, share]); 
     // console.log(recordData)
 
     return (
         <Container>
 
-            {recordData.Data.ownerUID !== undefined && <div className="RecordContainer">
-                <p> 공유한 친구 : {recordData.Data.ownerUID} </p>
+            {recordData.Data.writeUID !== undefined && <div className="RecordContainer">
+                <p> 공유한 친구 : {recordData.Data.writeUID} </p>
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 날짜 : {recordData.Data.date} </p>
                 <p> 기록 : {recordData.Data.record} </p>
-                <p> {recordData.Data.ownerUID} </p>
+                <p> {recordData.Data.writeUID} </p>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -72,6 +72,8 @@ const Container = styled.div`
         margin-bottom: 10px;
         padding: 13px;
         display: flex;
+        border-bottom: solid 1px black;
+        border-right: solid 1px black;
         p {
             color: rgba(0, 150, 138, 0.9);
             font-size: 13px;

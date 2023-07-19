@@ -12,7 +12,6 @@ const AddRecord = () => {
 
     return(
         <Container>
-            AddRecord
             <RecordSearch pathUID={pathUID} pathDocID={pathDocID} state={state}/>
         </Container>
     )

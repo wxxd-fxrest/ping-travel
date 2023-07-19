@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import BackButton from "../modal/BackButton";
 import styled from "styled-components";
+import { HiOutlineMap } from "react-icons/hi2";
 
 const RecordSave = () => {
     const {currentUser} = useContext(AuthContext);
@@ -69,7 +71,7 @@ const RecordSave = () => {
                         where("placeID", "==", `${state.state.placeID}`),
                         where("placeX", "==", `${state.state.placeX}`),
                         where("placeY", "==", `${state.state.placeY}`),
-                        where("ownerUID", "==", `${currentUser.uid}`),
+                        where("writeUID", "==", `${currentUser.uid}`),
                         );
                     const querySnapshot2 = await getDocs(e);
                     querySnapshot2.forEach(async (doc) => {
@@ -79,15 +81,16 @@ const RecordSave = () => {
                     });  
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "record", shareUserDocID), {
                         addRecord: arrayUnion({
-                            date: saveDate,
-                            placeName: state.name, 
-                            placeY: state.placey,
-                            placeX: state.placex,
-                            placeID: state.id,
-                            placeNumber: state.phone,
-                            placeAddress: state.address,
-                            placeRoadAddress: state.roadAdrees,
-                            record: text,
+                            addDate: saveDate,
+                            addPlaceName: state.name, 
+                            addPlaceY: state.placey,
+                            addPlaceX: state.placex,
+                            addPlaceID: state.id,
+                            addPlaceNumber: state.phone,
+                            addPlaceAddress: state.address,
+                            addPlaceRoadAddress: state.roadAdrees,
+                            addRecord: text,
+                            writeUID: currentUser.uid
                         })
                     });   
                 })
@@ -102,7 +105,7 @@ const RecordSave = () => {
                 }
 
                 const e = query(
-                    collection(db, "UserInfo", ownerUserID.ownerUID, "record"), 
+                    collection(db, "UserInfo", ownerUserID.writeUID, "record"), 
                     where("placeID", "==", `${state.state.placeID}`),
                     where("placeX", "==", `${state.state.placeX}`),
                     where("placeY", "==", `${state.state.placeY}`),
@@ -112,31 +115,33 @@ const RecordSave = () => {
                     ownerUserDocID = doc.id; 
                     console.log(doc.id, " => ", doc.data());
                 });  
-                await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "record", ownerUserDocID), {
+                await updateDoc(doc(db, "UserInfo", ownerUserID.writeUID, "record", ownerUserDocID), {
                     addRecord: arrayUnion({
-                        date: saveDate,
-                        placeName: state.name, 
-                        placeY: state.placey,
-                        placeX: state.placex,
-                        placeID: state.id,
-                        placeNumber: state.phone,
-                        placeAddress: state.address,
-                        placeRoadAddress: state.roadAdrees,
-                        record: text,
+                        addDate: saveDate,
+                        addPlaceName: state.name, 
+                        addPlaceY: state.placey,
+                        addPlaceX: state.placex,
+                        addPlaceID: state.id,
+                        addPlaceNumber: state.phone,
+                        addPlaceAddress: state.address,
+                        addPlaceRoadAddress: state.roadAdrees,
+                        addRecord: text,
+                        writeUID: currentUser.uid
                     })
                 });   
             }
             await updateDoc(doc(db, "UserInfo", currentUser.uid, "record", state.addPathDocID), {
                 addRecord: arrayUnion({
-                    date: saveDate,
-                    placeName: state.name, 
-                    placeY: state.placey,
-                    placeX: state.placex,
-                    placeID: state.id,
-                    placeNumber: state.phone,
-                    placeAddress: state.address,
-                    placeRoadAddress: state.roadAdrees,
-                    record: text,
+                    addDate: saveDate,
+                    addPlaceName: state.name, 
+                    addPlaceY: state.placey,
+                    addPlaceX: state.placex,
+                    addPlaceID: state.id,
+                    addPlaceNumber: state.phone,
+                    addPlaceAddress: state.address,
+                    addPlaceRoadAddress: state.roadAdrees,
+                    addRecord: text,
+                    writeUID: currentUser.uid
                 })
             });
         } else {
@@ -162,7 +167,7 @@ const RecordSave = () => {
                             placeAddress: state.address,
                             placeRoadAddress: state.roadAdrees,
                             record: text,
-                            ownerUID: currentUser.uid,
+                            writeUID: currentUser.uid,
                             ownerID: currentUserID, 
                         }); 
                     });     
@@ -189,6 +194,7 @@ const RecordSave = () => {
                 placeRoadAddress: state.roadAdrees,
                 record: text,
                 selectFriend: selected,
+                writeUID: currentUser.uid
             });
         }
         navigate('/');
@@ -226,33 +232,229 @@ const RecordSave = () => {
 
     return (
         <Container>
-            <p> 장소 : {state.name} </p>
-            <p> 함께 공유하고 싶은 사람이 있다면 선택하세요. </p>
+            <div className='searchHeaderContainer'>
+                <BackButton /> 
+                <div className='searchHeader'>
+                    <HiOutlineMap size="35px" className='searchIcon' />
+                    <h4> 함께 공유하고 싶은 사람이 있다면 선택하세요. </h4>
+                </div>
+            </div>
 
-            {!shareID && <>
-                {friendList.map((f, i) => {
-                    return(
-                        <div key={i}>
-                            <input type="checkbox" 
-                                id={f} 
-                                name={f} 
-                                onChange={handleSelect}/>
-                            <label htmlFor={f}> {f} </label>
-                        </div>
-                    )
-                })}
-            </>}
+            <div className="recordSaveBody">
+                <div className="recordSaveText">
+                    <div className="recordText">
+                        <h4> 장소 :</h4> 
+                        <p> '{state.name}' </p>
+                    </div>
+                    <div className="recordSaveContainer">
+                        <textarea type="text" 
+                            name="text"
+                            placeholder="내용을 입력해주세요" 
+                            value={text} 
+                            onChange={onChange}
+                            className="recordInput"/>
+                        <button type="button" onClick={onClickSave}> ok </button>
+                    </div>
+                </div>
 
-            <input type="text" 
-                    name="text"
-                    placeholder="내용을 입력해주세요" 
-                    value={text} 
-                    onChange={onChange}/>
-            <button type="button" onClick={onClickSave}> ok </button>
+                {!shareID && <div className="checkBox">
+                    <h4> 친구 목록 </h4>
+                    {friendList.map((f, i) => {
+                        return(
+                            <div key={i} className="friendCheck">
+                                <input type="checkbox" 
+                                    id={f} 
+                                    name={f} 
+                                    onChange={handleSelect}/>
+                                <label htmlFor={f}> {f} </label>
+                            </div>
+                        )
+                    })}
+                </div>}
+            </div>
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    background-color: grey;
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .searchHeaderContainer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        .haveBackBtn {
+            color: black;
+        }
+        .searchHeader {
+            display: flex;
+            align-items: center;
+            .searchIcon {
+                margin-right: 5px;
+            }
+            h4 {
+                font-size: 17px;
+            }
+        }
+        @media screen and (max-width: 500px) {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            .searchHeader {
+                margin-top: 10px;
+            }
+        }
+    }
+    .recordSaveBody {
+        margin: 10px;
+        display: flex;
+        justify-content: space-between;
+        .recordSaveText {
+            width: 60%;
+            /* background-color: yellowgreen; */
+            display: flex;
+            flex-direction: column;
+            .recordText {
+                display: flex;
+                margin-bottom: 20px;
+                h4 {
+                    font-size: 24px;
+                    color: white; 
+                    margin-right: 10px;
+                }
+                p {
+                    font-size: 24px;
+                    color: white;
+                }
+            }
+            .recordSaveContainer {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: relative;
+                .recordInput {
+                    display: flex;
+                    width: 100%;
+                    height: 200px;
+                    max-height: 200px;
+                    min-height: 200px;
+                    border-radius: 10px;
+                    border: none;
+                    background-color: rgba(255, 255, 255, 0.27);
+                    /* background-color: rgba(255, 255, 255); */
+                    color: rgba(255, 255, 255, 0.9);
+                    outline: none;
+                    margin-top: 5px;
+                    padding: 15px;
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.4);
+                    }
+                    &::placeholder {
+                        color: rgba(255, 255, 255, 0.7);
+                    }
+                    &:focus {
+                        background-color: rgba(255, 255, 255, 0.4);
+                    }
+                }
+                button {
+                    position: absolute;
+                    top: 235px;
+                    right: -30px;
+                    margin-top: 10px;
+                    width: 150px;
+                    height: 40px;
+                    border-radius: 50px;
+                    border: none;
+                    background-color: rgba(0, 150, 138, 0.85);
+                    color: white;
+                    font-size: 15px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(0, 150, 138);
+                    }
+                }
+            }
+        }
+        .checkBox {
+            width: 30%;
+            /* background-color: yellow; */
+            display: flex;
+            flex-direction: column;
+            h4 {
+                font-size: 20px;
+                color: white;
+                text-align: end;
+                margin-right: 5px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+            }
+            .friendCheck {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.27);
+                border-radius: 10px;
+                list-style: none;
+                position: relative;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding: 13px;
+                input {
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 7px;
+                }
+                label {
+                    color: white;
+                }
+            }
+        }
+        @media screen and (max-width: 500px) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .recordSaveText {
+                display: flex;
+                width: 100%;
+                padding: 30px;
+                .recordSaveContainer {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    position: relative;
+                    .recordInput {
+                        width: 90%;
+                    }
+                    button {
+                        /* position: absolute; */
+                        /* top: -55px; */
+                        right: 0px;
+                        width: 100%;
+                        height: 35px;
+                    }
+                }
+
+            }
+            .checkBox {
+                display: flex;
+                border-top: solid 0.01rem white;
+                margin-top: 40px;
+                padding-top: 15px;
+                width: 100%;
+            }
+        }
+    }
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
 
 export default RecordSave;

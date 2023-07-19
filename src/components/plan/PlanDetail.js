@@ -4,7 +4,9 @@ import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import MapComponent from "../MapComponent";
 import AddPlanDetail from "./AddPlanDetail";
+import BackButton from "../modal/BackButton";
 import styled from "styled-components";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 
 const PlanDetail = () => {
     const { kakao } = window;
@@ -54,7 +56,7 @@ const PlanDetail = () => {
         marker.setMap(map);
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: planData.placeName, // 인포윈도우에 표시할 내용
+            content: planData.placeName, // 인포윈도우에 표시할 내용  
         });
         
         infowindow.open(map, marker);
@@ -71,50 +73,167 @@ const PlanDetail = () => {
 
     return (
         <Container>
-            <button onClick={(e) => {
-                e.preventDefault();
-                navigate(-1);
-            }}> 뒤로가기 </button>
-            PlanDetail
-            <button onClick={onDelete}> 삭제 </button>
+            <div className="placeHeaderContainer">
+                <BackButton /> 
+                <div className='placeHeader'>
+                    <HiOutlinePencilSquare size="35px" className='searchIcon' />
+                    <h4> PlanDetail </h4>
+                </div>
+            </div>
 
-            <MapComponent />
+            <div className="recordMessageContainer">
 
-            <h3> 장소 : {planData.placeName} </h3>
-            {share ? <>
-                <p> 함께 공유한 user </p>
-                {share.map((r, i) => {
-                    return (
-                        <div key={i}>
-                            <p> {r} </p>
-                        </div>
-                    )
-                })}
-            </> : <>
-                <p> 공유해준 user : {planData.ownerID} </p>
-            </>}
-            <p> 날짜 : {planData.date} </p>
-            <p> 계획 : {planData.plan} </p>
-            {addPlanData && <>
-                {addPlanData.map((r, i) => (
-                    <AddPlanDetail key={i} addPlanData={r} pathUID={pathUID} pathDocID={pathDocID}/>
-                ))}
-            </>}
+                <MapComponent />
 
-            <button onClick={() => {
-                navigate(`/addplan/${pathUID}/${pathDocID}`, {
-                    state: {
-                        share,
-                        placeY: planData.placeY,
-                        placeX: planData.placeX,
-                        placeID: planData.placeID
-                    }
-                });
-            }}> 계획 추가하기 </button>
+                <div className="recordMainContainer">
+                    <h3> 장소 : {planData.placeName} </h3>
+
+                    {share ? <>
+                        <p> 함께 공유한 user </p>
+                        {share.map((r, i) => {
+                            return (
+                                <div key={i}>
+                                    <p> {r} </p>
+                                </div>
+                            )
+                        })}
+                    </> : <>
+                        <p> 공유해준 user : {planData.ownerID} </p>
+                    </>}
+
+                    <p> 날짜 : {planData.date} </p>
+                    <p> 계획 : {planData.plan} </p>
+                </div>
+
+                <button onClick={onDelete}> 삭제 </button>
+
+            </div>
+
+            <div className="addRecordContainer">
+                <button className="addBtn"
+                    onClick={() => {
+                        navigate(`/addplan/${pathUID}/${pathDocID}`, {
+                            state: {
+                                share,
+                                placeY: planData.placeY,
+                                placeX: planData.placeX,
+                                placeID: planData.placeID
+                            }
+                        });
+                }}> 계획 추가하기 </button>
+
+                {addPlanData && <>
+                    {addPlanData.map((r, i) => (
+                        <AddPlanDetail key={i} addPlanData={r} pathUID={pathUID} pathDocID={pathDocID}/>
+                    ))}
+                </>}
+            </div>
         </Container>
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    background-color: grey;
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .placeHeaderContainer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        .haveBackBtn {
+            color: black;
+        }
+        .placeHeader {
+            display: flex;
+            align-items: center;
+            .searchIcon {
+                margin-right: 5px;
+            }
+            h4 {
+                font-size: 17px;
+            }
+        }
+    }
+    .recordMessageContainer {
+        margin: 20px;
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.27);
+        border-radius: 10px;
+        list-style: none;
+        text-align: start;
+        /* align-items: flex-start; */
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        .mapComponent {
+            width: 100%;
+            height: 40vh;
+            max-height: 40vh;
+            min-height: 40vh;
+        }
+        .recordMainContainer {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            h3 {
+                font-size: 18px;
+                color: white;
+                margin-bottom: 5px;
+            }
+            p {
+                font-size: 14px;
+                color: white;
+                margin-top: 5px;
+            }
+        }
+        button {
+            width: 100%;
+            height: 28px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+    .addRecordContainer {
+        display: flex;
+        flex-direction: column;
+        margin: 0px 20px 20px 20px;
+        .addBtn {
+            width: 100%;
+            height: 30px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
 
 export default PlanDetail;

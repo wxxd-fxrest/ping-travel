@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { AuthContext } from "../../AuthContext";
+import styled from "styled-components";
 
 const Plan = ({planData, profileUser}) => {
     const navigate = useNavigate();
@@ -62,6 +62,8 @@ const Container = styled.div`
         margin-bottom: 10px;
         padding: 13px;
         display: flex;
+        border-bottom: solid 1px black;
+        border-right: solid 1px black;
         p {
             color: rgba(0, 150, 138, 0.9);
             font-size: 13px;

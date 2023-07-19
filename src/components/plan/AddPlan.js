@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import PlanSearch from "./PlanSearch";
+import styled from "styled-components";
 
 const AddPlan = () => {
     const location = useLocation() ;
@@ -12,7 +12,6 @@ const AddPlan = () => {
     
     return(
         <Container>
-            AddPlan
             <PlanSearch pathUID={pathUID} pathDocID={pathDocID} state={state}/>
         </Container>
     )

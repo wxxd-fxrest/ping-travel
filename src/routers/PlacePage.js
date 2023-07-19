@@ -215,7 +215,7 @@ const PlacePage = ({mainPing}) => {
 
 const Container = styled.div`
     background-color: grey;
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -239,9 +239,9 @@ const Container = styled.div`
     }
     .mapContainer {
         width: 100%;
-        height: 30vh;
-        max-height: 30vh;
-        min-height: 30vh;
+        height: 35vh;
+        max-height: 35vh;
+        min-height: 35vh;
     }
     .placeBody {
         display: flex;
