@@ -106,10 +106,13 @@ const Search = () => {
 
 const Container = styled.div`
     background-color: grey;
-    width: 100vw;
+    width: 60vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+    }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;
@@ -129,8 +132,13 @@ const Container = styled.div`
         }
     }
     .mapComponent {
-        width: 100%;
         height: 40vh;
+        max-height: 40vh;
+        min-height: 40vh;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-left: 10px;
+        margin-right: 10px;
     }
     .searchInputBox {
         display: flex;

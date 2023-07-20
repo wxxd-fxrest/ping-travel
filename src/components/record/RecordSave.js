@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
@@ -9,7 +9,6 @@ import { HiOutlineMap } from "react-icons/hi2";
 
 const RecordSave = () => {
     const {currentUser} = useContext(AuthContext);
-    const navigate = useNavigate();
     const location = useLocation();
     const state = location.state;
 
@@ -197,7 +196,7 @@ const RecordSave = () => {
                 writeUID: currentUser.uid
             });
         }
-        navigate('/');
+        // navigate('/');
     };
     
     // console.log(state)
@@ -278,10 +277,13 @@ const RecordSave = () => {
 
 const Container = styled.div`
     background-color: grey;
-    width: 80vw;
+    width: 60vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+    }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;

@@ -11,7 +11,7 @@ const FirstTab = ({myPingID, profileUser}) => {
     const [pingData, setPingData] = useState([]);
     const [open2, setOpen2] = useState(false);
 
-    console.log(pingData)
+    // console.log(pingData)
 
     const getPlaceAll = useCallback(() => {
         setOpen(false);
@@ -20,7 +20,7 @@ const FirstTab = ({myPingID, profileUser}) => {
         let container = document.getElementById("map");
         let options = {
             center: new kakao.maps.LatLng(37.45978574975834, 126.9511239870991),
-            level: 10,
+            level: 20,
         };
         //map
         const map = new kakao.maps.Map(container, options);
@@ -60,7 +60,7 @@ const FirstTab = ({myPingID, profileUser}) => {
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.event, myPingID]);
 
     useEffect(() => {
-        getPlaceAll();
+        getPlaceAll()
     }, [getPlaceAll]);
 
     const onClick = useCallback(async(e) => {
@@ -69,11 +69,7 @@ const FirstTab = ({myPingID, profileUser}) => {
         let all = (e.target.innerHTML);
         let placey = all.split(',')[0];
         let placex = all.split(',')[1];
-        // let placetype = all.split(',')[2];
         let placename = all.split(',')[3];
-        // let placeClickID = all.split(',')[4];
-        // console.log(placeClickID)
-        // console.log("placey => ", placey, "placex => ", placex, "placetype =>", placetype);
 
         let container = document.getElementById("map");
         let options = {
@@ -117,7 +113,7 @@ const FirstTab = ({myPingID, profileUser}) => {
             if (status === kakao.maps.services.Status.OK) {
                 setPingData(result);
                 // console.log(pingData[0].road_address.building_name);
-                console.log(result)
+                // console.log(result)
             }
         }
         geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
@@ -126,16 +122,17 @@ const FirstTab = ({myPingID, profileUser}) => {
     return (
         <Container>
             {open === true && <div className="firstTabContainer">
-                {pingData[0].address.address_name && <div className="openContainer">
-                    <h4> {pingData[0].address.address_name} </h4>
-                    <HiMiniXMark size="22px" className="Xicon" onClick={() => setOpen(false)} />
-                </div>}
+                {pingData[0].address.address_name && 
+                    <div className="openContainer">
+                        <h1 className="openName"> {pingData[0].address.address_name} </h1>
+                        <HiMiniXMark size="22px" className="Xicon" onClick={() => setOpen(false)} />
+                    </div>}
             </div>}
 
             {open2 === true && <div className="firstTabContainer">
                 {pingData && <> 
                     <div className="openContainer">
-                        <h4> {pingData.placeName} </h4>
+                        <h1 className="openName"> {pingData.placeName} </h1>
                         <HiMiniXMark size="22px" className="Xicon" onClick={() => setOpen2(false)} />
                     </div>
 
@@ -203,15 +200,17 @@ const Container = styled.div`
         padding: 13px;
         display: flex;
         .openContainer {
+            /* background-color: aliceblue; */
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            h4 {    
-                font-size: 20px;
+            .openName {    
+                font-size: 15px;
                 color: white;
             }
             .Xicon {
+                display: flex;
                 color: rgba(0, 150, 138, 0.85);
                 cursor: pointer;
             }
@@ -225,7 +224,7 @@ const Container = styled.div`
             color: white;
             font-size: 10px;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 10px;
             cursor: pointer;
             &:hover {
                 background-color: rgba(0, 150, 138);
@@ -234,7 +233,7 @@ const Container = styled.div`
     }
     .placeAllBtn {
         width: 100%;
-        height: 25px;
+        height: 30px;
         border-radius: 50px;
         border: none;
         background-color: rgba(0, 150, 138, 0.85);
@@ -242,6 +241,7 @@ const Container = styled.div`
         font-size: 10px;
         font-weight: bold;
         margin-top: 5px;
+        margin-bottom: 10px;
         cursor: pointer;
         &:hover {
             background-color: rgba(0, 150, 138);
@@ -299,7 +299,7 @@ const Container = styled.div`
             color: white;
             font-size: 10px;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 10px;
             cursor: pointer;
             &:hover {
                 background-color: rgba(0, 150, 138);

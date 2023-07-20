@@ -3,8 +3,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
-import { db } from "../../firebase";
+import { v4 as uuidv4 } from 'uuid';
+import { db, storage } from "../../firebase";
 import { arrayRemove, collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes, uploadString } from "firebase/storage";
 import MapComponent from "../MapComponent";
 import Friend from "./Friend";
 import FirstTab from "./tabComponent/FirstTab";
@@ -24,6 +26,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
 
     const [tab, setTab] = useState(0);
     const [myPingID, setMyPingID] = useState([]);
+    const [attachment, setAttachment] = useState(""); 
 
     useEffect(() => {
         const FeedCollection = query(
@@ -57,15 +60,65 @@ const Profile = ({profileUser, friendID, pathUID}) => {
         }
     };
 
+    const onFileChange = (event) => {
+        setAttachment(null);
+        const {target: {files}} = event; 
+        const theFile = files[0]; 
+        const reader = new FileReader(); 
+        reader.onloadend = (finishedEvent) => {
+            const {currentTarget: {result}} = finishedEvent; 
+            setAttachment(result); 
+        };
+        if (Boolean(theFile)) {
+            reader.readAsDataURL(theFile); 
+        }
+    }; 
+
+    const onEdit = async(event) => {
+        event.preventDefault();
+        try {
+            let attachmentUrl = ""; 
+            let uploadTask; 
+            if(attachment !== "") {
+                const attachmentRef = ref(storage, `images/${currentUser.uid + uuidv4()}`);
+                uploadTask = uploadBytes(attachmentRef, attachment);
+                await uploadString(attachmentRef, attachment, 'data_url');
+                uploadTask.then(async (snapshot) => {
+                    attachmentUrl = await getDownloadURL(snapshot.ref);
+                    await updateDoc(doc(db, "UserInfo", `${currentUser.uid}`), {
+                        attachmentUrl,
+                    }) 
+                    window.location.reload();
+                })
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    };
+
     return (
         <Container> 
             <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
                 <div className="profileFlex1">
                     <div className="profileContainer">
-                        <img src={profileUser.attachmentUrl} alt="#" />
+
+                        {profileUser.uid === currentUser.uid &&
+                        <input type="file"
+                            style={{display:"none"}}
+                            id="inputFile"
+                            onChange={onFileChange}
+                            required />}
+                        <label htmlFor="inputFile">
+                            {attachment ? 
+                                <img src={attachment} alt="" /> 
+                                : 
+                                <img src={profileUser.attachmentUrl} alt="" />}
+                        </label>
+
                         <p> {profileUser.ID} </p>
-                            {profileUser.uid === currentUser.uid ? null : 
-                                <button className="organizeBtn" onClick={onOrganize}> 친구 정리 </button>}
+                            {profileUser.uid === currentUser.uid ? <>
+                                {attachment && <button className="organizeBtn" onClick={onEdit}> 프로필 수정 </button>}
+                            </> : <button className="organizeBtn" onClick={onOrganize}> 친구 정리 </button>}
                     </div>
 
                     <div className="profileTab">
@@ -137,8 +190,24 @@ const Container = styled.div`
                     border-radius: 100%;
                 }
                 p {
-                    font-size: 20px;
+                    font-size: 24px;
                     margin-left: 20px;
+                    margin-right: 10px;
+                }
+                .organizeBtn {
+                    width: 80px;
+                    height: 25px;
+                    border-radius: 50px;
+                    border: none;
+                    background-color: rgba(0, 150, 138, 0.85);
+                    color: white;
+                    font-size: 10px;
+                    font-weight: bold;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(0, 150, 138);
+                    }
                 }
             }
             .profileTab {
@@ -201,17 +270,14 @@ const Container = styled.div`
                     display: none;
                 }
                 .tabComponent {
-                    /* background-color: skyblue; */
                     display: flex;
                     flex-direction: row;
                     flex: 1;
                     align-items: center;
-                    /* padding: 8px; */
                     .wirteName {
-                        /* background-color: aquamarine; */
                         display: flex;
                         flex: 0.85;
-                        color: black;
+                        color: white;
                         margin-right: 5px;
                         font-size: 16px;
                     }
@@ -232,10 +298,11 @@ const Container = styled.div`
                     }
                 }
                 .firstTabContainer {
+                    display: flex;
+                    flex-direction: column;
                     h4 {
                         display: flex;
-                        /* flex: 0.85; */
-                        color: black;
+                        color: white;
                         margin-right: 5px;
                         font-size: 16px;
                         margin-bottom: 10px;
@@ -246,6 +313,8 @@ const Container = styled.div`
                         .firstTabMap {
                             width: 65%;
                             margin-bottom: 10px;
+                            border-radius: 10px;
+                            overflow: hidden;
                         }
                         .firstTabComponent {
                             width: 33%;

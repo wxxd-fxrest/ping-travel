@@ -19,7 +19,7 @@ const MapComponent = () => {
         <Container>
             <Map id='map' 
                 center={{ lat: 37.566826, lng: 126.9786567 }}
-                level={3}
+                level={15}
                 className="mapComponent">
             </Map>
         </Container>
@@ -31,6 +31,8 @@ const Container = styled.div`
     .mapComponent {
         width: 100%;
         height: 400px;
+        border-radius: 5px;
+        overflow: hidden;
     }
 `;
 

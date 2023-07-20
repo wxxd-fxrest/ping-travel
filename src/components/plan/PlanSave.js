@@ -114,13 +114,13 @@ const PlanSave = () => {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     ownerUserID = docSnap.data(); 
-                    // console.log(docSnap.data())
+                    console.log(docSnap.data())
                 } else {
                     console.log("No such document!");
                 }
 
                 const e = query(
-                    collection(db, "UserInfo", ownerUserID.ownerUID, "plan"), 
+                    collection(db, "UserInfo", ownerUserID.writeUID, "plan"), 
                     where("placeID", "==", `${state.state.placeID}`),
                     where("placeX", "==", `${state.state.placeX}`),
                     where("placeY", "==", `${state.state.placeY}`),
@@ -128,9 +128,9 @@ const PlanSave = () => {
                 const querySnapshot2 = await getDocs(e);
                 querySnapshot2.forEach(async (doc) => {
                     ownerUserDocID = doc.id; 
-                    // console.log(doc.id, " => ", doc.data());
+                    console.log(doc.id, " => ", doc.data());
                 });  
-                await updateDoc(doc(db, "UserInfo", ownerUserID.ownerUID, "plan", ownerUserDocID), {
+                await updateDoc(doc(db, "UserInfo", ownerUserID.writeUID, "plan", ownerUserDocID), {
                     addPlan: arrayUnion({
                         addDate: saveDate,
                         addPlaceName: state.name, 
@@ -279,10 +279,13 @@ const PlanSave = () => {
 
 const Container = styled.div`
     background-color: grey;
-    width: 80vw;
+    width: 60vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+    }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;

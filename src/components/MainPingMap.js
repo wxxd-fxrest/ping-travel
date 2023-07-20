@@ -25,17 +25,17 @@ const MainPingMap = ({docData, type}) => {
         <Container>
             {type === true ? 
                 <div className="answerContainer">
-                    {docData.Data.type === "review" && 
+                    {docData.Data.type === "review" ? 
                     <div className="aboutBox">
                         <h4>{docData.Data.about}</h4> 
-                    </div>} 
+                    </div> : <p className="empty"> 공백 </p>} 
                 </div> : 
                 <div className="answerContainer">
-                    {docData.Data.type === "question" && 
+                    {docData.Data.type === "question" ? 
                     <div className="aboutBox">
                         <h4>{docData.Data.about}</h4> 
                         <button onClick={() => setAnswer(!answer)}> 답변달기 </button> 
-                    </div>}
+                    </div> : <p className="empty"> 공백 </p>}
 
                     <div className="answerInput">
                         {answer === true && <>
@@ -79,8 +79,8 @@ const MainPingMap = ({docData, type}) => {
                                         <HiMiniArrowSmallRight size="23px" className="answerIcon"/>
                                         <div className="answerBody">
                                             <p key={i}> {a.text} </p>
-                                            {currentUser.uid === a.UID &&
-                                                <HiOutlineXCircle size="23px" className="deleteBtn"
+                                            {currentUser.uid === a.UID && <div>
+                                                <HiOutlineXCircle size="25px" className="deleteBtn"
                                                     onClick={async () => {
                                                         const ok = window.confirm("답변을 삭제하시겠습니까?")
                                                         if(ok) {
@@ -88,7 +88,8 @@ const MainPingMap = ({docData, type}) => {
                                                                 answer: arrayRemove(a),
                                                             }); // 수락 시 요청 데이터 삭제 
                                                         }
-                                                }}/>}
+                                                }}/>
+                                            </div>}
                                         </div>
                                     </div>
                                 )
@@ -107,8 +108,6 @@ const Container = styled.div`
         flex-direction: column;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.27);
-        margin-bottom: 3px;
-        border-radius: 10px;
         .aboutBox {
             display: flex;
             background-color: rgba(255, 255, 255, 0.27);
@@ -144,6 +143,12 @@ const Container = styled.div`
                 }
             }
         }
+        .empty {
+            width: 0;
+            height: 0;
+            display: none;
+            font-size: 0;
+        }
         .answerInput {
             display: flex;
             align-items: center;
@@ -156,7 +161,6 @@ const Container = styled.div`
                 border-radius: 10px;
                 border: none;
                 background-color: rgba(255, 255, 255, 0.27);
-                /* background-color: rgba(255, 255, 255); */
                 color: rgba(255, 255, 255, 0.9);
                 outline: none;
                 padding: 10px;
@@ -190,12 +194,10 @@ const Container = styled.div`
             }
         }
         .answerList {
-            /* display: flex; */
             flex-direction: row;
             justify-content: flex-end;
             width: 100%;
             .answerMessage {
-                /* justify-content: space-between; */
                 display: flex;
                 align-items: center;
                 margin-left: 20px;
@@ -205,6 +207,7 @@ const Container = styled.div`
                     color: white;
                 }
                 .answerBody {
+                    /* height: 10%; */
                     width: 100%;
                     display: flex;
                     background-color: rgba(0, 0, 0, 0.27);
@@ -217,15 +220,21 @@ const Container = styled.div`
                     margin-top: 5px;
                     margin-bottom: 10px;
                     padding: 13px;
-                    display: flex;
                     align-items: center;
+                    word-break: break-all;
                     p {
+                        display: flex;
                         font-size: 16px;
                         color: white;
+                        margin-right: 5px;
                     }
-                    .deleteBtn {
-                        margin-left: 20px;
-                        color: white;
+                    div {
+                        display: flex;
+                        position: relative;
+                        .deleteBtn {
+                            display: flex;
+                            color: white;
+                        }
                     }
                 }
             }

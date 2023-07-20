@@ -21,7 +21,7 @@ const ReviewQuestion = ({mainPing}) => {
         let container = document.getElementById("map");
         let options = {
             center: new kakao.maps.LatLng(37.45978574975834, 126.9511239870991),
-            level: 10,
+            level: 15,
         };
 
         //map
@@ -37,13 +37,12 @@ const ReviewQuestion = ({mainPing}) => {
             });
             marker.setMap(map);
             var infowindow = new kakao.maps.InfoWindow({
-                // content: data.Data.placeName, // 인포윈도우에 표시할 내용
-                content: `
-                <div>
-                    <h3>${data.Data.placeName}</h3>
-                    <p>${data.Data.placeNumber}</p>
-                </div>
-                `
+                content: data.Data.placeName, // 인포윈도우에 표시할 내용
+                // content: `
+                // <div>
+                //     <h3>${data.Data.placeName}</h3>
+                // </div>
+                // `
             });
 
             kakao.maps.event.addListener(
@@ -57,7 +56,6 @@ const ReviewQuestion = ({mainPing}) => {
                 return function () {
                     setOpen(true);
                     setSelect(data.Data);
-                    // console.log(select);
                 };
             };
         });

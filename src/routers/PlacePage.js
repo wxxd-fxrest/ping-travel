@@ -27,6 +27,7 @@ const PlacePage = ({mainPing}) => {
     const [profileData, setProfileData] = useState([]); 
     const [type, setType] = useState(false);
     const [text, setText] = useState("");
+    const [toggle, setToggle] = useState(false);
   
     useEffect(() => {
         const ProfileUserInfo = async () => {
@@ -149,16 +150,12 @@ const PlacePage = ({mainPing}) => {
         
     }, [kakao.maps.InfoWindow, kakao.maps.LatLng, kakao.maps.Map, kakao.maps.Marker, kakao.maps.MarkerImage, kakao.maps.Point, kakao.maps.Size, mainPing, state.name, state.placex, state.placey, state.type]);
 
-
-    const [toggle, setToggle] = useState(false);
-
     const handleClickToggle = () => {
         setType(!type)
         setToggle((prev) => !prev);
     };
   
-    const btnClassName = 
-    ["toggle-btn", toggle ? "toggle-btn-on" : "toggle-btn-off",].join(" ");
+    const btnClassName = ["toggle-btn", toggle ? "toggle-btn-on" : "toggle-btn-off",].join(" ");
 
     return(
         <Container>
@@ -184,8 +181,7 @@ const PlacePage = ({mainPing}) => {
                         <h3> 질문/리뷰를 등록하세요. </h3>
                         <div className="checkBoxComponent">
                             <label className="toggle-container" aria-label="Toggle">
-                                <input
-                                    className="toggle-input"
+                                <input className="toggle-input"
                                     type="checkbox"
                                     checked={toggle}
                                     value={type} 
@@ -215,10 +211,13 @@ const PlacePage = ({mainPing}) => {
 
 const Container = styled.div`
     background-color: grey;
-    width: 80vw;
+    width: 60vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+    }
     .placeHeaderContainer {
         display: flex;
         justify-content: space-between;
@@ -238,15 +237,18 @@ const Container = styled.div`
         }
     }
     .mapContainer {
-        width: 100%;
-        height: 35vh;
-        max-height: 35vh;
-        min-height: 35vh;
+        height: 30vh;
+        max-height: 30vh;
+        min-height: 30vh;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-left: 10px;
+        margin-right: 10px;
     }
     .placeBody {
         display: flex;
         flex-direction: column;
-        padding: 20px;
+        padding: 20px 20px 10px 20px;
         h4 {
             font-size: 20px;
             color: white;
@@ -384,7 +386,7 @@ const Container = styled.div`
         }
     }
     .mapingComponent {
-        padding: 20px;
+        padding: 5px 20px 20px 20px;
         overflow-y: scroll;
         -ms-overflow-style: none; /* 인터넷 익스플로러 */
         scrollbar-width: none; /* 파이어폭스 */

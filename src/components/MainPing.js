@@ -65,7 +65,6 @@ const MainPing = ({id}) => {
 
 const Container = styled.div`
     .mainPingContainer {
-        /* background-color: #00968A; */
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -82,6 +81,8 @@ const Container = styled.div`
         }
         .toggle-container {
             display: flex;
+            margin-bottom: 10px;
+            margin-right: 5px;
         }
         .toggle-btn {
             box-sizing: initial;
