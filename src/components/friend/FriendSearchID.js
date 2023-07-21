@@ -4,16 +4,17 @@ import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "f
 import styled from "styled-components";
 import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
-const FriendSearchID = ({loginUserData, setRequestAlert}) => {
+const FriendSearchID = ({loginUserData, setRequestAlert, open, setOpen}) => {
     const [keyword, setKeyword] = useState("");
     const [searchData, setSearchData] = useState([]);
-    const [open, setOpen] = useState(false); 
+    // const [open, setOpen] = useState(false); 
     const [IDinclude, setIDinclude] = useState(false);
     const [requestInclude, setRequestInclude] = useState(false);
 
     // console.log(loginUserData)
     const handleSearch = useCallback(async (e) => {
         setRequestAlert(false);
+        setOpen(false);
         e.preventDefault();
         if (!keyword.trim()) {
             alert('키워드를 입력해주세요!');
@@ -44,7 +45,7 @@ const FriendSearchID = ({loginUserData, setRequestAlert}) => {
             setKeyword("");
         });
 
-    }, [keyword, loginUserData.ID, loginUserData.friendID, loginUserData.friendRequest, searchData.friendRequest, setRequestAlert]); 
+    }, [keyword, loginUserData.ID, loginUserData.friendID, loginUserData.friendRequest, searchData.friendRequest, setOpen, setRequestAlert]); 
 
     const clickPluse = async (e) => {
         e.preventDefault();
@@ -95,20 +96,21 @@ const Container = styled.div`
         height: 34px;
         border-radius: 50px;
         border: none;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.85);
         padding-left: 15px;
         padding-right: 40px;
         color: rgba(255, 255, 255, 0.9);
         outline: none;
+        /* border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85); */
         &:hover {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 150, 138, 0.85);
         }
         &::placeholder {
             color: rgba(255, 255, 255, 0.7);
             font-size: 12px;
         }
         &:focus {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 150, 138, 0.85); 
         }
         @media screen and (max-width: 500px) {
             width: 70%;
@@ -130,7 +132,7 @@ const Container = styled.div`
     }
     .searchIDList {
         display: flex;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.5); 
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -143,8 +145,8 @@ const Container = styled.div`
         .searchIDcontainer {
             display: flex;
             flex-direction: row;
-            color: white;
-            align-items: end;
+            color: rgba(0, 150, 138, 0.85); 
+            align-items: center;
             margin-bottom: 10px;
             img {
                 border-radius: 100%;
@@ -154,7 +156,12 @@ const Container = styled.div`
             h3 {
                 font-size: 18px;
                 margin-left: 10px;
+                margin-top: 5px;
             }
+        }
+        p {
+            margin-left: 10px;   
+            color: rgba(0, 150, 138, 0.9);
         }
         button {
             width: 100%;

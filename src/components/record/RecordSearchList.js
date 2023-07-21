@@ -112,7 +112,7 @@ const Container = styled.div`
     width: 100%;
     .searchList {
         display: flex;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -124,13 +124,13 @@ const Container = styled.div`
         padding: 18px;
         h3 {
             width: 80%;
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             margin-bottom: 5px;
             font-size: 16px;
         }
         p {
             width: 80%;
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             margin-bottom: 5px;
             font-size: 13px;
         }
@@ -139,6 +139,7 @@ const Container = styled.div`
             cursor: pointer;
             top: 10px;
             right: 15px;
+            color: rgba(0, 150, 138, 0.85);
         }
         .clickName {
             background-color: blue;

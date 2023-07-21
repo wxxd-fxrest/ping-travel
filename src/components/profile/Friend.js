@@ -37,7 +37,7 @@ const Friend = ({profileUser, friendID}) => {
     return(
         <Container>
             <div className="friendHeader">
-                <HiOutlineUsers size="30px"/>
+                <HiOutlineUsers size="30px" className="Icon"/>
                 <h3> 친구 </h3>
             </div>
             {friendList()}
@@ -61,6 +61,12 @@ const Container = styled.div`
             justify-content: flex-end;
             margin-right: 10px;
         }
+        .Icon {
+            color: rgba(0, 150, 138, 0.95);
+        }
+        h3 {
+            color: rgba(0, 150, 138, 0.95);
+        }
     }
     h3 {
         font-size: 20px;
@@ -73,7 +79,7 @@ const Container = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.45);
         border-radius: 10px;
         list-style: none;
         text-align: start;

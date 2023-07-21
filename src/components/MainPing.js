@@ -71,12 +71,12 @@ const Container = styled.div`
         align-items: center;
         h3 {
             font-size: 16px;
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             display: flex;
             flex-direction: row;
             p {
                 font-size: 16px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
         }
         .toggle-container {

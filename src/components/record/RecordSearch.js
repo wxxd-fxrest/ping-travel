@@ -99,29 +99,33 @@ const RecordSearch = ({pathUID, pathDocID, state}) => {
 }; 
 
 const Container = styled.div`
-    background-color: grey;
+    background-color: white;
     width: 60vw;
-    height: 100vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
+    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border-radius: 10px;
     @media screen and (max-width: 700px) {
-        width: 100vw;
+        width: 90vw;
     }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: black;
+            color: rgba(0, 150, 138, 0.85);
         }
         .searchHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
+                color: rgba(0, 150, 138, 0.85);
             }
             h4 {
                 font-size: 17px;
+                color: rgba(0, 150, 138, 0.85);
             }
         }
     }
@@ -144,20 +148,17 @@ const Container = styled.div`
             margin-right: 5px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(255, 255, 255, 0.27);
+            background-color: rgba(0, 150, 138, 0.3);
             /* background-color: rgba(255, 255, 255); */
             padding-left: 30px;
             padding-right: 50px;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 150, 138, 0.85);
             outline: none;
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.4);
-            }
             &::placeholder {
-                color: rgba(255, 255, 255, 0.7);
+                color: rgba(0, 150, 138, 0.85);
             }
             &:focus {
-                background-color: rgba(255, 255, 255, 0.4);
+                background-color: rgba(0, 150, 138, 0.3);
             }
         }
         button {

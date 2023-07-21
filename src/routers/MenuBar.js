@@ -18,6 +18,7 @@ const MenuBar = ({mainPing}) => {
     const navigate = useNavigate();
 
     const [requestAlert, setRequestAlert] = useState(false);
+    const [open, setOpen] = useState(false); 
     const [loginUserData, setLoginUserData] = useState([]);
     const [friendRequest, setFriendRequest] = useState([]);
     const [share, setShare] = useState([]);
@@ -48,7 +49,7 @@ const MenuBar = ({mainPing}) => {
         <Container>
             <div className="menubar">
                 <p className="search"> 친구를 검색하세요. </p>
-                <FriendSearchID setRequestAlert={setRequestAlert} loginUserData={loginUserData}/>
+                <FriendSearchID setRequestAlert={setRequestAlert} open={open} setOpen={setOpen} loginUserData={loginUserData}/>
 
                 <div className="tabContainer" onClick={() => setTab(0)}>
                     <HiOutlineDocumentText size="25px" className="tabBtn" />
@@ -62,6 +63,7 @@ const MenuBar = ({mainPing}) => {
                 <div className="alertContainer">
                     <div className="alertTab"  
                         onClick={() => {
+                            setOpen(false)
                             setRequestAlert(!requestAlert)}}>
                         <HiBellAlert size="25px" className="alertIcons" />
                         <h3> 알림 </h3>
@@ -111,10 +113,6 @@ const MenuBar = ({mainPing}) => {
 
             <div className="tab">
                 {tab === 0 && <> 
-                    <div div className="tabComponent">
-                        <HiOutlineDocumentText size="30px" className="tabHeaderIcon"/>
-                        <h4> 메인 </h4>
-                    </div>
                     <ProfileData mainPing={mainPing} loginUserData={loginUserData}/>
                 </>}
                 {tab === 1 && <>
@@ -137,7 +135,7 @@ const MenuBar = ({mainPing}) => {
 };
 
 const Container = styled.div`
-    background-color: yellowgreen;
+    /* background-color: grey; */
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -145,12 +143,13 @@ const Container = styled.div`
     overflow: hidden;
     flex: 1;
     .menubar {
-        background-color: skyblue;
+        background-color: white;
         width: 180px;
         max-width: 180px;
         min-width: 180px;
         flex: 0.2;
         padding: 15px;
+        border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
         @media screen and (max-width: 750px) {
             width: 150px;
             max-width: 150px;
@@ -162,7 +161,7 @@ const Container = styled.div`
             min-width: 50px;
         }
         .logoutContainer {
-            /* width: 100px; */
+            background-color: white;
             bottom: 10px;
             display: flex;
             align-items: center;
@@ -176,12 +175,12 @@ const Container = styled.div`
                 left: 30px;
             }
             .logoutBtn{
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
             h3 {
                 width: 100px;
                 font-size: 14px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 position: absolute;
                 left: 35px;
                 top: 10px;
@@ -191,7 +190,7 @@ const Container = styled.div`
             }
         }
         .search {
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             font-size: 11px;
             margin: 20px 10px 2px 20px;
             @media screen and (max-width: 600px) {
@@ -211,11 +210,11 @@ const Container = styled.div`
                 left: 10px;
             }
             .tabBtn {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
             h3 {
                 font-size: 14px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 position: absolute;
                 left: 35px;
                 top: 10px;
@@ -243,12 +242,12 @@ const Container = styled.div`
                     left: 0px;
                 }
                 .alertIcons {
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                 }
                 h3 {
                     width: 100px;
                     font-size: 14px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     position: absolute;
                     left: 35px;
                     top: 10px;
@@ -258,6 +257,7 @@ const Container = styled.div`
                 }
             }
             .alertScroll {
+                display: flex;
                 height: 500px;
                 flex-direction: column;
                 overflow-y: scroll;
@@ -267,13 +267,13 @@ const Container = styled.div`
                     display: none;
                 }
                 h5 {
-                color: white;
-                font-size: 12px;
-                margin-top: 10px;
+                    color: rgba(0, 150, 138, 0.85);
+                    font-size: 12px;
+                    margin-top: 10px;
                 }
                 .alertShareContainer {
                     display: flex;
-                    background-color: rgba(255, 255, 255, 0.27);
+                    background-color: rgba(0, 150, 138, 0.5); 
                     border-radius: 10px;
                     list-style: none;
                     text-align: start;
@@ -323,12 +323,12 @@ const Container = styled.div`
         }
     }
     .tab {
-        /* background-color: yellow; */
         display: flex;
         flex-direction: column;
         /* align-items: center; */
+        width: 100vw;
         height: 100%;
-        flex: 0.8;
+        flex: 0.9;
         padding: 15px 30px 0px 30px;
         @media screen and (max-width: 900px) {
             padding: 15px 10px 0px 10px;
@@ -341,15 +341,12 @@ const Container = styled.div`
             display: flex;
             flex-direction: row;
             align-items: end;
-            margin-bottom: 10px;
             .tabHeaderIcon {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
             h4 {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 font-size: 20px;
-                /* padding: 10px; */
-                /* margin: 10px; */
             }
         }
         .reviewQuestionTab {
@@ -363,17 +360,15 @@ const Container = styled.div`
                 align-items: end;
                 margin-bottom: 10px;
                 .tabHeaderIcon {
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                 }
                 h4 {
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     font-size: 20px;
-                    /* padding: 10px; */
-                    /* margin: 10px; */
                 }
             }
             .searchIcon {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 cursor: pointer;
                 margin-top: 3px;
                 margin-right: 5px;

@@ -32,6 +32,18 @@ const ThirdTab = ({profileUser}) => {
     )
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    overflow-y: scroll;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
 
 export default ThirdTab;

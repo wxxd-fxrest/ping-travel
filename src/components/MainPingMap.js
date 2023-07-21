@@ -110,7 +110,7 @@ const Container = styled.div`
         background-color: rgba(255, 255, 255, 0.27);
         .aboutBox {
             display: flex;
-            background-color: rgba(255, 255, 255, 0.27);
+            background-color: rgba(0, 150, 138, 0.3);
             border-radius: 10px;
             list-style: none;
             align-items: center;
@@ -121,20 +121,20 @@ const Container = styled.div`
             margin-bottom: 10px;
             padding: 13px;
             margin: 5px;
-            border-bottom: solid 1px black;
-            border-right: solid 1px black;
+            border-bottom: solid 1px rgba(0, 150, 138, 0.85);
+            border-right: solid 1px rgba(0, 150, 138, 0.85);
             h4 {
                 font-size: 16px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
             button {
-                width: 80px;
+                width: 65px;
                 height: 30px;
                 border-radius: 50px;
                 border: none;
                 background-color: rgba(0, 150, 138, 0.85);
                 color: white;
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: bold;
                 margin-right: 3px;
                 cursor: pointer;
@@ -160,20 +160,17 @@ const Container = styled.div`
                 min-height: 40px;
                 border-radius: 10px;
                 border: none;
-                background-color: rgba(255, 255, 255, 0.27);
+                background-color: rgba(0, 150, 138, 0.85);
                 color: rgba(255, 255, 255, 0.9);
                 outline: none;
                 padding: 10px;
                 margin-right: 5px;
                 margin-top: 5px;
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.4);
-                }
                 &::placeholder {
                     color: rgba(255, 255, 255, 0.7);
                 }
                 &:focus {
-                    background-color: rgba(255, 255, 255, 0.4);
+                    background-color: rgba(0, 150, 138, 0.85);
                 }
             }
             .textareaDeleteBtn {
@@ -204,13 +201,13 @@ const Container = styled.div`
                 margin-right: 10px;
                 .answerIcon {
                     margin-right: 10px;
-                    color: white;
+                    color:  rgba(0, 150, 138, 0.85);
                 }
                 .answerBody {
                     /* height: 10%; */
                     width: 100%;
                     display: flex;
-                    background-color: rgba(0, 0, 0, 0.27);
+                    background-color: rgba(0, 150, 138, 0.3);
                     border-radius: 10px;
                     list-style: none;
                     text-align: start;
@@ -225,7 +222,7 @@ const Container = styled.div`
                     p {
                         display: flex;
                         font-size: 16px;
-                        color: white;
+                        color: rgba(0, 150, 138, 0.85);
                         margin-right: 5px;
                     }
                     div {
@@ -233,7 +230,7 @@ const Container = styled.div`
                         position: relative;
                         .deleteBtn {
                             display: flex;
-                            color: white;
+                            color: rgba(0, 150, 138, 0.85);
                         }
                     }
                 }

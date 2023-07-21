@@ -141,35 +141,39 @@ const PlanDetail = () => {
 };
 
 const Container = styled.div`
-    background-color: grey;
+    background-color: white;
     width: 60vw;
-    height: 100vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
+    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border-radius: 10px;
     @media screen and (max-width: 700px) {
-        width: 100vw;
+        width: 90vw;
     }
     .placeHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: black;
+            color: rgba(0, 150, 138, 0.85);
         }
         .placeHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
+                color: rgba(0, 150, 138, 0.85);
             }
             h4 {
                 font-size: 17px;
+                color: rgba(0, 150, 138, 0.85);
             }
         }
     }
     .recordMessageContainer {
         display: flex;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -200,12 +204,12 @@ const Container = styled.div`
                 h3 {
                     margin-top: 8px;
                     font-size: 18px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     margin-bottom: 3px;
                 }
                 p {
                     font-size: 14px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     margin-top: 3px;
                 }
             }

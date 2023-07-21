@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { db } from "../../firebase";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
@@ -10,6 +10,7 @@ import { HiOutlineMap } from "react-icons/hi2";
 const RecordSave = () => {
     const {currentUser} = useContext(AuthContext);
     const location = useLocation();
+    const navigate = useNavigate();
     const state = location.state;
 
     const [text, setText] = useState("");
@@ -196,7 +197,7 @@ const RecordSave = () => {
                 writeUID: currentUser.uid
             });
         }
-        // navigate('/');
+        navigate('/');
     };
     
     // console.log(state)
@@ -276,29 +277,33 @@ const RecordSave = () => {
 };
 
 const Container = styled.div`
-    background-color: grey;
+    background-color: white;
     width: 60vw;
-    height: 100vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
+    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border-radius: 10px;
     @media screen and (max-width: 700px) {
-        width: 100vw;
+        width: 90vw;
     }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: black;
+            color: rgba(0, 150, 138, 0.85);
         }
         .searchHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
+                color:  rgba(0, 150, 138, 0.85);
             }
             h4 {
                 font-size: 17px;
+                color:  rgba(0, 150, 138, 0.85);
             }
         }
         @media screen and (max-width: 500px) {
@@ -324,12 +329,12 @@ const Container = styled.div`
                 margin-bottom: 20px;
                 h4 {
                     font-size: 24px;
-                    color: white; 
+                    color:  rgba(0, 150, 138, 0.85);
                     margin-right: 10px;
                 }
                 p {
                     font-size: 24px;
-                    color: white;
+                    color:  rgba(0, 150, 138, 0.85);
                 }
             }
             .recordSaveContainer {
@@ -345,20 +350,17 @@ const Container = styled.div`
                     min-height: 200px;
                     border-radius: 10px;
                     border: none;
-                    background-color: rgba(255, 255, 255, 0.27);
+                    background-color:  rgba(0, 150, 138, 0.3);
                     /* background-color: rgba(255, 255, 255); */
-                    color: rgba(255, 255, 255, 0.9);
+                    color:  rgba(0, 150, 138, 0.85);
                     outline: none;
                     margin-top: 5px;
                     padding: 15px;
-                    &:hover {
-                        background-color: rgba(255, 255, 255, 0.4);
-                    }
                     &::placeholder {
-                        color: rgba(255, 255, 255, 0.7);
+                        color:  rgba(0, 150, 138, 0.85);
                     }
                     &:focus {
-                        background-color: rgba(255, 255, 255, 0.4);
+                        background-color:  rgba(0, 150, 138, 0.3);
                     }
                 }
                 button {
@@ -388,7 +390,7 @@ const Container = styled.div`
             flex-direction: column;
             h4 {
                 font-size: 20px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 text-align: end;
                 margin-right: 5px;
                 margin-top: 5px;
@@ -398,7 +400,7 @@ const Container = styled.div`
                 display: flex;
                 justify-content: start;
                 align-items: center;
-                background-color: rgba(255, 255, 255, 0.27);
+                background-color: rgba(0, 150, 138, 0.3);
                 border-radius: 10px;
                 list-style: none;
                 position: relative;
@@ -411,7 +413,7 @@ const Container = styled.div`
                     margin-right: 7px;
                 }
                 label {
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                 }
             }
         }

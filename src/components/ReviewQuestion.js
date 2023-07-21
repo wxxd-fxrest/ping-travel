@@ -136,7 +136,8 @@ const Container = styled.div`
         justify-content: space-between;
         display: flex;
         .reviewQuestionMapContainer {
-            width: 63%;
+            width: 100%;
+            margin-right: 10px;
         }
         .reviewQuestionListContainer {
             display: flex;
@@ -167,7 +168,7 @@ const Container = styled.div`
                 }
                 div {
                     display: flex;
-                    background-color: rgba(255, 255, 255, 0.27);
+                    background-color: rgba(0, 150, 138, 0.3);
                     border-radius: 10px;
                     list-style: none;
                     text-align: start;
@@ -179,13 +180,13 @@ const Container = styled.div`
                     margin-bottom: 10px;
                     padding: 13px;
                     h3 {
-                        color: white;
+                        color: rgba(0, 150, 138, 0.85);
                         font-size: 15px;
                         margin-top: 5px;
                         margin-bottom: 5px;
                     }
                     p {
-                        color: white;
+                        color: rgba(0, 150, 138, 0.85);
                         font-size: 12px;
                         margin-bottom: 5px;
                     }
@@ -200,7 +201,7 @@ const Container = styled.div`
         .selectPlaceContainer {
             display: flex;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.27);
+            background-color: rgba(0, 150, 138, 0.3);
             border-radius: 10px;
             list-style: none;
             text-align: start;
@@ -227,17 +228,17 @@ const Container = styled.div`
                 }
             }
             h4 {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 font-size: 18px;
             }
             p {
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
                 font-size: 12px;
                 margin-top: 5px;
             }
         }
         h4 {
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
         }
     }
 `;

@@ -50,7 +50,7 @@ const Plan = ({planData, profileUser}) => {
 const Container = styled.div`
     .PlanContainer {
         display: flex;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;

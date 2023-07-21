@@ -189,9 +189,19 @@ const FirstTab = ({myPingID, profileUser}) => {
 };
 
 const Container = styled.div`
+    /* height: 71%; */
+    overflow-y: scroll;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    &::-webkit-scrollbar {
+        display: none;
+    } 
+    @media screen and (max-width: 900px) {
+        height: 78%;
+    }
     .firstTabContainer {
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color:  rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         position: relative;
@@ -207,7 +217,7 @@ const Container = styled.div`
             align-items: center;
             .openName {    
                 font-size: 15px;
-                color: white;
+                color: rgba(0, 150, 138, 0.85); 
             }
             .Xicon {
                 display: flex;
@@ -249,7 +259,7 @@ const Container = styled.div`
     }
     .myPingIDContainer {
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color:  rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         position: relative;
@@ -260,20 +270,20 @@ const Container = styled.div`
         h3 {
             width: 80%;
             font-size: 13px;
-            color: white;
+            color:  rgba(0, 150, 138, 0.85);
         }
         p {
             width: 80%;
             font-size: 13px;
-            color: white;
+            color:  rgba(0, 150, 138, 0.85);
         }
         h5 {
             width: 80%;
             font-size: 13px;
-            color: white;
+            color:  rgba(0, 150, 138, 0.85);
         }
         .clickBtn {
-            background-color: blue;
+            background-color: transparent;
             cursor: pointer;
             position: absolute;
             width: 50px;
@@ -285,7 +295,7 @@ const Container = styled.div`
         }
         .clickMap {
             position: absolute;
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             cursor: pointer;
             top: 10px;
             right: 15px;

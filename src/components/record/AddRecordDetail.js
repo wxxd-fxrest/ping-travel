@@ -107,10 +107,71 @@ const Box = styled.div`
     .addContainer {
         width: 80%;
         display: flex;
-        background-color: rgba(255, 255, 255, 0.27);
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px 10px 2px 10px;
         list-style: none;
         text-align: start;
+        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 13px;
+        display: flex;
+        .mapComponent {
+            width: 100%;
+            height: 30vh;
+            max-height: 30vh;
+            min-height: 30vh;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .recordMainContainer {
+            display: flex;
+            flex-direction: column;
+            margin-top: 3px;
+            /* margin-bottom: 10px; */
+            h3 {
+                font-size: 18px;
+                color: rgba(0, 150, 138, 0.85);
+                margin-bottom: 5px;
+            }
+            p {
+                font-size: 14px;
+                color: rgba(0, 150, 138, 0.85);
+                margin-top: 5px;
+            }
+        }
+        button {
+            margin-top: 10px;
+            width: 100%;
+            height: 28px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0, 150, 138, 0.85);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 150, 138);
+            }
+        }
+    }
+`;
+
+const Box2 = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;  
+    .unAddContainer {
+        width: 80%;
+        display: flex;
+        background-color: rgba(0, 150, 138, 0.8);
+        border-radius: 10px 10px 10px 2px;
+        list-style: none;
+        text-align: start;
+        /* align-items: flex-start; */
         justify-content: center;
         position: relative;
         flex-direction: column;
@@ -148,68 +209,8 @@ const Box = styled.div`
             height: 28px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            &:hover {
-                background-color: rgba(0, 150, 138);
-            }
-        }
-    }
-`;
-
-const Box2 = styled.div`
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;  
-    .unAddContainer {
-        width: 80%;
-        display: flex;
-        background-color: rgba(0, 0, 0, 0.3);
-        border-radius: 10px 10px 10px 2px;
-        list-style: none;
-        text-align: start;
-        /* align-items: flex-start; */
-        justify-content: center;
-        position: relative;
-        flex-direction: column;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        padding: 13px;
-        display: flex;
-        .mapComponent {
-            width: 100%;
-            height: 30vh;
-            max-height: 30vh;
-            min-height: 30vh;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .recordMainContainer {
-            display: flex;
-            flex-direction: column;
-            margin-top: 3px;
-            /* margin-bottom: 10px; */
-            h3 {
-                font-size: 18px;
-                color: white;
-                margin-bottom: 5px;
-            }
-            p {
-                font-size: 14px;
-                color: white;
-                margin-top: 5px;
-            }
-        }
-        button {
-            width: 100%;
-            height: 28px;
-            border-radius: 50px;
-            border: none;
-            background-color: rgba(0, 150, 138, 0.85);
-            color: white;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: rgba(0, 150, 138, 0.85);
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;

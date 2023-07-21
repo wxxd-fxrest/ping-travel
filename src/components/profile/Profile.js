@@ -13,6 +13,7 @@ import FirstTab from "./tabComponent/FirstTab";
 import SecondTab from "./tabComponent/SecondTab";
 import ThirdTab from "./tabComponent/ThirdTab";
 import styled from "styled-components";
+import { HiOutlineDocumentText } from "react-icons/hi2";
 
 // import MARKER from '../../img/marker.png';
 // import questionMarker from '../../img/question_marker.png';
@@ -100,6 +101,10 @@ const Profile = ({profileUser, friendID, pathUID}) => {
         <Container> 
             <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
                 <div className="profileFlex1">
+                    <div div className="HeaderTabComponent">
+                        <HiOutlineDocumentText size="30px" className="tabHeaderIcon"/>
+                        <h4 className="tabHeaderName"> 메인 </h4>
+                    </div>
                     <div className="profileContainer">
 
                         {profileUser.uid === currentUser.uid &&
@@ -135,7 +140,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                                 <button className="wirteBtn"
                                     onClick={() => navigate('/record/search')}> 기록하기 </button>}
                             </div>
-                            <SecondTab profileUser={profileUser}/>
+                            <SecondTab profileUser={profileUser} />
                         </>}
                         {tab === 1 && <>
                             <div className="tabComponent">
@@ -172,13 +177,29 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     flex: 1;
+    width: 100%;
+    height: 100vh;
     .pathUIDunHave {
         display: flex;
         .profileFlex1 {
             flex-direction: column;
+            width: 100%;
             flex: 0.8;
+            margin-right: 10px;
+            .HeaderTabComponent {
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                align-items: center;
+                .tabHeaderIcon {
+                    color: rgba(0, 150, 138, 0.85);
+                }
+                .tabHeaderName {
+                    color: rgba(0, 150, 138, 0.85);
+                    font-size: 20px;
+                }
+            }
             .profileContainer {
-                background-color: blueviolet;
                 display: flex;
                 flex-direction: row;
                 padding: 10px;
@@ -193,6 +214,7 @@ const Container = styled.div`
                     font-size: 24px;
                     margin-left: 20px;
                     margin-right: 10px;
+                    color: rgba(0, 150, 138, 0.85);
                 }
                 .organizeBtn {
                     width: 80px;
@@ -211,23 +233,19 @@ const Container = styled.div`
                 }
             }
             .profileTab {
-                background-color: aliceblue;
+                background-color: white;
                 display: flex;
                 flex-direction: row;
-                /* padding-top: 10px; */
-                /* padding-bottom: 10px; */
                 flex: 1;
                 justify-content: center;
                 height: 40px;
                 align-items: end;
                 .unSelectTab {
-                    background-color: green;
+                    background-color: rgba(0, 150, 138, 0.85);
                     display: flex;
                     cursor: pointer;
-                    flex: 0.34;
+                    flex: 0.36;
                     height: 32px;
-                    margin-left: 1px;
-                    margin-right: 1px;
                     font-size: 14px;
                     color: white;
                     align-items: end;
@@ -236,50 +254,51 @@ const Container = styled.div`
                     border-top-left-radius: 10px;
                     border-top-right-radius: 10px;
                     &:hover {
-                        background-color: grey;
+                        background-color: rgba(0, 150, 138, 0.3);
                     }
                 }
                 .selectTab {
-                    background-color: grey;
+                    background-color: white;
                     display: flex;
                     cursor: pointer;
-                    flex: 0.34;
+                    flex: 0.36;
                     height: 32px;
-                    margin-left: 1px;
                     font-size: 14px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     align-items: end;
                     justify-content: center;
                     padding-bottom: 5px;
                     border-top-left-radius: 10px;
                     border-top-right-radius: 10px;
+                    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                    border-bottom: none;
                     &:hover {
-                        background-color: grey;
+                        background-color: white;
                     }
                 }
             }
             .profileTabComponent {
-                background-color: grey;
+                background-color: white;
+                border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                border-top: none;
                 flex-direction: column;
-                height: 70vh;
-                overflow-y: scroll;
-                -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                scrollbar-width: none; /* 파이어폭스 */
-                padding: 15px;
-                &::-webkit-scrollbar {
-                    display: none;
-                }
+                width: 100%;
+                height: 100vh;
                 .tabComponent {
                     display: flex;
                     flex-direction: row;
                     flex: 1;
                     align-items: center;
+                    margin-left: 15px;
+                    margin-right: 15px;
                     .wirteName {
                         display: flex;
                         flex: 0.85;
-                        color: white;
+                        color: rgba(0, 150, 138, 0.85);
                         margin-right: 5px;
                         font-size: 16px;
+                        padding-top: 20px;
+                        padding-bottom: 10px;
                     }
                     .wirteBtn {
                         flex: 0.15;
@@ -291,6 +310,8 @@ const Container = styled.div`
                         color: white;
                         font-size: 10px;
                         font-weight: bold;
+                        padding-top: 10px;
+                        padding-bottom: 10px;
                         cursor: pointer;
                         &:hover {
                             background-color: rgba(0, 150, 138);
@@ -302,14 +323,19 @@ const Container = styled.div`
                     flex-direction: column;
                     h4 {
                         display: flex;
-                        color: white;
+                        color: rgba(0, 150, 138);
                         margin-right: 5px;
                         font-size: 16px;
-                        margin-bottom: 10px;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                        padding-top: 20px;
+                        /* padding-bottom: 10px; */
                     }
                     .firstTab {
                         display: flex;
                         justify-content: space-between;
+                        margin-left: 15px;
+                        margin-right: 15px;
                         .firstTabMap {
                             width: 65%;
                             margin-bottom: 10px;
@@ -330,7 +356,7 @@ const Container = styled.div`
                     @media screen and (max-width: 900px) {
                         h4 {
                             display: flex;
-                            color: black;
+                            color: rgba(0, 150, 138);
                             font-size: 16px;
                             margin-bottom: 10px;
                         }
@@ -340,6 +366,7 @@ const Container = styled.div`
                             justify-content: space-between;
                             .firstTabMap {
                                 width: 100%;
+                                height: 230px;
                             }
                             .firstTabComponent {
                                 width: 100%;
@@ -357,10 +384,11 @@ const Container = styled.div`
             }
         }
         .profileFlex2 {
-            background-color: yellowgreen;
+            background-color: rgba(0, 150, 138, 0.3);
             flex-direction: column;
             display: flex;
             flex: 0.2;
+            border-top-right-radius: 10px;
         }   
     }
     .pathUIDhave {
@@ -369,11 +397,28 @@ const Container = styled.div`
             display: flex;
             flex-direction: column;
             flex: 0.8;
-            .profileContainer {
-                background-color: blueviolet;
+            margin-right: 10px;
+            .HeaderTabComponent {
                 display: flex;
                 flex-direction: row;
-                padding: 25px;
+                justify-content: end;
+                align-items: end;
+                .tabHeaderIcon {
+                    margin-top: 2px;
+                    color: rgba(0, 150, 138, 0.85);
+                    display: none;
+                }
+                .tabHeaderName {
+                    margin-top: 2px;
+                    color: rgba(0, 150, 138, 0.85);
+                    font-size: 20px;
+                }
+            }
+            .profileContainer {
+                background-color: white;
+                display: flex;
+                flex-direction: row;
+                padding: 20px;
                 align-items: center;
                 justify-content: start;
                 position: relative;
@@ -389,6 +434,7 @@ const Container = styled.div`
                     margin-top: 20px;
                     margin-left: 20px;
                     margin-right: 20px;
+                    color: rgba(0, 150, 138, 0.85);
                 }
                 .organizeBtn {
                     width: 100px;
@@ -408,17 +454,15 @@ const Container = styled.div`
                 }
             }
             .profileTab {
-                /* background-color: aliceblue; */
+                background-color: white;
                 display: flex;
                 flex-direction: row;
-                /* padding-top: 10px; */
-                /* padding-bottom: 10px; */
                 flex: 1;
                 justify-content: center;
                 height: 40px;
                 align-items: end;
                 .unSelectTab {
-                    background-color: green;
+                    background-color: rgba(0, 150, 138, 0.85);
                     display: flex;
                     cursor: pointer;
                     flex: 0.34;
@@ -433,71 +477,77 @@ const Container = styled.div`
                     border-top-left-radius: 10px;
                     border-top-right-radius: 10px;
                     &:hover {
-                        background-color: grey;
+                        background-color: rgba(0, 150, 138, 0.3);
                     }
                 }
                 .selectTab {
-                    background-color: grey;
+                    background-color: white;
                     display: flex;
                     cursor: pointer;
                     flex: 0.34;
                     height: 32px;
                     margin-left: 1px;
                     font-size: 14px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     align-items: end;
                     justify-content: center;
                     padding-bottom: 5px;
                     border-top-left-radius: 10px;
                     border-top-right-radius: 10px;
+                    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                    border-bottom: none;
                     &:hover {
-                        background-color: grey;
+                        background-color: white;
                     }
                 }
             }
             .profileTabComponent {
-                background-color: grey;
+                background-color: white;
+                border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                border-top: none;
                 flex-direction: column;
-                height: 70vh;
-                overflow-y: scroll;
-                -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                scrollbar-width: none; /* 파이어폭스 */
-                padding: 15px;
-                &::-webkit-scrollbar {
-                    display: none;
-                }
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
                 .tabComponent {
-                    /* background-color: skyblue; */
                     display: flex;
                     flex-direction: row;
                     flex: 1;
                     align-items: center;
-                    margin-bottom: 10px;
-                    /* padding: 8px; */
+                    margin-left: 15px;
+                    margin-right: 15px;
                     .wirteName {
-                        /* background-color: aquamarine; */
                         display: flex;
                         flex: 0.85;
-                        color: black;
+                        color: rgba(0, 150, 138, 0.85);
                         margin-right: 5px;
                         font-size: 16px;
+                        padding-top: 20px;
+                        padding-bottom: 10px;
                     }
                 }
                 .firstTabContainer {
+                    display: flex;
+                    flex-direction: column;
                     h4 {
                         display: flex;
-                        /* flex: 0.85; */
-                        color: black;
+                        color: rgba(0, 150, 138);
                         margin-right: 5px;
                         font-size: 16px;
-                        margin-bottom: 10px;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                        padding-top: 10px;
                     }
                     .firstTab {
                         display: flex;
                         justify-content: space-between;
+                        margin-left: 15px;
+                        margin-right: 15px;
                         .firstTabMap {
                             width: 65%;
                             margin-bottom: 10px;
+                            border-radius: 10px;
+                            overflow: hidden;
                         }
                         .firstTabComponent {
                             width: 33%;
@@ -513,7 +563,7 @@ const Container = styled.div`
                     @media screen and (max-width: 900px) {
                         h4 {
                             display: flex;
-                            color: black;
+                            color: rgba(0, 150, 138);
                             font-size: 16px;
                             margin-bottom: 10px;
                         }
@@ -523,6 +573,7 @@ const Container = styled.div`
                             justify-content: space-between;
                             .firstTabMap {
                                 width: 100%;
+                                height: 230px;
                             }
                             .firstTabComponent {
                                 width: 100%;
@@ -540,10 +591,12 @@ const Container = styled.div`
             }
         }
         .profileFlex2 {
-            background-color: yellowgreen;
+            background-color: rgba(0, 150, 138, 0.3);
             flex-direction: column;
             display: flex;
             flex: 0.2;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
         }   
     }
 `;

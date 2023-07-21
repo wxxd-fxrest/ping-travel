@@ -210,29 +210,33 @@ const PlacePage = ({mainPing}) => {
 };
 
 const Container = styled.div`
-    background-color: grey;
+    background-color: white;
     width: 60vw;
-    height: 100vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
+    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border-radius: 10px;
     @media screen and (max-width: 700px) {
-        width: 100vw;
+        width: 90vw;
     }
     .placeHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: black;
+            color: rgba(0, 150, 138, 0.85);
         }
         .placeHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
+                color: rgba(0, 150, 138, 0.85);
             }
             h4 {
                 font-size: 17px;
+                color: rgba(0, 150, 138, 0.85);
             }
         }
     }
@@ -251,7 +255,7 @@ const Container = styled.div`
         padding: 20px 20px 10px 20px;
         h4 {
             font-size: 20px;
-            color: white;
+            color: rgba(0, 150, 138, 0.85);
             margin-bottom: 5px;
         }
         .checkBoxContainer {
@@ -262,7 +266,7 @@ const Container = styled.div`
             h3 {
                 font-size: 15px;
                 color: black;
-                color: white;
+                color: rgba(0, 150, 138, 0.85);
             }
             .checkBoxComponent {
                 align-items: center;
@@ -340,7 +344,7 @@ const Container = styled.div`
                 h6 {
                     margin-right: 10px;
                     font-size: 14px;
-                    color: white;
+                    color: rgba(0, 150, 138, 0.85);
                     border-right: solid 1px black;
                     padding-right: 10px;
                 }
@@ -367,21 +371,17 @@ const Container = styled.div`
             min-height: 40px;
             border-radius: 10px;
             border: none;
-            background-color: rgba(255, 255, 255, 0.27);
-            /* background-color: rgba(255, 255, 255); */
-            color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(0, 150, 138, 0.3);
+            color: rgba(0, 150, 138, 0.85);
             outline: none;
             padding: 10px;
             margin-right: 5px;
             margin-top: 5px;
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.4);
-            }
             &::placeholder {
-                color: rgba(255, 255, 255, 0.7);
+                color: rgba(0, 150, 138, 0.85);
             }
             &:focus {
-                background-color: rgba(255, 255, 255, 0.4);
+                background-color: rgba(0, 150, 138, 0.3);
             }
         }
     }
