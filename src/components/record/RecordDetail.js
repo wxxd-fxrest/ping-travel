@@ -93,14 +93,14 @@ const RecordDetail = () => {
                         <h3> 장소 : {recordData.placeName} </h3>
 
                         {share ? <>
-                            <p> 함께 공유한 user </p>
+                            <p> 함께 공유한 user : 
                             {share.map((r, i) => {
                                 return (
                                     <div key={i}>
                                         <p> {r} </p>
                                     </div>
                                 )
-                            })}
+                            })} </p>
                         </> : <>
                             <p> 공유해준 user : {recordData.ownerID} </p>
                         </>}

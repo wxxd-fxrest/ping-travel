@@ -76,7 +76,7 @@ const MenuBar = ({mainPing}) => {
                             {friendRequest.map((f, i) => (
                                 <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
                             ))}
-                        </> : <p> 요청이 없습니다. </p>}
+                        </> : <p className="noRequest"> 요청이 없습니다. </p>}
 
                         <h5> 알림 </h5>          
 
@@ -270,6 +270,11 @@ const Container = styled.div`
                     color: rgba(0, 150, 138, 0.85);
                     font-size: 12px;
                     margin-top: 10px;
+                }
+                .noRequest {
+                    margin-top: 10px;
+                    color:  rgba(0, 150, 138, 0.5);
+                    font-size: 12px;
                 }
                 .alertShareContainer {
                     display: flex;

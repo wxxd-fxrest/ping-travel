@@ -25,12 +25,12 @@ const Record = ({recordData, profileUser}) => {
     return (
         <Container>
 
-            {recordData.Data.writeUID !== undefined && <div className="RecordContainer">
-                <p> 공유한 친구 : {recordData.Data.writeUID} </p>
+            {recordData.Data.ownerID !== undefined && <div className="RecordContainer">
+                <p> 나한테 공유한 친구 : {recordData.Data.ownerID} </p>
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 날짜 : {recordData.Data.date} </p>
                 <p> 기록 : {recordData.Data.record} </p>
-                <p> {recordData.Data.writeUID} </p>
+                {/* <p> {recordData.Data.writeUID} </p> */}
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -44,7 +44,7 @@ const Record = ({recordData, profileUser}) => {
                 <h3> 장소 : {recordData.Data.placeName} </h3>
                 <p> 날짜 : {recordData.Data.date} </p>
                 <p> 기록 : {recordData.Data.record} </p>
-                <p> {profileUser.uid} </p>
+                {/* <p> {profileUser.uid} </p> */}
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {

@@ -15,12 +15,12 @@ const Plan = ({planData, profileUser}) => {
     return (
         <Container>
 
-            {planData.Data.ownerUID !== undefined && <div className="PlanContainer">
-                <p> 공유한 친구 : {planData.Data.ownerUID} </p>
+            {planData.Data.ownerID !== undefined && <div className="PlanContainer">
+                <p> 나한테 공유한 친구 : {planData.Data.ownerID} </p>
                 <h3> 장소 : {planData.Data.placeName} </h3>
                 <p> 날짜 : {planData.Data.date} </p>
                 <p> 계획 : {planData.Data.plan} </p>
-                <p> {planData.Data.ownerUID} </p>
+                {/* <p> {planData.Data.writeUID} </p> */}
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -34,7 +34,7 @@ const Plan = ({planData, profileUser}) => {
                 <h3> 장소 : {planData.Data.placeName} </h3>
                 <p> 날짜 : {planData.Data.date} </p>
                 <p> 계획 : {planData.Data.plan} </p>
-                <p> {profileUser.uid} </p>
+                {/* <p> {profileUser.uid} </p> */}
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
