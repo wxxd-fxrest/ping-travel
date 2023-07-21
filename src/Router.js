@@ -26,7 +26,7 @@ const Router = ({mainPing}) => {
   }; 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="ping-travel">
         <Routes>
             <Route path='/auth' element={<Auth />}  />
             <Route path='/search' element={<Search />}  />
