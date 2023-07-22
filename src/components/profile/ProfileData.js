@@ -68,16 +68,15 @@ const Container = styled.div`
         display: flex;
     }
     .pathUIDhave {
-        margin-top: 20px;
         background-color: white;
         width: 80vw;
-        height: 95vh;
+        height: 67vh;
         position: relative;
         .haveBackBtn {
             position: absolute;
             z-index: 1;
             color: white;
-            top: 13px;
+            top: 10px;
             cursor: pointer;
             color: rgba(0, 150, 138, 0.85);
         }

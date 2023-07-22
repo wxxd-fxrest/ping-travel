@@ -47,201 +47,143 @@ const MenuBar = ({mainPing}) => {
     
     return (
         <Container>
-            <div className="menubar">
-                <p className="search"> 친구를 검색하세요. </p>
-                <FriendSearchID setRequestAlert={setRequestAlert} open={open} setOpen={setOpen} loginUserData={loginUserData}/>
+            <div className="main">
+                <div className="menubar">
+                    <p className="search"> 친구를 검색하세요. </p>
+                    <FriendSearchID setRequestAlert={setRequestAlert} open={open} setOpen={setOpen} loginUserData={loginUserData}/>
 
-                <div className="tabContainer" onClick={() => setTab(0)}>
-                    <HiOutlineDocumentText size="25px" className="tabBtn" />
-                    <h3> 메인 </h3>
-                </div>
-                <div className="tabContainer" onClick={() => setTab(1)}>
-                    <HiOutlineMapPin size="25px" className="tabBtn" />
-                    <h3> 리뷰 / 질문 </h3>
-                </div>
-
-                <div className="alertContainer">
-                    <div className="alertTab"  
-                        onClick={() => {
-                            setOpen(false)
-                            setRequestAlert(!requestAlert)}}>
-                        <HiBellAlert size="25px" className="alertIcons" />
-                        <h3> 알림 </h3>
+                    <div className="tabContainer" onClick={() => setTab(0)}>
+                        <HiOutlineDocumentText size="25px" className="tabBtn" />
+                        <h3> 메인 </h3>
+                    </div>
+                    <div className="tabContainer" onClick={() => setTab(1)}>
+                        <HiOutlineMapPin size="25px" className="tabBtn" />
+                        <h3> 리뷰 / 질문 </h3>
                     </div>
 
-                    {requestAlert === true ? <div className="alertScroll">
-                        <h5> 친구요청 </h5>         
-
-                        {friendRequest !== undefined ? <>
-                            {friendRequest.map((f, i) => (
-                                <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
-                            ))}
-                        </> : <p className="noRequest"> 요청이 없습니다. </p>}
-
-                        <h5> 알림 </h5>          
-
-                        {share !== undefined ? <>
-                            {share.map((s, i) => {
-                                return(
-                                    <div key={i} className="alertShareContainer">
-                                        <p> {s.alert} </p>
-                                        <h6> · 장소: "{s.placeName}" </h6>
-                                        <h1> · {s.date} </h1>
-                                        <button onClick={async() => {
-                                            await updateDoc(doc(db, "UserInfo", currentUser.uid), {
-                                                shareAlert: arrayRemove(s),
-                                            }); // 수락 시 요청 데이터 삭제 
-                                            navigate(`/profile/${loginUserData.ID}`);
-                                            window.location.reload(); 
-                                        }}> 확인 </button>
-                                    </div>
-                                )
-                            })}
-                        </> : <p> 알림이 없습니다. </p>}
-
-                    </div> : null }
-                </div>
-                <div className="logoutContainer" 
-                    onClick={() => {
-                        signOut(auth) 
-                        navigate("/")
-                        alert("로그아웃 되었습니다.")}}>
-                    <HiOutlinePower className="logoutBtn" size="23px"/>
-                    <h3> 로그아웃 </h3> 
-                </div>
-            </div>
-
-            <div className="tab">
-                {tab === 0 && <> 
-                    <ProfileData mainPing={mainPing} loginUserData={loginUserData}/>
-                </>}
-                {tab === 1 && <>
-                    <div className="reviewQuestionTab">
-                        <div className="tabComponent">
-                            <HiOutlineMapPin size="30px" className="tabHeaderIcon" />
-                            <h4> 리뷰 / 질문 </h4>
+                    <div className="alertContainer">
+                        <div className="alertTab"  
+                            onClick={() => {
+                                setOpen(false)
+                                setRequestAlert(!requestAlert)}}>
+                            <HiBellAlert size="25px" className="alertIcons" />
+                            <h3> 알림 </h3>
                         </div>
-                        <HiMiniMagnifyingGlass size="25px" className='searchIcon'
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate('/search');
-                            }} />
+
+                        {requestAlert === true ? <div className="alertScroll">
+                            <h5> 친구요청 </h5>         
+
+                            {friendRequest !== undefined ? <>
+                                {friendRequest.map((f, i) => (
+                                    <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
+                                ))}
+                            </> : <p className="noRequest"> 요청이 없습니다. </p>}
+
+                            <h5> 알림 </h5>          
+
+                            {share !== undefined ? <>
+                                {share.map((s, i) => {
+                                    return(
+                                        <div key={i} className="alertShareContainer">
+                                            <p> {s.alert} </p>
+                                            <h6> · 장소: "{s.placeName}" </h6>
+                                            <h1> · {s.date} </h1>
+                                            <button onClick={async() => {
+                                                await updateDoc(doc(db, "UserInfo", currentUser.uid), {
+                                                    shareAlert: arrayRemove(s),
+                                                }); // 수락 시 요청 데이터 삭제 
+                                                navigate(`/profile/${loginUserData.ID}`);
+                                                window.location.reload(); 
+                                            }}> 확인 </button>
+                                        </div>
+                                    )
+                                })}
+                            </> : <p> 알림이 없습니다. </p>}
+
+                        </div> : null }
                     </div>
-                    <ReviewQuestion mainPing={mainPing} />
-                </>}
+                    <div className="logoutContainer" 
+                        onClick={() => {
+                            signOut(auth) 
+                            navigate("/")
+                            alert("로그아웃 되었습니다.")}}>
+                        <HiOutlinePower className="logoutBtn" size="23px"/>
+                        <h3> 로그아웃 </h3> 
+                    </div>
+                </div>
+
+                <div className="tab">
+                    {tab === 0 && <> 
+                        <ProfileData mainPing={mainPing} loginUserData={loginUserData}/>
+                    </>}
+                    {tab === 1 && <>
+                        <div className="reviewQuestionTab">
+                            <div className="searchBox">
+                                <HiMiniMagnifyingGlass className='searchIcon'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate('/search');
+                                    }} />
+                                <p> 검색 </p>
+                            </div>
+                            <div className="tabComponent">
+                                <HiOutlineMapPin className="tabHeaderIcon" />
+                                <h4 className="tabHeaderName"> 리뷰 / 질문 </h4>
+                            </div>
+                        </div>
+                        <ReviewQuestion mainPing={mainPing} />
+                    </>}
+                </div>
             </div>
         </Container>
     )
 };
 
 const Container = styled.div`
-    /* background-color: grey; */
+    background-color: white;
     display: flex;
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
-    flex: 1;
-    .menubar {
-        background-color: white;
-        width: 180px;
-        max-width: 180px;
-        min-width: 180px;
-        flex: 0.2;
-        padding: 15px;
-        border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
-        @media screen and (max-width: 750px) {
-            width: 150px;
-            max-width: 150px;
-            min-width: 150px;
-        }
-        @media screen and (max-width: 600px) {
-            width: 50px;
-            max-width: 50px;
-            min-width: 50px;
-        }
-        .logoutContainer {
+    flex-direction: column;
+    .main {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        .menubar {
             background-color: white;
-            bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            position: absolute;
-            margin: 10px 10px 20px 10px;
-            cursor: pointer;
+            width: 180px;
+            max-width: 180px;
+            min-width: 180px;
+            flex: 0.1;
+            padding: 15px;
+            border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+            @media screen and (max-width: 750px) {
+                width: 150px;
+                max-width: 150px;
+                min-width: 150px;
+            }
             @media screen and (max-width: 600px) {
-                margin: 10px 10px 20px 0px;
-                justify-items: center;
-                left: 30px;
+                width: 50px;
+                max-width: 50px;
+                min-width: 50px;
             }
-            .logoutBtn{
-                color: rgba(0, 150, 138, 0.85);
-            }
-            h3 {
-                width: 100px;
-                font-size: 14px;
-                color: rgba(0, 150, 138, 0.85);
-                position: absolute;
-                left: 35px;
-                top: 10px;
-                @media screen and (max-width: 600px) {
-                    display: none;
-                }
-            }
-        }
-        .search {
-            color: rgba(0, 150, 138, 0.85);
-            font-size: 11px;
-            margin: 20px 10px 2px 20px;
-            @media screen and (max-width: 600px) {
-                display: none;
-            }
-        }
-        .tabContainer {
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            position: relative;
-            margin: 10px 10px 20px 10px;
-            cursor: pointer;
-            @media screen and (max-width: 600px) {
-                margin: 10px 10px 20px 0px;
-                justify-items: center;
-                left: 10px;
-            }
-            .tabBtn {
-                color: rgba(0, 150, 138, 0.85);
-            }
-            h3 {
-                font-size: 14px;
-                color: rgba(0, 150, 138, 0.85);
-                position: absolute;
-                left: 35px;
-                top: 10px;
-                @media screen and (max-width: 600px) {
-                    display: none;
-                }
-            }
-        }
-        .alertContainer {
-            /* background-color: wheat; */
-            display: flex;
-            flex-direction: column;
-            margin: 10px 10px 20px 10px;
-            .alertTab {
-                /* background-color: violet; */
+            .logoutContainer {
+                background-color: white;
+                bottom: 10px;
                 display: flex;
-                flex-direction: row;
                 align-items: center;
                 justify-content: start;
-                position: relative;
-                margin-bottom: 10px;
+                position: absolute;
+                margin: 10px 10px 20px 10px;
                 cursor: pointer;
                 @media screen and (max-width: 600px) {
+                    margin: 10px 10px 20px 0px;
                     justify-items: center;
-                    left: 0px;
+                    left: 30px;
                 }
-                .alertIcons {
+                .logoutBtn{
                     color: rgba(0, 150, 138, 0.85);
                 }
                 h3 {
@@ -256,130 +198,201 @@ const Container = styled.div`
                     }
                 }
             }
-            .alertScroll {
-                display: flex;
-                height: 500px;
-                flex-direction: column;
-                overflow-y: scroll;
-                -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                scrollbar-width: none; /* 파이어폭스 */
-                &::-webkit-scrollbar {
+            .search {
+                color: rgba(0, 150, 138, 0.85);
+                font-size: 11px;
+                margin: 20px 10px 2px 20px;
+                @media screen and (max-width: 600px) {
                     display: none;
                 }
-                h5 {
+            }
+            .tabContainer {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                position: relative;
+                margin: 10px 10px 20px 10px;
+                cursor: pointer;
+                @media screen and (max-width: 600px) {
+                    margin: 10px 10px 20px 0px;
+                    justify-items: center;
+                    left: 10px;
+                }
+                .tabBtn {
                     color: rgba(0, 150, 138, 0.85);
-                    font-size: 12px;
-                    margin-top: 10px;
                 }
-                .noRequest {
-                    margin-top: 10px;
-                    color:  rgba(0, 150, 138, 0.5);
-                    font-size: 12px;
+                h3 {
+                    font-size: 14px;
+                    color: rgba(0, 150, 138, 0.85);
+                    position: absolute;
+                    left: 35px;
+                    top: 10px;
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }
                 }
-                .alertShareContainer {
+            }
+            .alertContainer {
+                /* background-color: wheat; */
+                display: flex;
+                flex-direction: column;
+                margin: 10px 10px 20px 10px;
+                .alertTab {
+                    /* background-color: violet; */
                     display: flex;
-                    background-color: rgba(0, 150, 138, 0.5); 
-                    border-radius: 10px;
-                    list-style: none;
-                    text-align: start;
-                    align-items: flex-start;
-                    justify-content: center;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: start;
                     position: relative;
-                    flex-direction: column;
-                    margin-top: 5px;
                     margin-bottom: 10px;
-                    padding: 13px;
-                    p {
-                        color: rgba(255, 255, 255);
+                    cursor: pointer;
+                    @media screen and (max-width: 600px) {
+                        justify-items: center;
+                        left: 0px;
+                    }
+                    .alertIcons {
+                        color: rgba(0, 150, 138, 0.85);
+                    }
+                    h3 {
+                        width: 100px;
                         font-size: 14px;
-                        margin-bottom: 10px;
-                    }
-                    h6 {
-                        /* color: rgba(255, 255, 255, 0.6); */
-                        color: rgba(0, 150, 138, 0.9);
-                        font-size: 13px;
-                        margin-bottom: 5px;
-                    }
-                    h1 {
-                        color: rgba(0, 150, 138, 0.9);
-                        font-size: 13px;
-                        margin-bottom: 5px;
-                    }
-                    button {
-                        width: 100%;
-                        height: 25px;
-                        border-radius: 50px;
-                        border: none;
-                        background-color: rgba(0, 150, 138, 0.85);
-                        color: white;
-                        font-size: 10px;
-                        font-weight: bold;
-                        margin-top: 5px;
-                        cursor: pointer;
-                        &:hover {
-                            background-color: rgba(0, 150, 138);
+                        color: rgba(0, 150, 138, 0.85);
+                        position: absolute;
+                        left: 35px;
+                        top: 10px;
+                        @media screen and (max-width: 600px) {
+                            display: none;
                         }
                     }
                 }
+                .alertScroll {
+                    display: flex;
+                    height: 500px;
+                    flex-direction: column;
+                    overflow-y: scroll;
+                    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                    scrollbar-width: none; /* 파이어폭스 */
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                    h5 {
+                        color: rgba(0, 150, 138, 0.85);
+                        font-size: 12px;
+                        margin-top: 10px;
+                    }
+                    .noRequest {
+                        margin-top: 10px;
+                        color:  rgba(0, 150, 138, 0.5);
+                        font-size: 12px;
+                    }
+                    .alertShareContainer {
+                        display: flex;
+                        background-color: rgba(0, 150, 138, 0.5); 
+                        border-radius: 10px;
+                        list-style: none;
+                        text-align: start;
+                        align-items: flex-start;
+                        justify-content: center;
+                        position: relative;
+                        flex-direction: column;
+                        margin-top: 5px;
+                        margin-bottom: 10px;
+                        padding: 13px;
+                        p {
+                            color: rgba(255, 255, 255);
+                            font-size: 14px;
+                            margin-bottom: 10px;
+                        }
+                        h6 {
+                            /* color: rgba(255, 255, 255, 0.6); */
+                            color: rgba(0, 150, 138, 0.9);
+                            font-size: 13px;
+                            margin-bottom: 5px;
+                        }
+                        h1 {
+                            color: rgba(0, 150, 138, 0.9);
+                            font-size: 13px;
+                            margin-bottom: 5px;
+                        }
+                        button {
+                            width: 100%;
+                            height: 25px;
+                            border-radius: 50px;
+                            border: none;
+                            background-color: rgba(0, 150, 138, 0.85);
+                            color: white;
+                            font-size: 10px;
+                            font-weight: bold;
+                            margin-top: 5px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(0, 150, 138);
+                            }
+                        }
+                    }
+                }
+                @media screen and (max-width: 600px) {
+                    display: none;
+                }
+            }
+        }
+        .tab {
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            width: 100vw;
+            height: 100%;
+            flex: 0.9;
+            /* padding: 15px 30px 0px 30px; */
+            @media screen and (max-width: 900px) {
+                /* padding: 15px 10px 0px 10px; */
             }
             @media screen and (max-width: 600px) {
-                display: none;
+                flex: 0.9;
+            }
+            .reviewQuestionTab {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+                .searchBox {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: end;
+                    .searchIcon {
+                        color: rgba(0, 150, 138, 0.85);
+                        cursor: pointer;
+                        width: 35px;
+                        height: 35px;
+                        margin-left: 10px;
+                    }
+                    p {
+                        color: rgba(0, 150, 138, 0.85);
+                        font-size: 20px;
+                        margin: 10px 10px 0px 5px;
+                    }
+                }
+                .tabComponent {
+                    display: flex;
+                    align-items: end;
+                    .tabHeaderIcon {
+                        color: rgba(0, 150, 138, 0.85);
+                        width: 35px;
+                        height: 35px;
+                        margin: 10px 0px 10px 50px;
+                    }
+                    .tabHeaderName {
+                        color: rgba(0, 150, 138, 0.85);
+                        font-size: 20px;
+                        margin: 10px 10px 10px 0px;
+                    }
+                }
             }
         }
     }
-    .tab {
-        display: flex;
-        flex-direction: column;
-        /* align-items: center; */
+    @media screen and (max-width: 750px) {
         width: 100vw;
-        height: 100%;
-        flex: 0.9;
-        padding: 15px 30px 0px 30px;
-        @media screen and (max-width: 900px) {
-            padding: 15px 10px 0px 10px;
-        }
-        @media screen and (max-width: 600px) {
-            flex: 0.9;
-        }
-        .tabComponent {
-            /* background-color: aliceblue; */
-            display: flex;
-            flex-direction: row;
-            align-items: end;
-            .tabHeaderIcon {
-                color: rgba(0, 150, 138, 0.85);
-            }
-            h4 {
-                color: rgba(0, 150, 138, 0.85);
-                font-size: 20px;
-            }
-        }
-        .reviewQuestionTab {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            .tabComponent {
-                /* background-color: aliceblue; */
-                display: flex;
-                flex-direction: row;
-                align-items: end;
-                margin-bottom: 10px;
-                .tabHeaderIcon {
-                    color: rgba(0, 150, 138, 0.85);
-                }
-                h4 {
-                    color: rgba(0, 150, 138, 0.85);
-                    font-size: 20px;
-                }
-            }
-            .searchIcon {
-                color: rgba(0, 150, 138, 0.85);
-                cursor: pointer;
-                margin-top: 3px;
-                margin-right: 5px;
-            }
-        }
-        
     }
 `;
 

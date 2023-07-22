@@ -47,11 +47,6 @@ const Login = ({setOpen, open}) => {
 
     return(
         <Container>
-            <div className="transform">
-                <h3 className="authTransform"> 계정이 없다면 회원가입을 진행해주세요. ▸▸ </h3>
-                <HiOutlineUserCircle size="25px" className="transformIcon"
-                    onClick={() => {setOpen(!open)}}/>
-            </div>
             <div className="logo">
                 <h3> Ping Travel </h3>
             </div>
@@ -75,6 +70,11 @@ const Login = ({setOpen, open}) => {
                         onChange={onChange} />
                 </div>
                 <button> Log In </button>
+                <div className="transform">
+                    <h3 className="authTransform"> 계정이 없다면 회원가입을 진행해주세요. ▸▸ </h3>
+                    <HiOutlineUserCircle size="25px" className="transformIcon"
+                        onClick={() => {setOpen(!open)}}/>
+                </div>
             </form>
         </Container>
     )
@@ -141,7 +141,7 @@ const Container = styled.div`
                 margin-top: 10px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(255, 255, 255, 0.27);
+                background-color: rgba(255, 255, 255, 0.5);
                 /* background-color: rgba(255, 255, 255); */
                 padding-left: 50px;
                 padding-right: 50px;
@@ -165,13 +165,13 @@ const Container = styled.div`
             margin-bottom: 10px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
+            background-color: rgba(0, 150, 138, 0.9);
             color: white;
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             &:hover {
-                background-color: rgba(0, 150, 138);
+                background-color: rgba(0, 150, 138, 0.75);
             }
         }
     }

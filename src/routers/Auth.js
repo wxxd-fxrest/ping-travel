@@ -20,7 +20,7 @@ const Auth = () => {
 };
 
 const Container = styled.div`
-    background-color: #D4F4FA;
+    background-color: white;
     position: relative;
     display: flex;
     text-align: start;
@@ -37,7 +37,7 @@ const Container = styled.div`
         .authComponent {
             position: absolute;
             display: inline-block;
-            top: 40%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 30px;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { db } from "../../../firebase";
 import Plan from "../../plan/Plan";
 
-const ThirdTab = ({profileUser}) => {
+const ThirdTab = ({profileUser, pathUID}) => {
     const [planData, setPlanData] = useState([]);
 
     useEffect(() => {
@@ -25,19 +25,19 @@ const ThirdTab = ({profileUser}) => {
 
     return (
         <Container>
-            {planData.map((p, i) => (
-                <Plan key={i} planData={p} profileUser={profileUser}/>
-            ))}
+            <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
+                {planData.map((p, i) => (
+                    <Plan key={i} planData={p} profileUser={profileUser}/>
+                ))}
+            </div>
         </Container>
     )
 };
 
 const Container = styled.div`
-    padding-left: 15px;
-    padding-right: 15px;
     display: flex;
     flex-direction: column;
-    height: 70%;
+    height: 71%;
     overflow-y: scroll;
     -ms-overflow-style: none; 
     scrollbar-width: none; 

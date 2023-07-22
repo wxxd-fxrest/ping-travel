@@ -4,7 +4,7 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import Record from "../../record/Record";
 import styled from "styled-components";
 
-const SecondTab = ({profileUser}) => {
+const SecondTab = ({profileUser, pathUID}) => {
     const [recordData, setRecordData] = useState([]);
 
     useEffect(() => {
@@ -25,19 +25,19 @@ const SecondTab = ({profileUser}) => {
 
     return (
         <Container>
-            {recordData.map((r, i) => (
-                <Record key={i} recordData={r} profileUser={profileUser}/>
-            ))}
+            <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
+                {recordData.map((r, i) => (
+                    <Record key={i} recordData={r} profileUser={profileUser}/>
+                ))}
+            </div>
         </Container>
     )
 };
 
 const Container = styled.div`
-    padding-left: 15px;
-    padding-right: 15px;
     display: flex;
     flex-direction: column;
-    height: 70%;
+    height: 71%;
     overflow-y: scroll;
     -ms-overflow-style: none; 
     scrollbar-width: none; 

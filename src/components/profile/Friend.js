@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../AuthContext";
-import { HiOutlineUsers, HiMiniSparkles, HiOutlineRocketLaunch } from "react-icons/hi2";
+import { HiOutlineUsers, HiMiniSparkles, HiOutlineRocketLaunch, HiOutlineXCircle } from "react-icons/hi2";
 
-const Friend = ({profileUser, friendID}) => {
+const Friend = ({profileUser, friendID, onClickOpen, setOpen, open}) => {
     const {currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const Friend = ({profileUser, friendID}) => {
             <div className="friendHeader">
                 <HiOutlineUsers size="30px" className="Icon"/>
                 <h3> 친구 </h3>
+                <HiOutlineXCircle size="30px" className="backIcon" onClick={() => setOpen(!open)} />
             </div>
             {friendList()}
         </Container>
@@ -57,8 +58,8 @@ const Container = styled.div`
         align-items: flex-end;
         margin-top: 10px;
         margin-bottom: 10px;
+        position: relative;
         @media screen and (max-width: 900px) {
-            justify-content: flex-end;
             margin-right: 10px;
         }
         .Icon {
@@ -66,13 +67,22 @@ const Container = styled.div`
         }
         h3 {
             color: rgba(0, 150, 138, 0.95);
+            font-size: 20px;
+            @media screen and (max-width: 1100px) {
+                display: none;
+            }
         }
-    }
-    h3 {
-        font-size: 20px;
-        margin-left: 10px;
-        @media screen and (max-width: 900px) {
-            display: none;
+        .backIcon {
+            color: rgba(0, 150, 138, 0.95);
+            position: absolute;
+            right: 0px;
+            cursor: pointer;
+            &:hover {
+                color: rgba(0, 150, 138, 0.58);
+            }
+            @media screen and (max-width: 900px) {
+                right: -10px;
+            }
         }
     }
     .friendList {

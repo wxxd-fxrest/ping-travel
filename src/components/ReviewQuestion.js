@@ -135,8 +135,9 @@ const Container = styled.div`
     .reviewQuestionMap {
         justify-content: space-between;
         display: flex;
+        margin: 10px 10px 0px 10px;
         .reviewQuestionMapContainer {
-            width: 100%;
+            width: 100%;   
             margin-right: 10px;
         }
         .reviewQuestionListContainer {
@@ -197,7 +198,7 @@ const Container = styled.div`
     .selectPlace {
         display: flex;
         padding: 10px;
-        margin-top: 10px;
+        /* margin-top: 10px; */
         .selectPlaceContainer {
             display: flex;
             width: 100%;
@@ -211,11 +212,20 @@ const Container = styled.div`
             flex-direction: column;
             margin-top: 5px;
             margin-bottom: 10px;
-            padding: 13px;
+            padding: 20px;
+            h4 {
+                color: rgba(0, 150, 138, 0.85);
+                font-size: 18px;
+            }
+            p {
+                color: rgba(0, 150, 138, 0.85);
+                font-size: 12px;
+                margin-top: 5px;
+            }
             button {
                 margin-top: 10px;
                 width: 100%;
-                height: 30px;
+                height: 35px;
                 border-radius: 50px;
                 border: none;
                 background-color: rgba(0, 150, 138, 0.85);
@@ -226,15 +236,6 @@ const Container = styled.div`
                 &:hover {
                     background-color: rgba(0, 150, 138);
                 }
-            }
-            h4 {
-                color: rgba(0, 150, 138, 0.85);
-                font-size: 18px;
-            }
-            p {
-                color: rgba(0, 150, 138, 0.85);
-                font-size: 12px;
-                margin-top: 5px;
             }
         }
         h4 {

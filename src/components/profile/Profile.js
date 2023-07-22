@@ -13,7 +13,7 @@ import FirstTab from "./tabComponent/FirstTab";
 import SecondTab from "./tabComponent/SecondTab";
 import ThirdTab from "./tabComponent/ThirdTab";
 import styled from "styled-components";
-import { HiOutlineDocumentText } from "react-icons/hi2";
+import { HiOutlineDocumentText, HiOutlineUserGroup } from "react-icons/hi2";
 
 // import MARKER from '../../img/marker.png';
 // import questionMarker from '../../img/question_marker.png';
@@ -28,6 +28,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
     const [tab, setTab] = useState(0);
     const [myPingID, setMyPingID] = useState([]);
     const [attachment, setAttachment] = useState(""); 
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         const FeedCollection = query(
@@ -100,72 +101,80 @@ const Profile = ({profileUser, friendID, pathUID}) => {
     return (
         <Container> 
             <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
-                <div className="profileFlex1">
-                    <div div className="HeaderTabComponent">
-                        <HiOutlineDocumentText size="30px" className="tabHeaderIcon"/>
-                        <h4 className="tabHeaderName"> 메인 </h4>
-                    </div>
-                    <div className="profileContainer">
-
-                        {profileUser.uid === currentUser.uid &&
-                        <input type="file"
-                            style={{display:"none"}}
-                            id="inputFile"
-                            onChange={onFileChange}
-                            required />}
-                        <label htmlFor="inputFile">
-                            {attachment ? 
-                                <img src={attachment} alt="" /> 
-                                : 
-                                <img src={profileUser.attachmentUrl} alt="" />}
-                        </label>
-
-                        <p> {profileUser.ID} </p>
-                            {profileUser.uid === currentUser.uid ? <>
-                                {attachment && <button className="organizeBtn" onClick={onEdit}> 프로필 수정 </button>}
-                            </> : <button className="organizeBtn" onClick={onOrganize}> 친구 정리 </button>}
-                    </div>
-
-                    <div className="profileTab">
-                        <h3 className={tab === 0 ? "selectTab" : "unSelectTab"} onClick={() => setTab(0)}> 여행 기록 </h3>
-                        <h3 className={tab === 1 ? "selectTab" : "unSelectTab"} onClick={() => setTab(1)}> 여행 계획 </h3>
-                        <h3 className={tab === 2 ? "selectTab" : "unSelectTab"} onClick={() => setTab(2)}> 리뷰 / 질문 </h3>
-                    </div>
-
-                    <div className="profileTabComponent">
-                        {tab === 0 && <>
-                            <div className="tabComponent">
-                                <h4 className="wirteName"> 여행 기록 (with. friend) </h4>
-                                {!pathUID &&
-                                <button className="wirteBtn"
-                                    onClick={() => navigate('/record/search')}> 기록하기 </button>}
-                            </div>
-                            <SecondTab profileUser={profileUser} />
-                        </>}
-                        {tab === 1 && <>
-                            <div className="tabComponent">
-                                <h4 className="wirteName"> 여행 계획 (with. friend) </h4>
-                                {!pathUID &&
-                                <button className="wirteBtn"
-                                    onClick={() => navigate('/plan/search')}> 계획하기 </button>}
-                            </div>
-                            <ThirdTab profileUser={profileUser} />
-                        </>}
-                        {tab === 2 && <div className="firstTabContainer">
-                            <h4> 내가 남긴 질문/리뷰 </h4>
-                            <div className="firstTab">
-                                <div className="firstTabMap">
-                                    <MapComponent />
-                                </div>
-                                <div className="firstTabComponent">
-                                    <FirstTab myPingID={myPingID} profileUser={profileUser}/>
-                                </div>
-                            </div>
-                        </div>}
-                    </div>
+                <div div className="HeaderTabComponent">
+                    <HiOutlineDocumentText className="tabHeaderIcon"/>
+                    <h4 className="tabHeaderName"> 메인 </h4>
                 </div>
-                <div className="profileFlex2">
-                    <Friend profileUser={profileUser} friendID={friendID}/> 
+                <div className="bodyContainer">
+
+                    {profileUser.uid === currentUser.uid && <>
+                        {open === false ? 
+                        <div className="clickOpen" onClick={() => setOpen(!open)}>
+                            <HiOutlineUserGroup className="clickIcon"/>
+                        </div> : <div className="profileFlex2">
+                            <Friend profileUser={profileUser} friendID={friendID} setOpen={setOpen} open={open}/> 
+                        </div>}
+                    </>}
+
+                    <div className={open === true ? "profileFlex1" : "openProfileFlex1"}>
+                        <div className="profileContainer">
+                            {profileUser.uid === currentUser.uid &&
+                            <input type="file"
+                                style={{display:"none"}}
+                                id="inputFile"
+                                onChange={onFileChange}
+                                required />}
+                            <label htmlFor="inputFile">
+                                {attachment ? 
+                                    <img src={attachment} alt="" /> 
+                                    : 
+                                    <img src={profileUser.attachmentUrl} alt="" />}
+                            </label>
+
+                            <p> {profileUser.ID} </p>
+                                {profileUser.uid === currentUser.uid ? <>
+                                    {attachment && <button className="organizeBtn" onClick={onEdit}> 프로필 수정 </button>}
+                                </> : <button className="organizeBtn" onClick={onOrganize}> 친구 정리 </button>}
+                        </div>
+
+                        <div className="profileTab">
+                            <h3 className={tab === 0 ? "selectTab" : "unSelectTab"} onClick={() => setTab(0)}> 여행 기록 </h3>
+                            <h3 className={tab === 1 ? "selectTab" : "unSelectTab"} onClick={() => setTab(1)}> 여행 계획 </h3>
+                            <h3 className={tab === 2 ? "selectTab" : "unSelectTab"} onClick={() => setTab(2)}> 리뷰 / 질문 </h3>
+                        </div>
+
+                        <div className="profileTabComponent">
+                            {tab === 0 && <>
+                                <div className="tabComponent">
+                                    <h4 className="wirteName"> 여행 기록 (with. friend) </h4>
+                                    {!pathUID &&
+                                    <button className="wirteBtn"
+                                        onClick={() => navigate('/record/search')}> 기록하기 </button>}
+                                </div>
+                                <SecondTab profileUser={profileUser} pathUID={pathUID} />
+                            </>}
+                            {tab === 1 && <>
+                                <div className="tabComponent">
+                                    <h4 className="wirteName"> 여행 계획 (with. friend) </h4>
+                                    {!pathUID &&
+                                    <button className="wirteBtn"
+                                        onClick={() => navigate('/plan/search')}> 계획하기 </button>}
+                                </div>
+                                <ThirdTab profileUser={profileUser} pathUID={pathUID}/>
+                            </>}
+                            {tab === 2 && <div className="firstTabContainer">
+                                <h4> 내가 남긴 질문/리뷰 </h4>
+                                <div className="firstTab">
+                                    <div className="firstTabMap">
+                                        <MapComponent />
+                                    </div>
+                                    <div className="firstTabComponent">
+                                        <FirstTab myPingID={myPingID} profileUser={profileUser} pathUID={pathUID}/>
+                                    </div>
+                                </div>
+                            </div>}
+                        </div>
+                    </div>
                 </div>
             </div>
         </Container>
@@ -181,403 +190,208 @@ const Container = styled.div`
     height: 100vh;
     .pathUIDunHave {
         display: flex;
-        .profileFlex1 {
-            flex-direction: column;
-            width: 100%;
-            flex: 0.8;
-            margin-right: 10px;
-            .HeaderTabComponent {
-                display: flex;
-                flex-direction: row;
-                justify-content: start;
-                align-items: center;
-                .tabHeaderIcon {
-                    color: rgba(0, 150, 138, 0.85);
-                }
-                .tabHeaderName {
-                    color: rgba(0, 150, 138, 0.85);
-                    font-size: 20px;
-                }
+        position: relative;
+        flex-direction: column;
+        .HeaderTabComponent {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+            .tabHeaderIcon {
+                color: rgba(0, 150, 138, 0.85);
+                width: 35px;
+                height: 35px;
+                margin: 10px 0px 10px 50px;
             }
-            .profileContainer {
-                display: flex;
-                flex-direction: row;
-                padding: 10px;
-                align-items: center;
-                justify-content: start;
-                img {
-                    width: 90px;
-                    height: 90px;
-                    border-radius: 100%;
-                }
-                p {
-                    font-size: 24px;
-                    margin-left: 20px;
-                    margin-right: 10px;
-                    color: rgba(0, 150, 138, 0.85);
-                }
-                .organizeBtn {
-                    width: 80px;
-                    height: 25px;
-                    border-radius: 50px;
-                    border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
-                    color: white;
-                    font-size: 10px;
-                    font-weight: bold;
-                    margin-left: 10px;
-                    cursor: pointer;
-                    &:hover {
-                        background-color: rgba(0, 150, 138);
-                    }
-                }
+            .tabHeaderName {
+                color: rgba(0, 150, 138, 0.85);
+                font-size: 20px;
+                margin: 10px 10px 0px 0px;
             }
-            .profileTab {
-                background-color: white;
+        }
+        .bodyContainer {
+            display: flex;
+            flex-direction: row;
+            .clickOpen {
+                background-color: rgba(0, 150, 138, 0.85);
+                position: absolute;
+                top: 60px;
+                z-index: 10;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                height: 50px;
+                width: 45px;
                 display: flex;
-                flex-direction: row;
-                flex: 1;
                 justify-content: center;
-                height: 40px;
-                align-items: end;
-                .unSelectTab {
-                    background-color: rgba(0, 150, 138, 0.85);
-                    display: flex;
-                    cursor: pointer;
-                    flex: 0.36;
-                    height: 32px;
-                    font-size: 14px;
+                align-items: center;
+                cursor: pointer;
+                .clickIcon {
                     color: white;
-                    align-items: end;
-                    justify-content: center;
-                    padding-bottom: 5px;
-                    border-top-left-radius: 10px;
-                    border-top-right-radius: 10px;
-                    &:hover {
-                        background-color: rgba(0, 150, 138, 0.3);
-                    }
-                }
-                .selectTab {
-                    background-color: white;
-                    display: flex;
-                    cursor: pointer;
-                    flex: 0.36;
-                    height: 32px;
-                    font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
-                    align-items: end;
-                    justify-content: center;
-                    padding-bottom: 5px;
-                    border-top-left-radius: 10px;
-                    border-top-right-radius: 10px;
-                    border: solid 0.01rem rgba(0, 150, 138, 0.85);
-                    border-bottom: none;
-                    &:hover {
-                        background-color: white;
-                    }
+                    width: 28px;
+                    height: 28px;
                 }
             }
-            .profileTabComponent {
-                background-color: white;
-                border: solid 0.01rem rgba(0, 150, 138, 0.85);
-                border-top: none;
+            .profileFlex2 {
+                flex-direction: column;
+                display: flex;
+                flex: 0.2;
+                border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+            }  
+            .profileFlex1 { 
                 flex-direction: column;
                 width: 100%;
-                height: 100vh;
-                .tabComponent {
+                flex: 0.8;
+                margin-left: 50px;
+                margin-right: 5px;
+                @media screen and (max-width: 750px) {
+                    margin-left: 5px;
+                    margin-right: 5px;
+                }
+                .profileContainer {
                     display: flex;
                     flex-direction: row;
-                    flex: 1;
+                    padding: 10px;
                     align-items: center;
-                    margin-left: 15px;
-                    margin-right: 15px;
-                    .wirteName {
-                        display: flex;
-                        flex: 0.85;
-                        color: rgba(0, 150, 138, 0.85);
-                        margin-right: 5px;
-                        font-size: 16px;
-                        padding-top: 20px;
-                        padding-bottom: 10px;
+                    justify-content: start;
+                    img {
+                        width: 90px;
+                        height: 90px;
+                        border-radius: 100%;
                     }
-                    .wirteBtn {
-                        flex: 0.15;
-                        width: 100%;
-                        height: 30px;
+                    p {
+                        font-size: 24px;
+                        margin-left: 20px;
+                        margin-right: 10px;
+                        color: rgba(0, 150, 138, 0.85);
+                    }
+                    .organizeBtn {
+                        width: 80px;
+                        height: 25px;
                         border-radius: 50px;
                         border: none;
                         background-color: rgba(0, 150, 138, 0.85);
                         color: white;
                         font-size: 10px;
                         font-weight: bold;
-                        padding-top: 10px;
-                        padding-bottom: 10px;
+                        margin-left: 10px;
                         cursor: pointer;
                         &:hover {
                             background-color: rgba(0, 150, 138);
                         }
                     }
                 }
-                .firstTabContainer {
-                    display: flex;
-                    flex-direction: column;
-                    h4 {
-                        display: flex;
-                        color: rgba(0, 150, 138);
-                        margin-right: 5px;
-                        font-size: 16px;
-                        margin-left: 15px;
-                        margin-right: 15px;
-                        padding-top: 20px;
-                        /* padding-bottom: 10px; */
-                    }
-                    .firstTab {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-left: 15px;
-                        margin-right: 15px;
-                        .firstTabMap {
-                            width: 65%;
-                            margin-bottom: 10px;
-                            border-radius: 10px;
-                            overflow: hidden;
-                        }
-                        .firstTabComponent {
-                            width: 33%;
-                            height: 50.5vh;
-                            overflow-y: scroll;
-                            -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                            scrollbar-width: none; /* 파이어폭스 */
-                            &::-webkit-scrollbar {
-                                display: none;
-                            }
-                        }
-                    }
-                    @media screen and (max-width: 900px) {
-                        h4 {
-                            display: flex;
-                            color: rgba(0, 150, 138);
-                            font-size: 16px;
-                            margin-bottom: 10px;
-                        }
-                        .firstTab {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-between;
-                            .firstTabMap {
-                                width: 100%;
-                                height: 230px;
-                            }
-                            .firstTabComponent {
-                                width: 100%;
-                                /* height: 46.5vh; */
-                                overflow-y: scroll;
-                                -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                                scrollbar-width: none; /* 파이어폭스 */
-                                &::-webkit-scrollbar {
-                                    display: none;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .profileFlex2 {
-            background-color: rgba(0, 150, 138, 0.3);
-            flex-direction: column;
-            display: flex;
-            flex: 0.2;
-            border-top-right-radius: 10px;
-        }   
-    }
-    .pathUIDhave {
-        display: flex;
-        .profileFlex1 {
-            display: flex;
-            flex-direction: column;
-            flex: 0.8;
-            margin-right: 10px;
-            .HeaderTabComponent {
-                display: flex;
-                flex-direction: row;
-                justify-content: end;
-                align-items: end;
-                .tabHeaderIcon {
-                    margin-top: 2px;
-                    color: rgba(0, 150, 138, 0.85);
-                    display: none;
-                }
-                .tabHeaderName {
-                    margin-top: 2px;
-                    color: rgba(0, 150, 138, 0.85);
-                    font-size: 20px;
-                }
-            }
-            .profileContainer {
-                background-color: white;
-                display: flex;
-                flex-direction: row;
-                padding: 20px;
-                align-items: center;
-                justify-content: start;
-                position: relative;
-                img {
-                    margin-top: 20px;
-                    margin-left: 10px;
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 100%;
-                }
-                p {
-                    font-size: 24px;
-                    margin-top: 20px;
-                    margin-left: 20px;
-                    margin-right: 20px;
-                    color: rgba(0, 150, 138, 0.85);
-                }
-                .organizeBtn {
-                    width: 100px;
-                    height: 25px;
-                    border-radius: 50px;
-                    border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
-                    color: white;
-                    font-size: 10px;
-                    font-weight: bold;
-                    margin-top: 20px;
-                    margin-right: 20px;
-                    cursor: pointer;
-                    &:hover {
-                        background-color: rgba(0, 150, 138);
-                    }
-                }
-            }
-            .profileTab {
-                background-color: white;
-                display: flex;
-                flex-direction: row;
-                flex: 1;
-                justify-content: center;
-                height: 40px;
-                align-items: end;
-                .unSelectTab {
-                    background-color: rgba(0, 150, 138, 0.85);
-                    display: flex;
-                    cursor: pointer;
-                    flex: 0.34;
-                    height: 32px;
-                    margin-left: 1px;
-                    margin-right: 1px;
-                    font-size: 14px;
-                    color: white;
-                    align-items: end;
-                    justify-content: center;
-                    padding-bottom: 5px;
-                    border-top-left-radius: 10px;
-                    border-top-right-radius: 10px;
-                    &:hover {
-                        background-color: rgba(0, 150, 138, 0.3);
-                    }
-                }
-                .selectTab {
+                .profileTab {
                     background-color: white;
-                    display: flex;
-                    cursor: pointer;
-                    flex: 0.34;
-                    height: 32px;
-                    margin-left: 1px;
-                    font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
-                    align-items: end;
-                    justify-content: center;
-                    padding-bottom: 5px;
-                    border-top-left-radius: 10px;
-                    border-top-right-radius: 10px;
-                    border: solid 0.01rem rgba(0, 150, 138, 0.85);
-                    border-bottom: none;
-                    &:hover {
-                        background-color: white;
-                    }
-                }
-            }
-            .profileTabComponent {
-                background-color: white;
-                border: solid 0.01rem rgba(0, 150, 138, 0.85);
-                border-top: none;
-                flex-direction: column;
-                width: 100%;
-                height: 100vh;
-                overflow: hidden;
-                .tabComponent {
                     display: flex;
                     flex-direction: row;
                     flex: 1;
-                    align-items: center;
-                    margin-left: 15px;
-                    margin-right: 15px;
-                    .wirteName {
+                    justify-content: center;
+                    height: 40px;
+                    align-items: end;
+                    .unSelectTab {
+                        background-color: rgba(0, 150, 138, 0.85);
                         display: flex;
-                        flex: 0.85;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
+                        color: white;
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        &:hover {
+                            background-color: rgba(0, 150, 138, 0.3);
+                        }
+                    }
+                    .selectTab {
+                        background-color: white;
+                        display: flex;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
                         color: rgba(0, 150, 138, 0.85);
-                        margin-right: 5px;
-                        font-size: 16px;
-                        padding-top: 20px;
-                        padding-bottom: 10px;
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border-bottom: none;
+                        &:hover {
+                            background-color: white;
+                        }
                     }
                 }
-                .firstTabContainer {
-                    display: flex;
+                .profileTabComponent {
+                    border-top: none;
                     flex-direction: column;
-                    h4 {
+                    width: 100%;
+                    height: 96vh;
+                    .tabComponent {
                         display: flex;
-                        color: rgba(0, 150, 138);
-                        margin-right: 5px;
-                        font-size: 16px;
+                        flex-direction: row;
+                        flex: 1;
+                        align-items: center;
                         margin-left: 15px;
                         margin-right: 15px;
-                        padding-top: 10px;
-                    }
-                    .firstTab {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-left: 15px;
-                        margin-right: 15px;
-                        .firstTabMap {
-                            width: 65%;
-                            margin-bottom: 10px;
-                            border-radius: 10px;
-                            overflow: hidden;
+                        .wirteName {
+                            display: flex;
+                            flex: 0.85;
+                            color: rgba(0, 150, 138, 0.85);
+                            margin-right: 5px;
+                            font-size: 16px;
+                            padding-top: 20px;
+                            padding-bottom: 10px;
                         }
-                        .firstTabComponent {
-                            width: 33%;
-                            height: 50.5vh;
-                            overflow-y: scroll;
-                            -ms-overflow-style: none; /* 인터넷 익스플로러 */
-                            scrollbar-width: none; /* 파이어폭스 */
-                            &::-webkit-scrollbar {
-                                display: none;
+                        .wirteBtn {
+                            flex: 0.15;
+                            width: 100%;
+                            height: 30px;
+                            border-radius: 50px;
+                            border: none;
+                            background-color: rgba(0, 150, 138, 0.85);
+                            color: white;
+                            font-size: 10px;
+                            font-weight: bold;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(0, 150, 138);
                             }
                         }
                     }
-                    @media screen and (max-width: 900px) {
+                    .firstTabContainer {
+                        display: flex;
+                        flex-direction: column;
                         h4 {
                             display: flex;
                             color: rgba(0, 150, 138);
+                            margin-right: 5px;
                             font-size: 16px;
-                            margin-bottom: 10px;
+                            margin-left: 15px;
+                            margin-right: 15px;
+                            padding-top: 20px;
+                            /* padding-bottom: 10px; */
                         }
                         .firstTab {
                             display: flex;
-                            flex-direction: column;
                             justify-content: space-between;
+                            margin-left: 15px;
+                            margin-right: 15px;
                             .firstTabMap {
-                                width: 100%;
-                                height: 230px;
+                                width: 65%;
+                                margin-bottom: 10px;
+                                border-radius: 10px;
+                                overflow: hidden;
                             }
                             .firstTabComponent {
-                                width: 100%;
-                                /* height: 46.5vh; */
+                                width: 33%;
+                                height: 50.5vh;
                                 overflow-y: scroll;
                                 -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                 scrollbar-width: none; /* 파이어폭스 */
@@ -586,18 +400,472 @@ const Container = styled.div`
                                 }
                             }
                         }
+                        @media screen and (max-width: 900px) {
+                            h4 {
+                                display: flex;
+                                color: rgba(0, 150, 138);
+                                font-size: 16px;
+                                margin-bottom: 10px;
+                            }
+                            .firstTab {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                .firstTabMap {
+                                    width: 100%;
+                                    height: 230px;
+                                }
+                                .firstTabComponent {
+                                    width: 100%;
+                                    height: 37vh;
+                                    overflow-y: scroll;
+                                    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                                    scrollbar-width: none; /* 파이어폭스 */
+                                    &::-webkit-scrollbar {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .openProfileFlex1{
+                flex-direction: column;
+                width: 100%;
+                flex: 1;
+                margin-left: 50px;
+                margin-right: 5px;
+                .profileContainer {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 10px;
+                    align-items: center;
+                    justify-content: start;
+                    img {
+                        width: 90px;
+                        height: 90px;
+                        border-radius: 100%;
+                    }
+                    p {
+                        font-size: 24px;
+                        margin-left: 20px;
+                        margin-right: 10px;
+                        color: rgba(0, 150, 138, 0.85);
+                    }
+                    .organizeBtn {
+                        width: 80px;
+                        height: 25px;
+                        border-radius: 50px;
+                        border: none;
+                        background-color: rgba(0, 150, 138, 0.85);
+                        color: white;
+                        font-size: 10px;
+                        font-weight: bold;
+                        margin-left: 10px;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: rgba(0, 150, 138);
+                        }
+                    }
+                }
+                .profileTab {
+                    background-color: white;
+                    display: flex;
+                    flex-direction: row;
+                    flex: 1;
+                    justify-content: center;
+                    height: 40px;
+                    align-items: end;
+                    .unSelectTab {
+                        background-color: rgba(0, 150, 138, 0.85);
+                        display: flex;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
+                        color: white;
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        &:hover {
+                            background-color: rgba(0, 150, 138, 0.3);
+                        }
+                    }
+                    .selectTab {
+                        background-color: white;
+                        display: flex;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
+                        color: rgba(0, 150, 138, 0.85);
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border-bottom: none;
+                        &:hover {
+                            background-color: white;
+                        }
+                    }
+                }
+                .profileTabComponent {
+                    background-color: white;
+                    /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
+                    border-top: none;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 96vh;
+                    .tabComponent {
+                        display: flex;
+                        flex-direction: row;
+                        flex: 1;
+                        align-items: center;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                        .wirteName {
+                            display: flex;
+                            flex: 0.85;
+                            color: rgba(0, 150, 138, 0.85);
+                            margin-right: 5px;
+                            font-size: 16px;
+                            padding-top: 20px;
+                            padding-bottom: 10px;
+                        }
+                        .wirteBtn {
+                            flex: 0.15;
+                            width: 100%;
+                            height: 30px;
+                            border-radius: 50px;
+                            border: none;
+                            background-color: rgba(0, 150, 138, 0.85);
+                            color: white;
+                            font-size: 10px;
+                            font-weight: bold;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(0, 150, 138);
+                            }
+                        }
+                    }
+                    .firstTabContainer {
+                        display: flex;
+                        flex-direction: column;
+                        h4 {
+                            display: flex;
+                            color: rgba(0, 150, 138);
+                            margin-right: 5px;
+                            font-size: 16px;
+                            margin-left: 15px;
+                            margin-right: 15px;
+                            padding-top: 20px;
+                            /* padding-bottom: 10px; */
+                        }
+                        .firstTab {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-left: 15px;
+                            margin-right: 15px;
+                            .firstTabMap {
+                                width: 65%;
+                                margin-bottom: 10px;
+                                border-radius: 10px;
+                                overflow: hidden;
+                            }
+                            .firstTabComponent {
+                                width: 33%;
+                                height: 50.5vh;
+                                overflow-y: scroll;
+                                -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                                scrollbar-width: none; /* 파이어폭스 */
+                                &::-webkit-scrollbar {
+                                    display: none;
+                                }
+                            }
+                        }
+                        @media screen and (max-width: 900px) {
+                            h4 {
+                                display: flex;
+                                color: rgba(0, 150, 138);
+                                font-size: 16px;
+                                margin-bottom: 10px;
+                            }
+                            .firstTab {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                .firstTabMap {
+                                    width: 100%;
+                                    height: 230px;
+                                }
+                                .firstTabComponent {
+                                    width: 100%;
+                                    height: 37vh;
+                                    overflow-y: scroll;
+                                    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                                    scrollbar-width: none; /* 파이어폭스 */
+                                    &::-webkit-scrollbar {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-        .profileFlex2 {
-            background-color: rgba(0, 150, 138, 0.3);
-            flex-direction: column;
+    }
+    .pathUIDhave {
+        background-color: white;
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        .HeaderTabComponent {
+            background-color: white;
             display: flex;
-            flex: 0.2;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }   
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+            .tabHeaderIcon {
+                color: rgba(0, 150, 138, 0.85);
+                width: 35px;
+                height: 35px;
+                margin: 10px 0px 10px 50px;
+            }
+            .tabHeaderName {
+                color: rgba(0, 150, 138, 0.85);
+                font-size: 20px;
+                margin: 10px 10px 0px 0px;
+            }
+        }
+        .bodyContainer {
+            display: flex;
+            flex-direction: row;
+            .clickOpen {
+                background-color: rgba(0, 150, 138, 0.85);
+                position: absolute;
+                top: 60px;
+                z-index: 10;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                height: 50px;
+                width: 45px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                .clickIcon {
+                    color: white;
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+            .profileFlex2 {
+                flex-direction: column;
+                display: flex;
+                flex: 0.2;
+                border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+            }  
+            .openProfileFlex1{
+                flex-direction: column;
+                width: 90%;
+                flex: 1;
+                /* margin-left: 5px; */
+                /* margin-right: 5px; */
+                .profileContainer {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 10px;
+                    align-items: center;
+                    justify-content: start;
+                    img {
+                        width: 90px;
+                        height: 90px;
+                        border-radius: 100%;
+                    }
+                    p {
+                        font-size: 24px;
+                        margin-left: 20px;
+                        margin-right: 10px;
+                        color: rgba(0, 150, 138, 0.85);
+                    }
+                    .organizeBtn {
+                        width: 80px;
+                        height: 25px;
+                        border-radius: 50px;
+                        border: none;
+                        background-color: rgba(0, 150, 138, 0.85);
+                        color: white;
+                        font-size: 10px;
+                        font-weight: bold;
+                        margin-left: 10px;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: rgba(0, 150, 138);
+                        }
+                    }
+                }
+                .profileTab {
+                    background-color: white;
+                    display: flex;
+                    flex-direction: row;
+                    flex: 1;
+                    justify-content: center;
+                    height: 40px;
+                    align-items: end;
+                    .unSelectTab {
+                        background-color: rgba(0, 150, 138, 0.85);
+                        display: flex;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
+                        color: white;
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        &:hover {
+                            background-color: rgba(0, 150, 138, 0.3);
+                        }
+                    }
+                    .selectTab {
+                        background-color: white;
+                        display: flex;
+                        cursor: pointer;
+                        flex: 0.36;
+                        height: 32px;
+                        font-size: 14px;
+                        color: rgba(0, 150, 138, 0.85);
+                        align-items: end;
+                        justify-content: center;
+                        padding-bottom: 5px;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border-bottom: none;
+                        &:hover {
+                            background-color: white;
+                        }
+                    }
+                }
+                .profileTabComponent {
+                    /* background-color: bisque; */
+                    /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
+                    border-top: none;
+                    flex-direction: column;
+                    width: 100%;
+                    /* height: 53vh; */
+                    .tabComponent {
+                        display: flex;
+                        flex-direction: row;
+                        flex: 1;
+                        align-items: center;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                        .wirteName {
+                            display: flex;
+                            flex: 0.85;
+                            color: rgba(0, 150, 138, 0.85);
+                            margin-right: 5px;
+                            font-size: 16px;
+                            padding-top: 20px;
+                            padding-bottom: 10px;
+                        }
+                        .wirteBtn {
+                            flex: 0.15;
+                            width: 100%;
+                            height: 30px;
+                            border-radius: 50px;
+                            border: none;
+                            background-color: rgba(0, 150, 138, 0.85);
+                            color: white;
+                            font-size: 10px;
+                            font-weight: bold;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(0, 150, 138);
+                            }
+                        }
+                    }
+                    .firstTabContainer {
+                        display: flex;
+                        flex-direction: column;
+                        h4 {
+                            display: flex;
+                            color: rgba(0, 150, 138);
+                            margin-right: 5px;
+                            font-size: 16px;
+                            margin-left: 15px;
+                            margin-right: 15px;
+                            padding-top: 20px;
+                            /* padding-bottom: 10px; */
+                        }
+                        .firstTab {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-left: 15px;
+                            margin-right: 15px;
+                            .firstTabMap {
+                                width: 65%;
+                                margin-bottom: 10px;
+                                border-radius: 10px;
+                                overflow: hidden;
+                            }
+                            .firstTabComponent {
+                                width: 33%;
+                                /* height: 37vh; */
+                                height: 50.5vh;
+                                overflow-y: scroll;
+                                -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                                scrollbar-width: none; /* 파이어폭스 */
+                                &::-webkit-scrollbar {
+                                    display: none;
+                                }
+                            }
+                        }
+                        @media screen and (max-width: 900px) {
+                            h4 {
+                                display: flex;
+                                color: rgba(0, 150, 138);
+                                font-size: 16px;
+                                margin-bottom: 10px;
+                            }
+                            .firstTab {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                .firstTabMap {
+                                    width: 100%;
+                                    height: 230px;
+                                }
+                                .firstTabComponent {
+                                    width: 100%;
+                                    height: 37vh;
+                                    overflow-y: scroll;
+                                    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                                    scrollbar-width: none; /* 파이어폭스 */
+                                    &::-webkit-scrollbar {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 `;
 

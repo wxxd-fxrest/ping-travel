@@ -189,7 +189,7 @@ const FirstTab = ({myPingID, profileUser}) => {
 };
 
 const Container = styled.div`
-    /* height: 71%; */
+    /* height: 71%;
     overflow-y: scroll;
     -ms-overflow-style: none; 
     scrollbar-width: none; 
@@ -198,7 +198,7 @@ const Container = styled.div`
     } 
     @media screen and (max-width: 900px) {
         height: 78%;
-    }
+    } */
     .firstTabContainer {
         flex-direction: column;
         background-color:  rgba(0, 150, 138, 0.3);
