@@ -105,6 +105,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                     <HiOutlineDocumentText className="tabHeaderIcon"/>
                     <h4 className="tabHeaderName"> 메인 </h4>
                 </div>
+
                 <div className="bodyContainer">
 
                     {profileUser.uid === currentUser.uid && <>
@@ -371,12 +372,11 @@ const Container = styled.div`
                         h4 {
                             display: flex;
                             color: rgba(0, 150, 138);
-                            margin-right: 5px;
                             font-size: 16px;
                             margin-left: 15px;
                             margin-right: 15px;
+                            margin-bottom: 10px;
                             padding-top: 20px;
-                            /* padding-bottom: 10px; */
                         }
                         .firstTab {
                             display: flex;
@@ -561,12 +561,11 @@ const Container = styled.div`
                         h4 {
                             display: flex;
                             color: rgba(0, 150, 138);
-                            margin-right: 5px;
                             font-size: 16px;
                             margin-left: 15px;
                             margin-right: 15px;
                             padding-top: 20px;
-                            /* padding-bottom: 10px; */
+                            margin-bottom: 10px;
                         }
                         .firstTab {
                             display: flex;
@@ -810,7 +809,7 @@ const Container = styled.div`
                             margin-left: 15px;
                             margin-right: 15px;
                             padding-top: 20px;
-                            /* padding-bottom: 10px; */
+                            margin-bottom: 10px;
                         }
                         .firstTab {
                             display: flex;

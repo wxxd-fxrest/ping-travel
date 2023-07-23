@@ -51,7 +51,10 @@ const ProfileData = ({mainPing, loginUserData}) => {
             <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
                 {pathUID &&
                     <BackButton />}
-                <Profile mainPing={mainPing} profileUser={profileUser} friendID={friendID} pathUID={pathUID}/>
+                <Profile mainPing={mainPing} 
+                    profileUser={profileUser} 
+                    friendID={friendID} 
+                    pathUID={pathUID}/>
             </div>
         </Container>
     )
@@ -69,7 +72,7 @@ const Container = styled.div`
     }
     .pathUIDhave {
         background-color: white;
-        width: 80vw;
+        width: 60vw;
         height: 67vh;
         position: relative;
         .haveBackBtn {
