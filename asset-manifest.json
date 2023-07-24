@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ping-travel/static/css/main.19c23f0d.css",
-    "main.js": "/ping-travel/static/js/main.df992039.js",
+    "main.js": "/ping-travel/static/js/main.e92509bf.js",
     "static/media/ping-travel-auth-background.jpeg": "/ping-travel/static/media/ping-travel-auth-background.bc8ad34ae8b8183209ee.jpeg",
     "static/media/signupImg.jpeg": "/ping-travel/static/media/signupImg.7e01724a75f9c4fe4697.jpeg",
     "index.html": "/ping-travel/index.html",
     "main.19c23f0d.css.map": "/ping-travel/static/css/main.19c23f0d.css.map",
-    "main.df992039.js.map": "/ping-travel/static/js/main.df992039.js.map"
+    "main.e92509bf.js.map": "/ping-travel/static/js/main.e92509bf.js.map"
   },
   "entrypoints": [
     "static/css/main.19c23f0d.css",
-    "static/js/main.df992039.js"
+    "static/js/main.e92509bf.js"
   ]
 }
