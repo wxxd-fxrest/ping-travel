@@ -49,6 +49,12 @@ const MenuBar = ({mainPing}) => {
         <Container>
             <div className="main">
                 <div className="menubar">
+                    <div className="menuLogo">
+                        <div className="logo">
+                            <h3> Ping Travel </h3>
+                            <div className='logoBar' />
+                        </div>
+                    </div>
                     <p className="search"> 친구를 검색하세요. </p>
                     <FriendSearchID setRequestAlert={setRequestAlert} open={open} setOpen={setOpen} loginUserData={loginUserData}/>
 
@@ -168,6 +174,55 @@ const Container = styled.div`
                 width: 50px;
                 max-width: 50px;
                 min-width: 50px;
+            }
+            .menuLogo {
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                .logo {
+                    background-color: rgba(0, 150, 138, 0.2);
+                    display: inline-flex;
+                    width: 75px;
+                    height: 75px;
+                    border-radius: 100%;
+                    border: 0.1px solid rgba(0, 150, 138, 0.2);
+                    text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    @media screen and (max-width: 600px) {
+                        width: 45px;
+                        height: 45px;
+                        margin-bottom: 20px;
+                    }
+                    .logoBar {
+                        position: absolute;
+                        display: flex;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        align-items: center;
+                        justify-content: center;
+                        border-left: 1px solid rgb(195, 96, 57, 0.6);
+                        border-radius: 100%;
+                        animation: rotate_image 6s ease-in-out infinite;
+                        transform-origin: 50% 50%;
+                        @keyframes rotate_image{
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    }
+                    h3 {
+                        font-size: 0.1rem;
+                        font-weight: 100;
+                        color: rgba(0, 150, 138);
+                        &::first-letter {
+                            font-size: 1.4rem;
+                            letter-spacing: -10px;
+                        }
+                    }
+                }
             }
             .logoutContainer {
                 background-color: white;

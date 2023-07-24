@@ -15,12 +15,6 @@ import ThirdTab from "./tabComponent/ThirdTab";
 import styled from "styled-components";
 import { HiOutlineDocumentText, HiOutlineUserGroup } from "react-icons/hi2";
 
-// import MARKER from '../../img/marker.png';
-// import questionMarker from '../../img/question_marker.png';
-
-// MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
-// questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
-
 const Profile = ({profileUser, friendID, pathUID}) => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
@@ -215,7 +209,7 @@ const Container = styled.div`
             display: flex;
             flex-direction: row;
             .clickOpen {
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgba(0, 150, 138, 0.75);
                 position: absolute;
                 top: 60px;
                 z-index: 10;
@@ -227,8 +221,11 @@ const Container = styled.div`
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
+                &:hover {
+                    background-color: rgba(0, 150, 138, 0.9);
+                }
                 .clickIcon {
-                    color: white;
+                    color: rgba(255, 255, 255, 0.8);
                     width: 28px;
                     height: 28px;
                 }
@@ -308,7 +305,6 @@ const Container = styled.div`
                         }
                     }
                     .selectTab {
-                        background-color: white;
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -320,14 +316,12 @@ const Container = styled.div`
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
                         border-bottom: none;
-                        &:hover {
-                            background-color: white;
-                        }
+                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
                     }
                 }
                 .profileTabComponent {
+                    /* background-color: rgba(0, 150, 138, 0.1); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
@@ -478,7 +472,7 @@ const Container = styled.div`
                     height: 40px;
                     align-items: end;
                     .unSelectTab {
-                        background-color: rgba(0, 150, 138, 0.85);
+                        background-color: rgba(0, 150, 138, 0.8);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -491,11 +485,11 @@ const Container = styled.div`
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         &:hover {
-                            background-color: rgba(0, 150, 138, 0.3);
+                            background-color: rgba(0, 150, 138, 0.9);
                         }
                     }
                     .selectTab {
-                        background-color: white;
+                        /* background-color: rgba(0, 150, 138, 0.1); */
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -509,13 +503,9 @@ const Container = styled.div`
                         border-top-right-radius: 10px;
                         border: solid 0.01rem rgba(0, 150, 138, 0.85);
                         border-bottom: none;
-                        &:hover {
-                            background-color: white;
-                        }
                     }
                 }
                 .profileTabComponent {
-                    background-color: white;
                     /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
                     border-top: none;
                     flex-direction: column;
@@ -734,11 +724,10 @@ const Container = styled.div`
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         &:hover {
-                            background-color: rgba(0, 150, 138, 0.3);
+                            background-color: rgba(0, 150, 138, 0.9);
                         }
                     }
                     .selectTab {
-                        background-color: white;
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -753,11 +742,12 @@ const Container = styled.div`
                         border: solid 0.01rem rgba(0, 150, 138, 0.85);
                         border-bottom: none;
                         &:hover {
-                            background-color: white;
+                            background-color: rgba(0, 150, 138, 0.2);
                         }
                     }
                 }
                 .profileTabComponent {
+                    /* background-color: rgba(0, 150, 138, 0.1); */
                     /* background-color: bisque; */
                     /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
                     border-top: none;

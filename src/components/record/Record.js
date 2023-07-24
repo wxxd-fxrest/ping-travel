@@ -26,11 +26,8 @@ const Record = ({recordData, profileUser}) => {
         <Container>
 
             {recordData.Data.ownerID !== undefined && <div className="RecordContainer">
-                <p> 나한테 공유한 친구 : {recordData.Data.ownerID} </p>
-                <h3> 장소 : {recordData.Data.placeName} </h3>
-                <p> 날짜 : {recordData.Data.date} </p>
-                <p> 기록 : {recordData.Data.record} </p>
-                {/* <p> {recordData.Data.writeUID} </p> */}
+                <p> Ping Owner: {recordData.Data.ownerID} </p>
+                <h3> {recordData.Data.placeName} · {recordData.Data.date} </h3>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -40,11 +37,8 @@ const Record = ({recordData, profileUser}) => {
             </div>}
 
             {recordData.Data.selectFriend !== undefined && <div className="RecordContainer">
-                <p> 함께한 친구 : {recordData.Data.selectFriend} </p>
-                <h3> 장소 : {recordData.Data.placeName} </h3>
-                <p> 날짜 : {recordData.Data.date} </p>
-                <p> 기록 : {recordData.Data.record} </p>
-                {/* <p> {profileUser.uid} </p> */}
+                <p> Ping Friend: {recordData.Data.selectFriend} </p>
+                <h3> {recordData.Data.placeName} · {recordData.Data.date} </h3>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -76,17 +70,17 @@ const Container = styled.div`
         border-right: solid 1px rgba(0, 150, 138, 0.3);
         p {
             color: rgba(0, 150, 138, 0.9);
-            font-size: 13px;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 11px;
         }
         h3 {
-            color: rgba(255, 255, 255);
-            font-size: 14px;
+            color: rgba(0, 150, 138, 0.9);
+            font-size: 15px;
             margin-bottom: 10px;
         }
         button {
             width: 100%;
-            height: 25px;
+            height: 30px;
             border-radius: 50px;
             border: none;
             background-color: rgba(0, 150, 138, 0.85);

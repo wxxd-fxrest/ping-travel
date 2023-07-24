@@ -16,11 +16,8 @@ const Plan = ({planData, profileUser}) => {
         <Container>
 
             {planData.Data.ownerID !== undefined && <div className="PlanContainer">
-                <p> 나한테 공유한 친구 : {planData.Data.ownerID} </p>
-                <h3> 장소 : {planData.Data.placeName} </h3>
-                <p> 날짜 : {planData.Data.date} </p>
-                <p> 계획 : {planData.Data.plan} </p>
-                {/* <p> {planData.Data.writeUID} </p> */}
+                <p> Ping Owner: {planData.Data.ownerID} </p>
+                <h3> {planData.Data.placeName} · {planData.Data.date} </h3>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -30,11 +27,8 @@ const Plan = ({planData, profileUser}) => {
             </div>}
 
             {planData.Data.selectFriend !== undefined && <div className="PlanContainer">
-                <p> 함께한 친구 : {planData.Data.selectFriend} </p>
-                <h3> 장소 : {planData.Data.placeName} </h3>
-                <p> 날짜 : {planData.Data.date} </p>
-                <p> 계획 : {planData.Data.plan} </p>
-                {/* <p> {profileUser.uid} </p> */}
+                <p> Ping Friend: {planData.Data.selectFriend} </p>
+                <h3> {planData.Data.placeName} · {planData.Data.date} </h3>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -62,21 +56,21 @@ const Container = styled.div`
         margin-bottom: 10px;
         padding: 13px;
         display: flex;
-        border-bottom: solid 1px black;
-        border-right: solid 1px black;
+        border-bottom: solid 1px rgba(0, 150, 138, 0.3);
+        border-right: solid 1px rgba(0, 150, 138, 0.3);
         p {
             color: rgba(0, 150, 138, 0.9);
-            font-size: 13px;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 11px;
         }
         h3 {
-            color: rgba(255, 255, 255);
-            font-size: 14px;
+            color: rgba(0, 150, 138, 0.9);
+            font-size: 15px;
             margin-bottom: 10px;
         }
         button {
             width: 100%;
-            height: 25px;
+            height: 30px;
             border-radius: 50px;
             border: none;
             background-color: rgba(0, 150, 138, 0.85);

@@ -59,7 +59,8 @@ const SignUp = ({setOpen, open}) => {
     return(
         <Container>
             <div className="logo">
-                <h3> Ping Travel </h3>
+                    <h3> Ping Travel </h3>
+                <div className='logoBar' />
             </div>
             <form onSubmit={onSubmit}>
                 <div className="loginInput">
@@ -83,7 +84,7 @@ const SignUp = ({setOpen, open}) => {
                 <button> Sign Up </button>
                 <div className="transform">
                     <h3 className="authTransform"> 이미 계정이 있으신가요? ▸▸ </h3>
-                    <HiOutlineUserCircle size="25px" className="transformIcon"
+                    <HiOutlineUserCircle size="30px" className="transformIcon"
                         onClick={() => {setOpen(!open)}}/>
                 </div>
             </form>
@@ -115,7 +116,7 @@ const Container = styled.div`
             margin-left: 3px;
             cursor: pointer;
             &:hover {
-                color: rgba(0, 150, 138, 0.9);
+                color: rgba(0, 150, 138);
             }
         }
     }
@@ -125,10 +126,29 @@ const Container = styled.div`
         width: 100px;
         height: 100px;
         border-radius: 100%;
-        border: 0.1px solid white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
         text-align: center;
         align-items: center;
         justify-content: center;
+        position: relative;
+        .logoBar {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            border-left: 2.5px solid rgb(195, 96, 57);
+            border-radius: 100%;
+            animation: rotate_image 6s ease-in-out infinite;
+            transform-origin: 50% 50%;
+            @keyframes rotate_image{
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
         h3 {
             font-size: 0.9rem;
             font-weight: 100;
@@ -176,13 +196,13 @@ const Container = styled.div`
             margin-bottom: 10px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.9);
+            background-color: rgba(0, 150, 138, 0.75);
             color: white;
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             &:hover {
-                background-color: rgba(0, 150, 138, 0.75);
+                background-color: rgba(0, 150, 138, 0.9);
             }
         }
     }

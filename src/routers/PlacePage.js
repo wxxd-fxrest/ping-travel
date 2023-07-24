@@ -9,14 +9,6 @@ import MainPing from "../components/MainPing";
 import BackButton from "../components/modal/BackButton";
 import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
-
-// import MARKER from '..//img/marker.png';
-// import questionMarker from '..//img/question_marker.png';
-// import nullMarker from '..//img/location-pin.png';
-
-// MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
-// questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
-// nullMarker <a href="https://www.flaticon.com/free-icons/unavailable" title="unavailable icons">Unavailable icons created by exomoon design studio - Flaticon</a> 
             
 const PlacePage = ({mainPing}) => {
     const {currentUser} = useContext(AuthContext);
