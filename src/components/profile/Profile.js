@@ -121,9 +121,9 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                                 required />}
                             <label htmlFor="inputFile">
                                 {attachment ? 
-                                    <img src={attachment} alt="" /> 
+                                    <img src={attachment} alt="" style={{cursor: "pointer"}}/> 
                                     : 
-                                    <img src={profileUser.attachmentUrl} alt="" />}
+                                    <img src={profileUser.attachmentUrl} alt="" style={{cursor: "pointer"}}/>}
                             </label>
 
                             <p> {profileUser.ID} </p>
@@ -141,7 +141,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                         <div className="profileTabComponent">
                             {tab === 0 && <>
                                 <div className="tabComponent">
-                                    <h4 className="wirteName"> 여행 기록 (with. friend) </h4>
+                                    <h4 className="wirteName"> 여행 기록 </h4>
                                     {!pathUID &&
                                     <button className="wirteBtn"
                                         onClick={() => navigate('/record/search')}> 기록하기 </button>}
@@ -150,7 +150,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                             </>}
                             {tab === 1 && <>
                                 <div className="tabComponent">
-                                    <h4 className="wirteName"> 여행 계획 (with. friend) </h4>
+                                    <h4 className="wirteName"> 여행 계획 </h4>
                                     {!pathUID &&
                                     <button className="wirteBtn"
                                         onClick={() => navigate('/plan/search')}> 계획하기 </button>}
@@ -158,7 +158,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
                                 <ThirdTab profileUser={profileUser} pathUID={pathUID}/>
                             </>}
                             {tab === 2 && <div className="firstTabContainer">
-                                <h4> 내가 남긴 질문/리뷰 </h4>
+                                <h4> 질문/리뷰 </h4>
                                 <div className="firstTab">
                                     <div className="firstTabMap">
                                         <MapComponent />
@@ -193,6 +193,7 @@ const Container = styled.div`
             justify-content: flex-end;
             align-items: center;
             border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+            margin-right: 80px;
             .tabHeaderIcon {
                 color: rgba(0, 150, 138, 0.85);
                 width: 35px;
@@ -202,7 +203,7 @@ const Container = styled.div`
             .tabHeaderName {
                 color: rgba(0, 150, 138, 0.85);
                 font-size: 20px;
-                margin: 10px 10px 0px 0px;
+                margin: 10px 20px 0px 0px;
             }
         }
         .bodyContainer {
@@ -231,15 +232,27 @@ const Container = styled.div`
                 }
             }
             .profileFlex2 {
+                background-color: rgba(0, 150, 138, 0.25);
                 flex-direction: column;
                 display: flex;
                 flex: 0.2;
-                border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+                min-width: 120px;
+                height: min-content;
+                max-height: 500px;
+                margin-top: 5px;
+                border-radius: 0px 10px 10px 0px;
+                padding-bottom: 10px;
+                overflow-y: scroll;
+                -ms-overflow-style: none; /* 인터넷 익스플로러 */
+                scrollbar-width: none; /* 파이어폭스 */
+                &::-webkit-scrollbar {
+                    display: none;
+                }
             }  
             .profileFlex1 { 
                 flex-direction: column;
                 width: 100%;
-                flex: 0.8;
+                flex: 0.65;
                 margin-left: 50px;
                 margin-right: 5px;
                 @media screen and (max-width: 750px) {
@@ -387,6 +400,7 @@ const Container = styled.div`
                                 width: 33%;
                                 height: 50.5vh;
                                 overflow-y: scroll;
+                                overflow-x: hidden;
                                 -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                 scrollbar-width: none; /* 파이어폭스 */
                                 &::-webkit-scrollbar {
@@ -413,6 +427,7 @@ const Container = styled.div`
                                     width: 100%;
                                     height: 37vh;
                                     overflow-y: scroll;
+                                    overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                     scrollbar-width: none; /* 파이어폭스 */
                                     &::-webkit-scrollbar {
@@ -428,8 +443,8 @@ const Container = styled.div`
                 flex-direction: column;
                 width: 100%;
                 flex: 1;
-                margin-left: 50px;
-                margin-right: 5px;
+                margin-left: 100px;
+                margin-right: 100px;
                 .profileContainer {
                     display: flex;
                     flex-direction: row;
@@ -572,6 +587,7 @@ const Container = styled.div`
                                 width: 33%;
                                 height: 50.5vh;
                                 overflow-y: scroll;
+                                overflow-x: hidden;
                                 -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                 scrollbar-width: none; /* 파이어폭스 */
                                 &::-webkit-scrollbar {
@@ -598,6 +614,7 @@ const Container = styled.div`
                                     width: 100%;
                                     height: 37vh;
                                     overflow-y: scroll;
+                                    overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                     scrollbar-width: none; /* 파이어폭스 */
                                     &::-webkit-scrollbar {
@@ -817,6 +834,7 @@ const Container = styled.div`
                                 /* height: 37vh; */
                                 height: 50.5vh;
                                 overflow-y: scroll;
+                                overflow-x: hidden;
                                 -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                 scrollbar-width: none; /* 파이어폭스 */
                                 &::-webkit-scrollbar {
@@ -843,6 +861,7 @@ const Container = styled.div`
                                     width: 100%;
                                     height: 37vh;
                                     overflow-y: scroll;
+                                    overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
                                     scrollbar-width: none; /* 파이어폭스 */
                                     &::-webkit-scrollbar {

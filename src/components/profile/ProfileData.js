@@ -72,7 +72,7 @@ const Container = styled.div`
     }
     .pathUIDhave {
         background-color: white;
-        width: 60vw;
+        width: 40vw;
         height: 67vh;
         position: relative;
         .haveBackBtn {

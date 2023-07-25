@@ -193,7 +193,7 @@ const PlanSave = () => {
                             ownerEmail: currentUser.email, 
                             ownerID: currentUserID, 
                             placeName: state.name, 
-                            alert: `${currentUserID}(이)가 계획을 공유했습니다.`
+                            alert: `${currentUserID}(이)의 계획 공유`
                         })
                     });   
                 })
@@ -279,7 +279,7 @@ const PlanSave = () => {
 
 const Container = styled.div`
     background-color: white;
-    width: 60vw;
+    width: 50vw;
     height: 98vh;
     display: flex;
     flex-direction: column;
@@ -413,6 +413,7 @@ const Container = styled.div`
                     margin-right: 7px;
                 }
                 label {
+                    word-break: break-all;
                     color: rgba(0, 150, 138, 0.85);
                 }
             }

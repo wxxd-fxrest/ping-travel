@@ -27,7 +27,8 @@ const Record = ({recordData, profileUser}) => {
 
             {recordData.Data.ownerID !== undefined && <div className="RecordContainer">
                 <p> Ping Owner: {recordData.Data.ownerID} </p>
-                <h3> {recordData.Data.placeName} · {recordData.Data.date} </h3>
+                <h3> " {recordData.Data.placeName} " </h3>
+                <p> {recordData.Data.date} </p>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -38,7 +39,8 @@ const Record = ({recordData, profileUser}) => {
 
             {recordData.Data.selectFriend !== undefined && <div className="RecordContainer">
                 <p> Ping Friend: {recordData.Data.selectFriend} </p>
-                <h3> {recordData.Data.placeName} · {recordData.Data.date} </h3>
+                <h3> " {recordData.Data.placeName} " </h3>
+                <p> {recordData.Data.date} </p>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {

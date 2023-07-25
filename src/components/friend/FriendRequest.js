@@ -58,8 +58,10 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
         <Container>
             <li className="friendRequestContainer"> 
                 <p> {friendRequest} </p>
-                <button onClick={onClickAccept}> 수락 </button> 
-                <button onClick={onClickRefuse}> 거절 </button> 
+                <div className="btnBox">
+                    <button className="okBtn" onClick={onClickAccept}> 수락 </button> 
+                    <button className="noBtn" onClick={onClickRefuse}> 거절 </button> 
+                </div>
             </li>
         </Container>
     )
@@ -68,7 +70,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
 const Container = styled.div`
     .friendRequestContainer {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.5); 
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -80,22 +82,45 @@ const Container = styled.div`
         margin-bottom: 15px;
         padding: 10px;
         p {
-            color: white;
-            margin: 5px;
+            color: rgba(0, 150, 138, 0.85); 
+            margin: 5px 5px 0px 5px;
         }
-        button {
+        .btnBox {
+            display: flex;
+            flex-direction: row;
+            position: relative;
             width: 100%;
-            height: 25px;
-            border-radius: 50px;
-            border: none;
-            background-color: rgba(0, 150, 138, 0.85);
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            margin-top: 10px;
-            cursor: pointer;
-            &:hover {
-                background-color: rgba(0, 150, 138);
+            flex: 1;
+            .okBtn {
+                flex: 0.5;
+                height: 25px;
+                margin-right: 5px;
+                border-radius: 50px;
+                border: none;
+                background-color: rgba(0, 150, 138, 0.85);
+                color: white;
+                font-size: 10px;
+                font-weight: bold;
+                margin-top: 10px;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(0, 150, 138);
+                }
+            }
+            .noBtn {
+                flex: 0.5;
+                height: 25px;
+                border-radius: 50px;
+                border: none;
+                background-color: rgba(0, 150, 138, 0.85);
+                color: white;
+                font-size: 10px;
+                font-weight: bold;
+                margin-top: 10px;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(0, 150, 138);
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ const Friend = ({profileUser, friendID, onClickOpen, setOpen, open}) => {
                             <p> {friendID[i]} </p>
                         </div>
                         {profileUser.uid !== currentUser.uid ? null : 
-                            <HiOutlineRocketLaunch size="15px" className="goFriendProfile"
+                            <HiOutlineRocketLaunch className="goFriendProfile"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     navigate(`/profile/${friendID[i]}`);
@@ -100,6 +100,7 @@ const Container = styled.div`
         padding: 10px;
         .friendName {
             display: flex;
+            width: 100px;
             .friendIcon {
                 color: white;
                 @media screen and (max-width: 900px) {
@@ -107,13 +108,17 @@ const Container = styled.div`
                 }
             }
             p {
+                display: flex;
                 margin-left: 5px;
                 color: white;
+                word-break: break-all;
             }
         }
         .goFriendProfile {
             color: rgba(0, 150, 138, 0.85);
             margin-left: 5px;
+            height: 15px;
+            width: 15px;
             cursor: pointer;
             &:hover {
                 color: rgba(0, 150, 138);

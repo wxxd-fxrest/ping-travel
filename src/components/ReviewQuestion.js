@@ -3,12 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MapComponent from '../components/MapComponent';
 import styled from "styled-components";
-
-// import MARKER from '../img/marker.png';
-// import questionMarker from '../img/question_marker.png';
-
-// MARKER <a href="https://www.flaticon.com/free-icons/marker" title="marker icons">Marker icons created by kmg design - Flaticon</a> 
-// questionMarker <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Iconic Panda - Flaticon</a> 
+import { HiOutlineXCircle } from "react-icons/hi2";
 
 const ReviewQuestion = ({mainPing}) => {
     const { kakao } = window;
@@ -70,9 +65,33 @@ const ReviewQuestion = ({mainPing}) => {
             <div className='reviewQuestionMap'>
                 <div className='reviewQuestionMapContainer'>
                     <MapComponent />
+                    <div className='selectPlace'>
+                        {open === true ? 
+                        <div className='selectPlaceContainer'>
+                            <HiOutlineXCircle className='XIcon' onClick={() => setOpen(false)}/>
+                            <h4> {select.placeName} </h4> 
+                            <p> {select.placeNumber} </p> 
+                            <p> 주소: {select.placeAddress} </p> 
+                            <p> 도로명 주소: {select.placeRoadAddress} </p> 
+                            <button onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate(`/place/${select.placeID}`, {
+                                        state: {
+                                            name: select.placeName,
+                                            phone: select.placeNumber,
+                                            id: select.placeID,
+                                            placey: select.placeY,
+                                            placex: select.placeX,
+                                            address: select.placeAddress,
+                                            roadAdrees: select.placeRoadAddress,
+                                        }
+                                    }); 
+                                }}> 상세보기 </button>
+                        </div> : <h4> 마커를 클릭하세요. </h4>}
+                    </div>
                 </div>
                 <div className='reviewQuestionListContainer'>
-                    <div className='reviewQuestionListMap'>
+                    <div className={open === true ? 'openReviewQuestionListMap' : 'reviewQuestionListMap'}>
                     <button className='mapAll' onClick={getMainPing}> 마커 전체보기 </button>
                         {mainPing.map((m, i) => {
                             return (
@@ -100,29 +119,7 @@ const ReviewQuestion = ({mainPing}) => {
                     </div>
                 </div>
             </div>
-            <div className='selectPlace'>
-                {open === true ? 
-                <div className='selectPlaceContainer'>
-                    <h4> {select.placeName} </h4> 
-                    <p> {select.placeNumber} </p> 
-                    <p> 주소: {select.placeAddress} </p> 
-                    <p> 도로명 주소: {select.placeRoadAddress} </p> 
-                    <button onClick={(e) => {
-                            e.preventDefault();
-                            navigate(`/place/${select.placeID}`, {
-                                state: {
-                                    name: select.placeName,
-                                    phone: select.placeNumber,
-                                    id: select.placeID,
-                                    placey: select.placeY,
-                                    placex: select.placeX,
-                                    address: select.placeAddress,
-                                    roadAdrees: select.placeRoadAddress,
-                                }
-                            }); 
-                        }}> 상세보기 </button>
-                </div> : <h4> 마커를 클릭하세요. </h4>}
-            </div>
+            
         </Container>
     );
 };
@@ -131,28 +128,59 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 100%;
+    margin-right: 100px;
+    margin-left: 100px;
     .reviewQuestionMap {
         justify-content: space-between;
         display: flex;
         margin: 10px 10px 0px 10px;
+        @media screen and (max-width: 1200px) {
+            margin: 0px;
+            margin-top: 10px;
+        }
         .reviewQuestionMapContainer {
             width: 100%;   
             margin-right: 10px;
+            .mapComponent {
+                @media screen and (max-width: 1200px) {
+                    width: 100%;
+                    height: 300px;
+                }
+            }
         }
         .reviewQuestionListContainer {
             display: flex;
             flex-direction: column;
             width: 35%;
-            height: 50vh;
+            height: 48vh;
             overflow-y: scroll;
             -ms-overflow-style: none; /* 인터넷 익스플로러 */
             scrollbar-width: none; /* 파이어폭스 */
             &::-webkit-scrollbar {
                 display: none;
             }
+            @media screen and (max-width: 1200px) {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                /* margin-top: 10px; */
+            }
             .reviewQuestionListMap {
                 width: 100%;
+                .mapAll {
+                    width: 100%;
+                    height: 30px;
+                    border-radius: 50px;
+                    border: none;
+                    background-color: rgba(0, 150, 138, 0.85);
+                    color: white;
+                    font-size: 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(0, 150, 138);
+                    }
+                }
                 button {
                     width: 100%;
                     height: 25px;
@@ -181,18 +209,25 @@ const Container = styled.div`
                     margin-bottom: 10px;
                     padding: 13px;
                     h3 {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: rgba(0, 150, 138, 0.9);
                         font-size: 15px;
                         margin-top: 5px;
                         margin-bottom: 5px;
                     }
                     p {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: rgba(0, 150, 138, 0.6);
                         font-size: 12px;
                         margin-bottom: 5px;
                     }
                 }
             }
+            .openReviewQuestionListMap {
+                display: none;
+            }
+        }
+        @media screen and (max-width: 1200px) {
+            display: flex;
+            flex-direction: column;
         }
     }
     .selectPlace {
@@ -212,10 +247,22 @@ const Container = styled.div`
             flex-direction: column;
             margin-top: 5px;
             margin-bottom: 10px;
-            padding: 20px;
+            padding: 15px;
+            .XIcon {
+                color: rgba(0, 150, 138, 0.5);
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                height: 25px;
+                width: 25px;
+                cursor: pointer;
+                &:hover {
+                    color: rgba(0, 150, 138, 0.85);
+                }
+            }
             h4 {
                 color: rgba(0, 150, 138, 0.85);
-                font-size: 18px;
+                font-size: 17px;
             }
             p {
                 color: rgba(0, 150, 138, 0.85);
@@ -225,7 +272,7 @@ const Container = styled.div`
             button {
                 margin-top: 10px;
                 width: 100%;
-                height: 35px;
+                height: 30px;
                 border-radius: 50px;
                 border: none;
                 background-color: rgba(0, 150, 138, 0.85);

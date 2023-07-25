@@ -132,7 +132,7 @@ const Container = styled.div`
     }
     .searchIDList {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.5); 
+        background-color: rgba(0, 150, 138, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -145,7 +145,7 @@ const Container = styled.div`
         .searchIDcontainer {
             display: flex;
             flex-direction: row;
-            color: rgba(0, 150, 138, 0.85); 
+            color: rgba(0, 150, 138, 0.9); 
             align-items: center;
             margin-bottom: 10px;
             img {
@@ -161,6 +161,7 @@ const Container = styled.div`
         }
         p {
             margin-left: 10px;   
+            font-size: 10px;
             color: rgba(0, 150, 138, 0.9);
         }
         button {

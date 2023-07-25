@@ -58,11 +58,11 @@ const MenuBar = ({mainPing}) => {
                     <p className="search"> 친구를 검색하세요. </p>
                     <FriendSearchID setRequestAlert={setRequestAlert} open={open} setOpen={setOpen} loginUserData={loginUserData}/>
 
-                    <div className="tabContainer" onClick={() => setTab(0)}>
+                    <div className={tab === 0 ? "clickTabContainer" : "tabContainer"} onClick={() => setTab(0)}>
                         <HiOutlineDocumentText size="25px" className="tabBtn" />
                         <h3> 메인 </h3>
                     </div>
-                    <div className="tabContainer" onClick={() => setTab(1)}>
+                    <div className={tab === 1 ? "clickTabContainer" : "tabContainer"} onClick={() => setTab(1)}>
                         <HiOutlineMapPin size="25px" className="tabBtn" />
                         <h3> 리뷰 / 질문 </h3>
                     </div>
@@ -92,8 +92,7 @@ const MenuBar = ({mainPing}) => {
                                     return(
                                         <div key={i} className="alertShareContainer">
                                             <p> {s.alert} </p>
-                                            <h6> · 장소: "{s.placeName}" </h6>
-                                            <h1> · {s.date} </h1>
+                                            <h6> · " {s.placeName} " </h6>
                                             <button onClick={async() => {
                                                 await updateDoc(doc(db, "UserInfo", currentUser.uid), {
                                                     shareAlert: arrayRemove(s),
@@ -233,6 +232,9 @@ const Container = styled.div`
                 position: absolute;
                 margin: 10px 10px 20px 10px;
                 cursor: pointer;
+                &:hover {
+                    margin: 10px 10px 20px 15px;
+                }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
@@ -266,8 +268,11 @@ const Container = styled.div`
                 align-items: center;
                 justify-content: start;
                 position: relative;
-                margin: 10px 10px 20px 10px;
+                margin: 10px 10px 10px 10px;
                 cursor: pointer;
+                &:hover {
+                    margin: 10px 10px 10px 15px;
+                }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
@@ -287,11 +292,41 @@ const Container = styled.div`
                     }
                 }
             }
+            .clickTabContainer {
+                background-color: rgba(189, 189, 189, 0.3);
+                height: 40px;
+                border-radius: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                position: relative;
+                margin: 10px 10px 10px 10px;
+                padding-left: 8px;
+                cursor: pointer;
+                @media screen and (max-width: 600px) {
+                    margin: 10px 10px 20px 0px;
+                    justify-items: center;
+                    left: 5px;
+                }
+                .tabBtn {
+                    color: rgba(0, 150, 138, 0.85);
+                }
+                h3 {
+                    font-size: 14px;
+                    color: rgba(0, 150, 138, 0.85);
+                    position: absolute;
+                    left: 40px;
+                    top: 16px;
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }
+                }
+            }
             .alertContainer {
                 /* background-color: wheat; */
                 display: flex;
                 flex-direction: column;
-                margin: 10px 10px 20px 10px;
+                margin: 20px 10px 20px 10px;
                 .alertTab {
                     /* background-color: violet; */
                     display: flex;
@@ -301,6 +336,9 @@ const Container = styled.div`
                     position: relative;
                     margin-bottom: 10px;
                     cursor: pointer;
+                    &:hover {
+                        margin-left: 5px;
+                    }
                     @media screen and (max-width: 600px) {
                         justify-items: center;
                         left: 0px;
@@ -322,7 +360,7 @@ const Container = styled.div`
                 }
                 .alertScroll {
                     display: flex;
-                    height: 500px;
+                    height: 420px;
                     flex-direction: column;
                     overflow-y: scroll;
                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -342,7 +380,7 @@ const Container = styled.div`
                     }
                     .alertShareContainer {
                         display: flex;
-                        background-color: rgba(0, 150, 138, 0.5); 
+                        background-color: rgba(0, 150, 138, 0.3);
                         border-radius: 10px;
                         list-style: none;
                         text-align: start;
@@ -354,17 +392,11 @@ const Container = styled.div`
                         margin-bottom: 10px;
                         padding: 13px;
                         p {
-                            color: rgba(255, 255, 255);
-                            font-size: 14px;
+                            color: rgba(0, 150, 138, 0.6);
+                            font-size: 13px;
                             margin-bottom: 10px;
                         }
                         h6 {
-                            /* color: rgba(255, 255, 255, 0.6); */
-                            color: rgba(0, 150, 138, 0.9);
-                            font-size: 13px;
-                            margin-bottom: 5px;
-                        }
-                        h1 {
                             color: rgba(0, 150, 138, 0.9);
                             font-size: 13px;
                             margin-bottom: 5px;
@@ -410,6 +442,8 @@ const Container = styled.div`
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
+                margin-right: 100px;
+                margin-left: 100px;
                 border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
                 .searchBox {
                     display: flex;

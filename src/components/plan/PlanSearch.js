@@ -99,7 +99,7 @@ const PlanSearch = ({pathUID, pathDocID, state}) => {
 
 const Container = styled.div`
     background-color: white;
-    width: 60vw;
+    width: 50vw;
     height: 98vh;
     display: flex;
     flex-direction: column;

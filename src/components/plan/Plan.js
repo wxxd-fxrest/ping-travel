@@ -17,7 +17,8 @@ const Plan = ({planData, profileUser}) => {
 
             {planData.Data.ownerID !== undefined && <div className="PlanContainer">
                 <p> Ping Owner: {planData.Data.ownerID} </p>
-                <h3> {planData.Data.placeName} · {planData.Data.date} </h3>
+                <h3> " {planData.Data.placeName} " </h3>
+                <p> {planData.Data.date} </p>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
@@ -28,7 +29,8 @@ const Plan = ({planData, profileUser}) => {
 
             {planData.Data.selectFriend !== undefined && <div className="PlanContainer">
                 <p> Ping Friend: {planData.Data.selectFriend} </p>
-                <h3> {planData.Data.placeName} · {planData.Data.date} </h3>
+                <h3> " {planData.Data.placeName} " </h3>
+                <p> {planData.Data.date} </p>
 
                 {(currentUserID === pathUID || !pathUID) && 
                     <button onClick={(e) => {
