@@ -61,17 +61,17 @@ const ProfileData = ({mainPing, loginUserData}) => {
 };
 
 const Container = styled.div`
-    background-color: white;
+    /* background-color: rgba(0, 150, 138, 0.3); */
     width: 100%;
     height: 100vh;
     .pathUIDunHave {
-        background-color: white;
+        /* background-color: rgba(0, 150, 138, 0.3); */
         height: 100vh;
         width: 100%;
         display: flex;
     }
     .pathUIDhave {
-        background-color: white;
+        /* background-color: rgba(0, 150, 138, 0.3); */
         width: 40vw;
         height: 67vh;
         position: relative;
@@ -82,6 +82,9 @@ const Container = styled.div`
             top: 10px;
             cursor: pointer;
             color: rgba(0, 150, 138, 0.85);
+        }
+        @media screen and (max-width: 900px) {
+            width: 80vw;
         }
     }
 `;

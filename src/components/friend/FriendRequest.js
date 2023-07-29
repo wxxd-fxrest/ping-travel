@@ -70,7 +70,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
 const Container = styled.div`
     .friendRequestContainer {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: white;
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -81,6 +81,8 @@ const Container = styled.div`
         margin-top: 5px;
         margin-bottom: 15px;
         padding: 10px;
+        border-bottom: solid 2px rgba(171, 171, 171);
+        border-right: solid 2px rgba(171, 171, 171);
         p {
             color: rgba(0, 150, 138, 0.85); 
             margin: 5px 5px 0px 5px;

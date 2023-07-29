@@ -123,12 +123,12 @@ const MenuBar = ({mainPing}) => {
                     </>}
                     {tab === 1 && <>
                         <div className="reviewQuestionTab">
-                            <div className="searchBox">
-                                <HiMiniMagnifyingGlass className='searchIcon'
+                            <div className="searchBox" 
                                     onClick={(e) => {
                                         e.preventDefault();
                                         navigate('/search');
-                                    }} />
+                                    }}>
+                                <HiMiniMagnifyingGlass className='searchIcon' />
                                 <p> 검색 </p>
                             </div>
                             <div className="tabComponent">
@@ -145,7 +145,7 @@ const MenuBar = ({mainPing}) => {
 };
 
 const Container = styled.div`
-    background-color: white;
+    background-color: rgb(80, 171, 161);
     display: flex;
     width: 80vw;
     height: 100vh;
@@ -157,13 +157,13 @@ const Container = styled.div`
         flex-direction: row;
         flex: 1;
         .menubar {
-            background-color: white;
+            /* background-color: rgba(0, 150, 138, 0.3); */
             width: 180px;
             max-width: 180px;
             min-width: 180px;
             flex: 0.1;
             padding: 15px;
-            border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+            border-right: solid 0.01rem white;
             @media screen and (max-width: 750px) {
                 width: 150px;
                 max-width: 150px;
@@ -175,16 +175,17 @@ const Container = styled.div`
                 min-width: 50px;
             }
             .menuLogo {
-                background-color: white;
+                /* background-color: white; */
                 display: flex;
                 justify-content: center;
                 .logo {
-                    background-color: rgba(0, 150, 138, 0.2);
+                    /* background-color: rgba(255, 255, 255, 0.7); */
+                    background-color: white;
                     display: inline-flex;
                     width: 75px;
                     height: 75px;
                     border-radius: 100%;
-                    border: 0.1px solid rgba(0, 150, 138, 0.2);
+                    border: 1.3px solid rgb(80, 171, 161, 0.8);
                     text-align: center;
                     align-items: center;
                     justify-content: center;
@@ -202,7 +203,7 @@ const Container = styled.div`
                         text-align: center;
                         align-items: center;
                         justify-content: center;
-                        border-left: 1px solid rgb(195, 96, 57, 0.6);
+                        border-left: 1.5px solid rgb(195, 96, 57, 0.9);
                         border-radius: 100%;
                         animation: rotate_image 6s ease-in-out infinite;
                         transform-origin: 50% 50%;
@@ -213,18 +214,18 @@ const Container = styled.div`
                         }
                     }
                     h3 {
-                        font-size: 0.1rem;
+                        font-size: 0.7rem;
                         font-weight: 100;
                         color: rgba(0, 150, 138);
                         &::first-letter {
-                            font-size: 1.4rem;
+                            font-size: 1.6rem;
                             letter-spacing: -10px;
                         }
                     }
                 }
             }
             .logoutContainer {
-                background-color: white;
+                background-color: rgb(80, 171, 161);
                 bottom: 10px;
                 display: flex;
                 align-items: center;
@@ -239,14 +240,17 @@ const Container = styled.div`
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
                     left: 30px;
+                    &:hover {
+                        margin: 10px 10px 20px 5px;
+                    }
                 }
                 .logoutBtn{
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                 }
                 h3 {
                     width: 100px;
                     font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                     position: absolute;
                     left: 35px;
                     top: 10px;
@@ -256,9 +260,10 @@ const Container = styled.div`
                 }
             }
             .search {
-                color: rgba(0, 150, 138, 0.85);
+                /* color: rgba(0, 150, 138, 0.85); */
+                color: white;
                 font-size: 11px;
-                margin: 20px 10px 2px 20px;
+                margin: 20px 10px 5px 15px;
                 @media screen and (max-width: 600px) {
                     display: none;
                 }
@@ -268,22 +273,28 @@ const Container = styled.div`
                 align-items: center;
                 justify-content: start;
                 position: relative;
-                margin: 10px 10px 10px 10px;
+                /* margin: 10px 10px 10px 10px; */
+                margin: 20px;
                 cursor: pointer;
                 &:hover {
-                    margin: 10px 10px 10px 15px;
+                    margin: 20px 20px 20px 25px;
                 }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
                     left: 10px;
+                    &:hover {
+                        margin: 10px 10px 20px 15px;
+                        top: 0px;
+                        left: 0px;
+                    }
                 }
                 .tabBtn {
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                 }
                 h3 {
                     font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                     position: absolute;
                     left: 35px;
                     top: 10px;
@@ -293,29 +304,35 @@ const Container = styled.div`
                 }
             }
             .clickTabContainer {
-                background-color: rgba(189, 189, 189, 0.3);
+                background-color: rgba(255, 255, 255, 0.15);
                 height: 40px;
-                border-radius: 30px;
+                width: 65%;
+                /* border-radius: 30px; */
+                border: solid 0.01rem white;
                 display: flex;
                 align-items: center;
                 justify-content: start;
                 position: relative;
-                margin: 10px 10px 10px 10px;
+                /* margin: 10px 10px 10px 10px; */
+                margin: 20px;
                 padding-left: 8px;
+                padding-right: 8px;
                 cursor: pointer;
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
+                    padding-left: 8px;
+                    padding-right: 0px;
                     justify-items: center;
                     left: 5px;
                 }
                 .tabBtn {
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                 }
                 h3 {
                     font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: white;
                     position: absolute;
-                    left: 40px;
+                    left: 38px;
                     top: 16px;
                     @media screen and (max-width: 600px) {
                         display: none;
@@ -328,13 +345,13 @@ const Container = styled.div`
                 flex-direction: column;
                 margin: 20px 10px 20px 10px;
                 .alertTab {
-                    /* background-color: violet; */
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                     justify-content: start;
                     position: relative;
                     margin-bottom: 10px;
+                    padding-left: 10px;
                     cursor: pointer;
                     &:hover {
                         margin-left: 5px;
@@ -344,14 +361,14 @@ const Container = styled.div`
                         left: 0px;
                     }
                     .alertIcons {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                     }
                     h3 {
                         width: 100px;
                         font-size: 14px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                         position: absolute;
-                        left: 35px;
+                        left: 43px;
                         top: 10px;
                         @media screen and (max-width: 600px) {
                             display: none;
@@ -360,7 +377,7 @@ const Container = styled.div`
                 }
                 .alertScroll {
                     display: flex;
-                    height: 420px;
+                    height: 400px;
                     flex-direction: column;
                     overflow-y: scroll;
                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -369,18 +386,18 @@ const Container = styled.div`
                         display: none;
                     }
                     h5 {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                         font-size: 12px;
                         margin-top: 10px;
                     }
                     .noRequest {
                         margin-top: 10px;
-                        color:  rgba(0, 150, 138, 0.5);
+                        color: white;
                         font-size: 12px;
                     }
                     .alertShareContainer {
                         display: flex;
-                        background-color: rgba(0, 150, 138, 0.3);
+                        background-color: white;
                         border-radius: 10px;
                         list-style: none;
                         text-align: start;
@@ -391,6 +408,8 @@ const Container = styled.div`
                         margin-top: 5px;
                         margin-bottom: 10px;
                         padding: 13px;
+                        border-bottom: solid 2px rgba(171, 171, 171);
+                        border-right: solid 2px rgba(171, 171, 171);
                         p {
                             color: rgba(0, 150, 138, 0.6);
                             font-size: 13px;
@@ -443,36 +462,45 @@ const Container = styled.div`
                 justify-content: space-between;
                 align-items: center;
                 margin-right: 100px;
-                margin-left: 100px;
-                border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+                /* margin-left: 100px; */
+                border-bottom: solid 0.01rem white;
                 .searchBox {
+                    border: 1px solid white;
+                    margin-left: 10px;
+                    border-radius: 20px;
+                    padding: 10px;
                     display: flex;
                     flex-direction: row;
                     align-items: end;
+                    cursor: pointer;
                     .searchIcon {
-                        color: rgba(0, 150, 138, 0.85);
-                        cursor: pointer;
-                        width: 35px;
-                        height: 35px;
+                        color: white;
+                        width: 25px;
+                        height: 25px;
                         margin-left: 10px;
                     }
                     p {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                         font-size: 20px;
-                        margin: 10px 10px 0px 5px;
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        /* margin: 10px 10px 0px 5px; */
+                    }
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.15);
                     }
                 }
                 .tabComponent {
                     display: flex;
                     align-items: end;
                     .tabHeaderIcon {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                         width: 35px;
                         height: 35px;
                         margin: 10px 0px 10px 50px;
                     }
                     .tabHeaderName {
-                        color: rgba(0, 150, 138, 0.85);
+                        color: white;
                         font-size: 20px;
                         margin: 10px 10px 10px 0px;
                     }

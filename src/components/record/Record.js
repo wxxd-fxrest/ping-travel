@@ -54,9 +54,12 @@ const Record = ({recordData, profileUser}) => {
 };
 
 const Container = styled.div`
+    /* background-color: yellowgreen; */
+    padding-right: 29px;
+    padding-left: 29px;
     .RecordContainer {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: white;
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -68,8 +71,7 @@ const Container = styled.div`
         margin-bottom: 10px;
         padding: 13px;
         display: flex;
-        border-bottom: solid 1px rgba(0, 150, 138, 0.3);
-        border-right: solid 1px rgba(0, 150, 138, 0.3);
+        box-shadow: 0px 4px 16px rgba(158, 158, 158, 0.25);
         p {
             color: rgba(0, 150, 138, 0.9);
             font-size: 12px;

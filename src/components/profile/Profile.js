@@ -177,7 +177,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
 };
 
 const Container = styled.div`
-    background-color: white;
+    /* background-color: rgba(0, 150, 138, 0.3); */
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -192,16 +192,16 @@ const Container = styled.div`
             flex-direction: row;
             justify-content: flex-end;
             align-items: center;
-            border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+            border-bottom: solid 0.01rem white;
             margin-right: 80px;
             .tabHeaderIcon {
-                color: rgba(0, 150, 138, 0.85);
+                color: white;
                 width: 35px;
                 height: 35px;
                 margin: 10px 0px 10px 50px;
             }
             .tabHeaderName {
-                color: rgba(0, 150, 138, 0.85);
+                color: white;
                 font-size: 20px;
                 margin: 10px 20px 0px 0px;
             }
@@ -209,8 +209,9 @@ const Container = styled.div`
         .bodyContainer {
             display: flex;
             flex-direction: row;
+            padding-top: 30px;
             .clickOpen {
-                background-color: rgba(0, 150, 138, 0.75);
+                background-color: white;
                 position: absolute;
                 top: 60px;
                 z-index: 10;
@@ -222,17 +223,17 @@ const Container = styled.div`
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                &:hover {
-                    background-color: rgba(0, 150, 138, 0.9);
-                }
                 .clickIcon {
-                    color: rgba(255, 255, 255, 0.8);
+                    color: rgba(0, 150, 138, 0.7);
                     width: 28px;
                     height: 28px;
+                    &:hover {
+                        color: rgba(0, 150, 138);
+                    }
                 }
             }
             .profileFlex2 {
-                background-color: rgba(0, 150, 138, 0.25);
+                background-color: white;
                 flex-direction: column;
                 display: flex;
                 flex: 0.2;
@@ -250,11 +251,16 @@ const Container = styled.div`
                 }
             }  
             .profileFlex1 { 
+                background-color: white;
                 flex-direction: column;
                 width: 100%;
                 flex: 0.65;
-                margin-left: 50px;
-                margin-right: 5px;
+                margin-left: 30px;
+                /* margin-right: 30px; */
+                padding-left: 1px;
+                padding-right: 1px;
+                border-top-left-radius: 30px;
+                border-top-right-radius: 30px;
                 @media screen and (max-width: 750px) {
                     margin-left: 5px;
                     margin-right: 5px;
@@ -262,17 +268,20 @@ const Container = styled.div`
                 .profileContainer {
                     display: flex;
                     flex-direction: row;
+                    margin-top: 20px;
                     padding: 10px;
                     align-items: center;
                     justify-content: start;
+                    padding-left: 30px;
+                    padding-right: 30px;
                     img {
-                        width: 90px;
-                        height: 90px;
+                        width: 70px;
+                        height: 70px;
                         border-radius: 100%;
                     }
                     p {
-                        font-size: 24px;
-                        margin-left: 20px;
+                        font-size: 22px;
+                        margin-left: 15px;
                         margin-right: 10px;
                         color: rgba(0, 150, 138, 0.85);
                     }
@@ -338,7 +347,7 @@ const Container = styled.div`
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    height: 96vh;
+                    height: 90vh;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
@@ -421,11 +430,11 @@ const Container = styled.div`
                                 justify-content: space-between;
                                 .firstTabMap {
                                     width: 100%;
-                                    height: 230px;
+                                    height: 200px;
                                 }
                                 .firstTabComponent {
                                     width: 100%;
-                                    height: 37vh;
+                                    height: 38vh;
                                     overflow-y: scroll;
                                     overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -440,25 +449,33 @@ const Container = styled.div`
                 }
             }
             .openProfileFlex1{
+                background-color: white;
                 flex-direction: column;
                 width: 100%;
                 flex: 1;
-                margin-left: 100px;
-                margin-right: 100px;
+                margin-left: 80px;
+                margin-right: 80px;
+                padding-left: 1px;
+                padding-right: 1px;
+                border-top-left-radius: 30px;
+                border-top-right-radius: 30px;
                 .profileContainer {
                     display: flex;
                     flex-direction: row;
+                    margin-top: 20px;
                     padding: 10px;
                     align-items: center;
                     justify-content: start;
+                    padding-left: 30px;
+                    padding-right: 30px;
                     img {
-                        width: 90px;
-                        height: 90px;
+                        width: 70px;
+                        height: 70px;
                         border-radius: 100%;
                     }
                     p {
-                        font-size: 24px;
-                        margin-left: 20px;
+                        font-size: 22px;
+                        margin-left: 15px;
                         margin-right: 10px;
                         color: rgba(0, 150, 138, 0.85);
                     }
@@ -525,7 +542,7 @@ const Container = styled.div`
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    height: 96vh;
+                    height: 90vh;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
@@ -608,11 +625,11 @@ const Container = styled.div`
                                 justify-content: space-between;
                                 .firstTabMap {
                                     width: 100%;
-                                    height: 230px;
+                                    height: 200px;
                                 }
                                 .firstTabComponent {
                                     width: 100%;
-                                    height: 37vh;
+                                    height: 38vh;
                                     overflow-y: scroll;
                                     overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -629,12 +646,12 @@ const Container = styled.div`
         }
     }
     .pathUIDhave {
-        background-color: white;
+        /* background-color: rgba(0, 150, 138, 0.3); */
         display: flex;
         position: relative;
         flex-direction: column;
         .HeaderTabComponent {
-            background-color: white;
+            /* background-color: white; */
             display: flex;
             flex-direction: row;
             justify-content: flex-end;

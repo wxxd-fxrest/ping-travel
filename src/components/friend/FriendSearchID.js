@@ -96,21 +96,21 @@ const Container = styled.div`
         height: 34px;
         border-radius: 50px;
         border: none;
-        background-color: rgba(0, 150, 138, 0.85);
+        background-color: white;
         padding-left: 15px;
         padding-right: 40px;
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(0, 150, 138, 0.85);
         outline: none;
         /* border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85); */
         &:hover {
-            background-color: rgba(0, 150, 138, 0.85);
+            background-color: white;
         }
         &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 150, 138, 0.85);
             font-size: 12px;
         }
         &:focus {
-            background-color: rgba(0, 150, 138, 0.85); 
+            background-color: rgba(255, 255, 255, 0.85); 
         }
         @media screen and (max-width: 500px) {
             width: 70%;
@@ -122,7 +122,7 @@ const Container = styled.div`
         position: absolute;
         background-color: transparent;
         border: none;
-        color: white;
+        color: rgba(0, 150, 138, 0.85);
         top: 7.5px;
         right: 10px;
         cursor: pointer;
@@ -132,7 +132,7 @@ const Container = styled.div`
     }
     .searchIDList {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: white;
         border-radius: 10px;
         list-style: none;
         text-align: start;

@@ -152,7 +152,7 @@ const Container = styled.div`
             display: flex;
             flex-direction: column;
             width: 35%;
-            height: 48vh;
+            height: 50.5vh;
             overflow-y: scroll;
             -ms-overflow-style: none; /* 인터넷 익스플로러 */
             scrollbar-width: none; /* 파이어폭스 */
@@ -197,7 +197,7 @@ const Container = styled.div`
                 }
                 div {
                     display: flex;
-                    background-color: rgba(0, 150, 138, 0.3);
+                    background-color: white;
                     border-radius: 10px;
                     list-style: none;
                     text-align: start;
@@ -208,6 +208,7 @@ const Container = styled.div`
                     margin-top: 5px;
                     margin-bottom: 10px;
                     padding: 13px;
+                    box-shadow: 0px 4px 16px rgba(158, 158, 158, 0.25);
                     h3 {
                         color: rgba(0, 150, 138, 0.9);
                         font-size: 15px;
@@ -237,7 +238,7 @@ const Container = styled.div`
         .selectPlaceContainer {
             display: flex;
             width: 100%;
-            background-color: rgba(0, 150, 138, 0.3);
+            background-color: white;
             border-radius: 10px;
             list-style: none;
             text-align: start;
@@ -286,7 +287,7 @@ const Container = styled.div`
             }
         }
         h4 {
-            color: rgba(0, 150, 138, 0.85);
+            color: white;
         }
     }
 `;
