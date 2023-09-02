@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import { HiOutlineUser, HiOutlineLockClosed, HiOutlineUserCircle } from "react-icons/hi2";
 
 const Login = ({setOpen, open}) => {
@@ -81,6 +81,16 @@ const Login = ({setOpen, open}) => {
     )
 };
 
+const blinkAnimation = keyframes`
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+`;
+
+
 const Container = styled.div`
     position: relative;
     text-align: center;
@@ -104,9 +114,11 @@ const Container = styled.div`
             margin-right: 10px;
             margin-left: 3px;
             cursor: pointer;
-            &:hover {
-                color: rgba(0, 150, 138);
-            }
+            animation: ${blinkAnimation} 2s infinite; /* blink 애니메이션 적용 */
+        }
+        .transformIcon:hover {
+            color: rgba(0, 150, 138);
+            animation: none; /* hover 시 애니메이션 중단 */
         }
     }
     .logo {

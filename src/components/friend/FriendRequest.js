@@ -70,7 +70,7 @@ const FriendRequest = ({friendRequest, loginUserData}) => {
 const Container = styled.div`
     .friendRequestContainer {
         display: flex;
-        background-color: white;
+        background: linear-gradient(to bottom, #ffffff, #f0f0f0);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -81,10 +81,10 @@ const Container = styled.div`
         margin-top: 5px;
         margin-bottom: 15px;
         padding: 10px;
-        border-bottom: solid 2px rgba(171, 171, 171);
-        border-right: solid 2px rgba(171, 171, 171);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
         p {
-            color: rgba(0, 150, 138, 0.85); 
+            color: rgba(250, 117, 65, 0.85);
             margin: 5px 5px 0px 5px;
         }
         .btnBox {
@@ -99,14 +99,20 @@ const Container = styled.div`
                 margin-right: 5px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgba(250, 117, 65, 0.85);
                 color: white;
                 font-size: 10px;
                 font-weight: bold;
                 margin-top: 10px;
                 cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.2s ease;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                transform: translateZ(5px); 
+
                 &:hover {
-                    background-color: rgba(0, 150, 138);
+                    background-color: rgba(250, 117, 65);
                 }
             }
             .noBtn {
@@ -114,14 +120,18 @@ const Container = styled.div`
                 height: 25px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgba(250, 117, 65, 0.85);
                 color: white;
                 font-size: 10px;
                 font-weight: bold;
                 margin-top: 10px;
                 cursor: pointer;
+                transition: transform 0.2s ease;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                transform: translateZ(5px); 
+
                 &:hover {
-                    background-color: rgba(0, 150, 138);
+                    background-color: rgba(250, 117, 65);
                 }
             }
         }

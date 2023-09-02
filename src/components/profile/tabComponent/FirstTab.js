@@ -189,19 +189,9 @@ const FirstTab = ({myPingID, profileUser}) => {
 };
 
 const Container = styled.div`
-    /* height: 71%;
-    overflow-y: scroll;
-    -ms-overflow-style: none; 
-    scrollbar-width: none; 
-    &::-webkit-scrollbar {
-        display: none;
-    } 
-    @media screen and (max-width: 900px) {
-        height: 78%;
-    } */
     .firstTabContainer {
         flex-direction: column;
-        background-color:  rgba(0, 150, 138, 0.3);
+        background-color: rgb(250, 117, 65, 0.3);
         border-radius: 10px;
         list-style: none;
         position: relative;
@@ -246,15 +236,20 @@ const Container = styled.div`
         height: 30px;
         border-radius: 50px;
         border: none;
-        background-color: rgba(0, 150, 138, 0.85);
+        background-color: rgb(250, 117, 65, 0.85);
         color: white;
         font-size: 10px;
         font-weight: bold;
         margin-top: 5px;
         margin-bottom: 10px;
         cursor: pointer;
+        /* 입체 효과를 위한 그림자 추가 */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease; /* 변환 효과 추가 */
+
         &:hover {
-            background-color: rgba(0, 150, 138);
+            transform: translateZ(5px);
+            background-color: rgb(250, 117, 65);
         }
     }
     .myPingIDContainer {

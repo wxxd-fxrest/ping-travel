@@ -83,7 +83,7 @@ const MenuBar = ({mainPing}) => {
                                 {friendRequest.map((f, i) => (
                                     <FriendRequest key={i} friendRequest={f} loginUserData={loginUserData}/>
                                 ))}
-                            </> : <p className="noRequest"> 요청이 없습니다. </p>}
+                            </> : <p className="noRequest"> · 요청이 없습니다. </p>}
 
                             <h5> 알림 </h5>          
 
@@ -103,7 +103,7 @@ const MenuBar = ({mainPing}) => {
                                         </div>
                                     )
                                 })}
-                            </> : <p> 알림이 없습니다. </p>}
+                            </> : <p style={{color: 'white', fontSize: '13px', margin: '10px 0px'}}> · 알림이 없습니다. </p>}
 
                         </div> : null }
                     </div>
@@ -145,13 +145,27 @@ const MenuBar = ({mainPing}) => {
 };
 
 const Container = styled.div`
-    background-color: rgb(80, 171, 161);
+    background-color: #f2b195;
     display: flex;
-    width: 80vw;
+    width: 60vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
     flex-direction: column;
+    transition: all 0.2s ease; 
+
+    @media screen and (max-width: 1330px) {
+        width: 70vw;
+    }
+    @media screen and (max-width: 1100px) {
+        width: 80vw;
+    }
+    @media screen and (max-width: 850px) {
+        width: 90vw;
+    }
+    @media screen and (max-width: 750px) {
+        width: 100vw;
+    }
     .main {
         display: flex;
         flex-direction: row;
@@ -175,74 +189,79 @@ const Container = styled.div`
                 min-width: 50px;
             }
             .menuLogo {
-                /* background-color: white; */
                 display: flex;
                 justify-content: center;
-                .logo {
-                    /* background-color: rgba(255, 255, 255, 0.7); */
-                    background-color: white;
-                    display: inline-flex;
-                    width: 75px;
-                    height: 75px;
-                    border-radius: 100%;
-                    border: 1.3px solid rgb(80, 171, 161, 0.8);
+            }
+
+            .logo {
+                background-color: white;
+                display: inline-flex;
+                width: 75px;
+                height: 75px;
+                border-radius: 100%;
+                border: 1.3px solid rgb(255, 255, 255, 0.8);
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                /* 입체 효과를 위한 그림자 추가 */
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
+
+                @media screen and (max-width: 600px) {
+                    width: 45px;
+                    height: 45px;
+                    margin-bottom: 20px;
+                }
+
+                .logoBar {
+                    position: absolute;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
                     text-align: center;
                     align-items: center;
                     justify-content: center;
-                    position: relative;
-                    @media screen and (max-width: 600px) {
-                        width: 45px;
-                        height: 45px;
-                        margin-bottom: 20px;
-                    }
-                    .logoBar {
-                        position: absolute;
-                        display: flex;
-                        width: 100%;
-                        height: 100%;
-                        text-align: center;
-                        align-items: center;
-                        justify-content: center;
-                        border-left: 1.5px solid rgb(195, 96, 57, 0.9);
-                        border-radius: 100%;
-                        animation: rotate_image 6s ease-in-out infinite;
-                        transform-origin: 50% 50%;
-                        @keyframes rotate_image{
-                            100% {
-                                transform: rotate(360deg);
-                            }
-                        }
-                    }
-                    h3 {
-                        font-size: 0.7rem;
-                        font-weight: 100;
-                        color: rgba(0, 150, 138);
-                        &::first-letter {
-                            font-size: 1.6rem;
-                            letter-spacing: -10px;
+                    border-left: 3px solid rgba(250, 117, 65, 0.9);
+                    border-radius: 100%;
+                    animation: rotate_image 6s ease-in-out infinite;
+                    transform-origin: 50% 50%;
+
+                    @keyframes rotate_image {
+                        100% {
+                            transform: rotate(360deg);
                         }
                     }
                 }
+                h3 {
+                    font-size: 0.7rem;
+                    font-weight: 100;
+                    color: rgba(250, 117, 65);
+
+                    &::first-letter {
+                        font-size: 1.6rem;
+                        letter-spacing: -10px;
+                    }
+                }
+            }
+            .logo:hover {
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
             }
             .logoutContainer {
-                background-color: rgb(80, 171, 161);
+                background-color: rgba(250, 117, 65, 0);
                 bottom: 10px;
+                left: 25px;
                 display: flex;
                 align-items: center;
                 justify-content: start;
                 position: absolute;
                 margin: 10px 10px 20px 10px;
                 cursor: pointer;
-                &:hover {
-                    margin: 10px 10px 20px 15px;
-                }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
                     left: 30px;
-                    &:hover {
-                        margin: 10px 10px 20px 5px;
-                    }
                 }
                 .logoutBtn{
                     color: white;
@@ -253,7 +272,7 @@ const Container = styled.div`
                     color: white;
                     position: absolute;
                     left: 35px;
-                    top: 10px;
+                    top: 8px;
                     @media screen and (max-width: 600px) {
                         display: none;
                     }
@@ -276,18 +295,15 @@ const Container = styled.div`
                 /* margin: 10px 10px 10px 10px; */
                 margin: 20px;
                 cursor: pointer;
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                 &:hover {
-                    margin: 20px 20px 20px 25px;
+                    transform: scale(1.1); /* 호버 시 약간 확대되도록 설정 */
                 }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
                     left: 10px;
-                    &:hover {
-                        margin: 10px 10px 20px 15px;
-                        top: 0px;
-                        left: 0px;
-                    }
                 }
                 .tabBtn {
                     color: white;
@@ -304,39 +320,40 @@ const Container = styled.div`
                 }
             }
             .clickTabContainer {
-                background-color: rgba(255, 255, 255, 0.15);
+                background-color: rgba(250, 117, 65, 0.8);
                 height: 40px;
                 width: 65%;
-                /* border-radius: 30px; */
-                border: solid 0.01rem white;
+                border-radius: 0px 10px 10px 10px;
                 display: flex;
                 align-items: center;
                 justify-content: start;
                 position: relative;
-                /* margin: 10px 10px 10px 10px; */
-                margin: 20px;
-                padding-left: 8px;
-                padding-right: 8px;
+                margin: 10px;
+                padding: 0px 20px;
                 cursor: pointer;
+                /* 입체 효과를 위한 그림자 추가 */
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
+            }
+
+            .clickTabContainer:hover {
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+            }
+
+            /* 나머지 스타일 유지 */
+            .clickTabContainer .tabBtn {
+                color: white;
+            }
+
+            .clickTabContainer h3 {
+                font-size: 14px;
+                color: white;
+                position: absolute;
+                left: 58px;
+                top: 16px;
                 @media screen and (max-width: 600px) {
-                    margin: 10px 10px 20px 0px;
-                    padding-left: 8px;
-                    padding-right: 0px;
-                    justify-items: center;
-                    left: 5px;
-                }
-                .tabBtn {
-                    color: white;
-                }
-                h3 {
-                    font-size: 14px;
-                    color: white;
-                    position: absolute;
-                    left: 38px;
-                    top: 16px;
-                    @media screen and (max-width: 600px) {
-                        display: none;
-                    }
+                    display: none;
                 }
             }
             .alertContainer {
@@ -353,8 +370,10 @@ const Container = styled.div`
                     margin-bottom: 10px;
                     padding-left: 10px;
                     cursor: pointer;
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                     &:hover {
-                        margin-left: 5px;
+                        transform: scale(1.1); /* 호버 시 약간 확대되도록 설정 */
                     }
                     @media screen and (max-width: 600px) {
                         justify-items: center;
@@ -408,16 +427,17 @@ const Container = styled.div`
                         margin-top: 5px;
                         margin-bottom: 10px;
                         padding: 13px;
-                        border-bottom: solid 2px rgba(171, 171, 171);
-                        border-right: solid 2px rgba(171, 171, 171);
+                        background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
                         p {
-                            color: rgba(0, 150, 138, 0.6);
+                            color: rgba(250, 117, 65, 0.6);
                             font-size: 13px;
                             margin-bottom: 10px;
                         }
                         h6 {
-                            color: rgba(0, 150, 138, 0.9);
+                            color: rgba(250, 117, 65, 0.9);
                             font-size: 13px;
+                            font-weight: 500;
                             margin-bottom: 5px;
                         }
                         button {
@@ -425,15 +445,20 @@ const Container = styled.div`
                             height: 25px;
                             border-radius: 50px;
                             border: none;
-                            background-color: rgba(0, 150, 138, 0.85);
+                            background-color: rgba(250, 117, 65, 0.8);
                             color: white;
                             font-size: 10px;
                             font-weight: bold;
                             margin-top: 5px;
                             cursor: pointer;
-                            &:hover {
-                                background-color: rgba(0, 150, 138);
-                            }
+                            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                            transition: transform 0.2s ease; /* 변환 효과 추가 */
+                        }
+
+                        button:hover {
+                            /* 호버 시 약간의 변환 효과 추가 */
+                            transform: translateZ(5px);
+                            background-color: rgb(250, 117, 65);
                         }
                     }
                 }
@@ -507,9 +532,6 @@ const Container = styled.div`
                 }
             }
         }
-    }
-    @media screen and (max-width: 750px) {
-        width: 100vw;
     }
 `;
 

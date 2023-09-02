@@ -60,31 +60,41 @@ const Container = styled.div`
         margin-bottom: 10px;
         padding: 13px;
         display: flex;
-        box-shadow: 0px 4px 16px rgba(158, 158, 158, 0.25);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease; /* 변환 효과 추가 */   
         p {
-            color: rgba(0, 150, 138, 0.9);
+            color: rgba(250, 117, 65, 0.7);
             font-size: 12px;
             margin-bottom: 11px;
         }
         h3 {
-            color: rgba(0, 150, 138, 0.9);
+            color: rgb(250, 117, 65);
             font-size: 15px;
             margin-bottom: 10px;
+            font-weight: bold;
         }
         button {
             width: 100%;
             height: 30px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
+            background-color: rgba(250, 117, 65, 0.8);
             color: white;
             font-size: 10px;
             font-weight: bold;
             margin-top: 5px;
             cursor: pointer;
-            &:hover {
-                background-color: rgba(0, 150, 138);
-            }
+            position: relative; /* 상대적 위치 설정 */
+            overflow: hidden; /* 내부 요소가 밖으로 벗어나지 않도록 설정 */
+            /* 입체 효과를 위한 그림자 추가 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+        }
+
+        button:hover {
+            /* 호버 시 약간의 변환 효과 추가 */
+            transform: translateZ(5px);
+            background-color: rgb(250, 117, 65);
         }
     }
 `;

@@ -24,6 +24,15 @@ const Profile = ({profileUser, friendID, pathUID}) => {
     const [attachment, setAttachment] = useState(""); 
     const [open, setOpen] = useState(false);
 
+    // 너비가 1000px 이하일 때 `profileFlex2`를 열고 `profileFlex1`를 닫도록 제어
+    const handleResize = () => {
+        if (window.innerWidth <= 1000) {
+            setOpen(false);
+        } else {
+            setOpen(false);
+        }
+    };
+
     useEffect(() => {
         const FeedCollection = query(
             collection(db, "UserInfo", `${profileUser.uid}`, "about"));
@@ -38,6 +47,13 @@ const Profile = ({profileUser, friendID, pathUID}) => {
             setMyPingID(feedArray);
             // console.log(feedArray)
         });
+
+        // 화면 크기 변경 이벤트 리스너 등록
+        window.addEventListener("resize", handleResize);
+        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, [profileUser.uid]);
     
     const onOrganize = async(e) => {
@@ -94,22 +110,26 @@ const Profile = ({profileUser, friendID, pathUID}) => {
 
     return (
         <Container> 
-            <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
-                <div div className="HeaderTabComponent">
+                <div className={pathUID ? 'pathUIDhave' : 'pathUIDunHave'}>
+                <div className="HeaderTabComponent">
                     <HiOutlineDocumentText className="tabHeaderIcon"/>
                     <h4 className="tabHeaderName"> 메인 </h4>
                 </div>
 
                 <div className="bodyContainer">
-
-                    {profileUser.uid === currentUser.uid && <>
-                        {open === false ? 
-                        <div className="clickOpen" onClick={() => setOpen(!open)}>
+                    {profileUser.uid === currentUser.uid && (
+                      <>
+                        {open === false ? (
+                          <div className="clickOpen" onClick={() => setOpen(!open)}>
                             <HiOutlineUserGroup className="clickIcon"/>
-                        </div> : <div className="profileFlex2">
+                          </div>
+                        ) : (
+                          <div className="profileFlex2 open"> {/* 'open' 클래스 추가 */}
                             <Friend profileUser={profileUser} friendID={friendID} setOpen={setOpen} open={open}/> 
-                        </div>}
-                    </>}
+                          </div>
+                        )}
+                      </>
+                    )}
 
                     <div className={open === true ? "profileFlex1" : "openProfileFlex1"}>
                         <div className="profileContainer">
@@ -134,7 +154,7 @@ const Profile = ({profileUser, friendID, pathUID}) => {
 
                         <div className="profileTab">
                             <h3 className={tab === 0 ? "selectTab" : "unSelectTab"} onClick={() => setTab(0)}> 여행 기록 </h3>
-                            <h3 className={tab === 1 ? "selectTab" : "unSelectTab"} onClick={() => setTab(1)}> 여행 계획 </h3>
+                            <h3 style={{margin: '0px 1px'}} className={tab === 1 ? "selectTab" : "unSelectTab"} onClick={() => setTab(1)}> 여행 계획 </h3>
                             <h3 className={tab === 2 ? "selectTab" : "unSelectTab"} onClick={() => setTab(2)}> 리뷰 / 질문 </h3>
                         </div>
 
@@ -177,7 +197,6 @@ const Profile = ({profileUser, friendID, pathUID}) => {
 };
 
 const Container = styled.div`
-    /* background-color: rgba(0, 150, 138, 0.3); */
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -209,7 +228,8 @@ const Container = styled.div`
         .bodyContainer {
             display: flex;
             flex-direction: row;
-            padding-top: 30px;
+            margin: 30px 0px;
+            height: 100vh;
             .clickOpen {
                 background-color: white;
                 position: absolute;
@@ -223,14 +243,20 @@ const Container = styled.div`
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                .clickIcon {
-                    color: rgba(0, 150, 138, 0.7);
-                    width: 28px;
-                    height: 28px;
-                    &:hover {
-                        color: rgba(0, 150, 138);
-                    }
-                }
+                transition: all 0.2s ease; /* 변경 사항이 부드럽게 적용되도록 트랜지션 설정 */
+
+                /* 요소를 띄우는 입체적인 효과 추가 */
+                box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+                transform: translateY(0); /* 초기 위치는 아래로 내려갔다가 */
+            }
+            .clickOpen:hover {
+                /* 호버 시 약간 띄워 보이도록 변경 */
+                transform: translateY(-3px);
+            }
+            .clickIcon {
+                color: rgba(250, 117, 65);
+                width: 28px;
+                height: 28px;
             }
             .profileFlex2 {
                 background-color: white;
@@ -261,6 +287,9 @@ const Container = styled.div`
                 padding-right: 1px;
                 border-top-left-radius: 30px;
                 border-top-right-radius: 30px;
+                @media screen and (max-width: 1100px) {
+                    display: none;
+                }
                 @media screen and (max-width: 750px) {
                     margin-left: 5px;
                     margin-right: 5px;
@@ -297,7 +326,7 @@ const Container = styled.div`
                         margin-left: 10px;
                         cursor: pointer;
                         &:hover {
-                            background-color: rgba(0, 150, 138);
+                            background-color:   rgb(250, 117, 65);
                         }
                     }
                 }
@@ -340,6 +369,7 @@ const Container = styled.div`
                         border-top-right-radius: 10px;
                         border-bottom: none;
                         border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border-bottom: none;
                     }
                 }
                 .profileTabComponent {
@@ -377,8 +407,18 @@ const Container = styled.div`
                             padding-top: 10px;
                             padding-bottom: 10px;
                             cursor: pointer;
+                            position: relative; /* 상대적 위치 설정 */
+
+                            /* 그림자 효과 추가 */
+                            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                            /* 텍스트 위에 띄우기 */
+                            z-index: 1;
+
+                            /* 호버 시 배경색 변경 및 그림자 효과 강화 */
                             &:hover {
-                                background-color: rgba(0, 150, 138);
+                                background-color:   rgb(250, 117, 65);
+                                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2), 0px 3px 6px rgba(0, 0, 0, 0.2);
                             }
                         }
                     }
@@ -387,7 +427,7 @@ const Container = styled.div`
                         flex-direction: column;
                         h4 {
                             display: flex;
-                            color: rgba(0, 150, 138);
+                            color:  rgb(250, 117, 65);
                             font-size: 16px;
                             margin-left: 15px;
                             margin-right: 15px;
@@ -420,7 +460,7 @@ const Container = styled.div`
                         @media screen and (max-width: 900px) {
                             h4 {
                                 display: flex;
-                                color: rgba(0, 150, 138);
+                                color:   rgb(250, 117, 65);
                                 font-size: 16px;
                                 margin-bottom: 10px;
                             }
@@ -449,35 +489,52 @@ const Container = styled.div`
                 }
             }
             .openProfileFlex1{
-                background-color: white;
+                /* background-color: white; */
                 flex-direction: column;
                 width: 100%;
                 flex: 1;
-                margin-left: 80px;
+                margin-left: 60px;
                 margin-right: 80px;
-                padding-left: 1px;
-                padding-right: 1px;
                 border-top-left-radius: 30px;
                 border-top-right-radius: 30px;
+                transition: all 0.2s ease; 
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                transform: translateZ(5px); 
+                @media screen and (max-width: 850px) {
+                    margin-left: 50px;
+                    margin-right: 80px;
+                }
+                @media screen and (max-width: 750px) {
+                    margin-left: 50px;
+                    margin-right: 80px;
+                }
                 .profileContainer {
                     display: flex;
                     flex-direction: row;
-                    margin-top: 20px;
-                    padding: 10px;
+                    margin-top: 10px;
+                    padding: 20px 30px;
                     align-items: center;
                     justify-content: start;
-                    padding-left: 30px;
-                    padding-right: 30px;
                     img {
                         width: 70px;
                         height: 70px;
-                        border-radius: 100%;
+                        border-radius: 50%; /* 원 모양의 이미지를 위해 50%로 설정 */
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+                        transition: all 0.2s ease; /* 변경 사항이 부드럽게 적용되도록 트랜지션 설정 */
+
+                        /* 이미지 호버 시 스타일 변경 */
+                        &:hover {
+                            transform: scale(1.05); /* 호버 시 이미지가 약간 커지는 효과 추가 */
+                            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); /* 호버 시 그림자가 더 강조되도록 변경 */
+                        }
                     }
                     p {
                         font-size: 22px;
+                        font-weight: bold;
                         margin-left: 15px;
                         margin-right: 10px;
-                        color: rgba(0, 150, 138, 0.85);
+                        /* color: rgba(0, 150, 138, 0.85); */
+                        color: white;
                     }
                     .organizeBtn {
                         width: 80px;
@@ -491,20 +548,20 @@ const Container = styled.div`
                         margin-left: 10px;
                         cursor: pointer;
                         &:hover {
-                            background-color: rgba(0, 150, 138);
+                            background-color:   rgb(250, 117, 65);
                         }
                     }
                 }
                 .profileTab {
-                    background-color: white;
+                    background-color: transparent;
                     display: flex;
                     flex-direction: row;
                     flex: 1;
-                    justify-content: center;
-                    height: 40px;
-                    align-items: end;
+                    justify-content: space-around; /* 탭들을 균등한 간격으로 정렬합니다. */
+                    /* height: 40px; */
+                    align-items: center;
                     .unSelectTab {
-                        background-color: rgba(0, 150, 138, 0.8);
+                        background-color: rgba(250, 117, 65);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -516,44 +573,48 @@ const Container = styled.div`
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        &:hover {
-                            background-color: rgba(0, 150, 138, 0.9);
-                        }
                     }
                     .selectTab {
-                        /* background-color: rgba(0, 150, 138, 0.1); */
+                        background-color: rgba(255, 255, 255, 0.3);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
                         height: 32px;
                         font-size: 14px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color: rgba(250, 117, 65);
                         align-items: end;
                         justify-content: center;
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
                         border-bottom: none;
+                        transition: background-color 0.2s ease, transform 0.2s ease; /* 트랜지션 효과 추가 */
+                        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+                        transform: translateZ(5px); /* 입체적인 효과 추가 */
                     }
                 }
+
                 .profileTabComponent {
+                    background-color: rgba(255, 255, 255, 0.3);
                     /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    height: 90vh;
+                    /* 아래의 margin 값을 조정하여 탭과 컴포넌트 사이의 간격을 조절할 수 있습니다. */
+                    margin-bottom: 20px;
+                    height: 69vh;
+                    overflow: hidden;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
                         flex: 1;
                         align-items: center;
-                        margin-left: 15px;
-                        margin-right: 15px;
+                        margin-left: 30px;
+                        margin-right: 30px;
                         .wirteName {
                             display: flex;
                             flex: 0.85;
-                            color: rgba(0, 150, 138, 0.85);
+                            color: rgba(250, 117, 65);
                             margin-right: 5px;
                             font-size: 16px;
                             padding-top: 20px;
@@ -565,15 +626,25 @@ const Container = styled.div`
                             height: 30px;
                             border-radius: 50px;
                             border: none;
-                            background-color: rgba(0, 150, 138, 0.85);
+                            background-color: rgb(250, 117, 65, 0.9);
                             color: white;
                             font-size: 10px;
                             font-weight: bold;
                             padding-top: 10px;
                             padding-bottom: 10px;
                             cursor: pointer;
+                            position: relative; /* 상대적 위치 설정 */
+
+                            /* 그림자 효과 추가 */
+                            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                            /* 텍스트 위에 띄우기 */
+                            z-index: 1;
+
+                            /* 호버 시 배경색 변경 및 그림자 효과 강화 */
                             &:hover {
-                                background-color: rgba(0, 150, 138);
+                                background-color:  rgb(250, 117, 65);
+                                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2), 0px 3px 6px rgba(0, 0, 0, 0.2);
                             }
                         }
                     }
@@ -582,7 +653,7 @@ const Container = styled.div`
                         flex-direction: column;
                         h4 {
                             display: flex;
-                            color: rgba(0, 150, 138);
+                            color: rgb(250, 117, 65);
                             font-size: 16px;
                             margin-left: 15px;
                             margin-right: 15px;
@@ -615,7 +686,7 @@ const Container = styled.div`
                         @media screen and (max-width: 900px) {
                             h4 {
                                 display: flex;
-                                color: rgba(0, 150, 138);
+                                color:   rgb(250, 117, 65);
                                 font-size: 16px;
                                 margin-bottom: 10px;
                             }
@@ -732,7 +803,7 @@ const Container = styled.div`
                         margin-left: 10px;
                         cursor: pointer;
                         &:hover {
-                            background-color: rgba(0, 150, 138);
+                            background-color:   rgb(250, 117, 65);
                         }
                     }
                 }
@@ -793,8 +864,8 @@ const Container = styled.div`
                         flex-direction: row;
                         flex: 1;
                         align-items: center;
-                        margin-left: 15px;
-                        margin-right: 15px;
+                        margin-left: 30px;
+                        margin-right: 30px;
                         .wirteName {
                             display: flex;
                             flex: 0.85;
@@ -818,7 +889,7 @@ const Container = styled.div`
                             padding-bottom: 10px;
                             cursor: pointer;
                             &:hover {
-                                background-color: rgba(0, 150, 138);
+                                background-color:   rgb(250, 117, 65);
                             }
                         }
                     }
@@ -827,7 +898,7 @@ const Container = styled.div`
                         flex-direction: column;
                         h4 {
                             display: flex;
-                            color: rgba(0, 150, 138);
+                            color:  rgb(250, 117, 65);
                             margin-right: 5px;
                             font-size: 16px;
                             margin-left: 15px;
@@ -862,7 +933,7 @@ const Container = styled.div`
                         @media screen and (max-width: 900px) {
                             h4 {
                                 display: flex;
-                                color: rgba(0, 150, 138);
+                                color: rgb(250, 117, 65);
                                 font-size: 16px;
                                 margin-bottom: 10px;
                             }

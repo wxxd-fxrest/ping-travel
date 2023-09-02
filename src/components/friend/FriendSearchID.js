@@ -99,14 +99,14 @@ const Container = styled.div`
         background-color: white;
         padding-left: 15px;
         padding-right: 40px;
-        color: rgba(0, 150, 138, 0.85);
+        color: rgba(250, 117, 65);
         outline: none;
         /* border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85); */
         &:hover {
             background-color: white;
         }
         &::placeholder {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgba(250, 117, 65);
             font-size: 12px;
         }
         &:focus {
@@ -122,7 +122,7 @@ const Container = styled.div`
         position: absolute;
         background-color: transparent;
         border: none;
-        color: rgba(0, 150, 138, 0.85);
+        color: rgba(250, 117, 65);
         top: 7.5px;
         right: 10px;
         cursor: pointer;
@@ -145,7 +145,7 @@ const Container = styled.div`
         .searchIDcontainer {
             display: flex;
             flex-direction: row;
-            color: rgba(0, 150, 138, 0.9); 
+            color: rgb(250, 117, 65, 0.9); 
             align-items: center;
             margin-bottom: 10px;
             img {
@@ -162,22 +162,27 @@ const Container = styled.div`
         p {
             margin-left: 10px;   
             font-size: 10px;
-            color: rgba(0, 150, 138, 0.9);
+            color: rgb(250, 117, 65, 0.9);
         }
         button {
             width: 100%;
             height: 25px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
+            background-color: rgba(250, 117, 65, 0.8);
             color: white;
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
-            &:hover {
-                background-color: rgba(0, 150, 138);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
             }
-        }
+
+            button:hover {
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+                background-color: rgb(250, 117, 65);
+            }
         p {
             font-size: 10px;
         }

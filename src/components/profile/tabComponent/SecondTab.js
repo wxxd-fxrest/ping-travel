@@ -37,10 +37,10 @@ const SecondTab = ({profileUser, pathUID}) => {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: 71%;
+    max-height: 90%; 
     overflow-y: scroll;
-    -ms-overflow-style: none; 
-    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     &::-webkit-scrollbar {
         display: none;
     }

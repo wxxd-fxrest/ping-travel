@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../AuthContext";
-import { HiOutlineUsers, HiMiniSparkles, HiOutlineRocketLaunch, HiOutlineXCircle } from "react-icons/hi2";
+import { HiOutlineUsers, HiOutlineRocketLaunch, HiOutlineXCircle } from "react-icons/hi2";
 
 const Friend = ({profileUser, friendID, onClickOpen, setOpen, open}) => {
     const {currentUser} = useContext(AuthContext);
@@ -15,7 +15,6 @@ const Friend = ({profileUser, friendID, onClickOpen, setOpen, open}) => {
                 IDlist.push(
                     <div key={i} className="friendList">
                         <div className="friendName">
-                            <HiMiniSparkles size="12px" className="friendIcon"/> 
                             <p> {friendID[i]} </p>
                         </div>
                         {profileUser.uid !== currentUser.uid ? null : 
@@ -37,9 +36,9 @@ const Friend = ({profileUser, friendID, onClickOpen, setOpen, open}) => {
     return(
         <Container>
             <div className="friendHeader">
-                <HiOutlineUsers size="30px" className="Icon"/>
+                <HiOutlineUsers size="25px" className="Icon"/>
                 <h3> 친구 </h3>
-                <HiOutlineXCircle size="30px" className="backIcon" onClick={() => setOpen(!open)} />
+                <HiOutlineXCircle size="25px" className="backIcon" onClick={() => setOpen(!open)} />
             </div>
             {friendList()}
         </Container>
@@ -55,7 +54,7 @@ const Container = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: start;
-        align-items: flex-end;
+        align-items: center;
         margin-top: 10px;
         margin-bottom: 10px;
         position: relative;
@@ -63,22 +62,23 @@ const Container = styled.div`
             margin-right: 10px;
         }
         .Icon {
-            color: rgba(0, 150, 138, 0.95);
+            color: rgba(250, 117, 65);
         }
         h3 {
-            color: rgba(0, 150, 138, 0.95);
-            font-size: 20px;
+            color: rgba(250, 117, 65);
+            font-size: 15px;
+            margin-left: 5px;
             @media screen and (max-width: 1100px) {
                 display: none;
             }
         }
         .backIcon {
-            color: rgba(0, 150, 138, 0.95);
+            color: rgba(250, 117, 65, 0.58);
             position: absolute;
             right: 0px;
             cursor: pointer;
             &:hover {
-                color: rgba(0, 150, 138, 0.58);
+                color: rgba(250, 117, 65, 0.95);
             }
             @media screen and (max-width: 900px) {
                 right: -10px;
@@ -89,7 +89,7 @@ const Container = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        background-color: rgba(0, 150, 138, 0.45);
+        background-color: rgba(250, 117, 65, 0.8);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -98,30 +98,46 @@ const Container = styled.div`
         margin-top: 5px;
         margin-bottom: 10px;
         padding: 10px;
+
         .friendName {
             display: flex;
-            width: 100px;
+            align-items: center; /* 텍스트와 아이콘을 세로 가운데 정렬 */
+            max-width: 100px; /* 최대 너비를 100px로 제한 */
+            overflow: hidden; /* 너비를 초과하는 부분은 숨김 */
+
+            @media screen and (max-width: 1300px) {
+                max-width: 60px;
+            }
+            
             .friendIcon {
                 color: white;
+
                 @media screen and (max-width: 900px) {
                     display: none;
                 }
             }
             p {
-                display: flex;
-                margin-left: 5px;
                 color: white;
                 word-break: break-all;
+                white-space: nowrap; /* 줄 바꿈 방지 */
+                text-overflow: ellipsis; /* 텍스트가 넘칠 경우 ...으로 처리 */
+                overflow: hidden; /* 너비를 초과하는 부분은 숨김 */
+                flex-shrink: 1; /* 텍스트를 줄이지 않고 아이콘 크기 유지 */
+                margin-left: 5px;
             }
         }
+
         .goFriendProfile {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgba(255, 255, 255, 0.5);
             margin-left: 5px;
             height: 15px;
             width: 15px;
             cursor: pointer;
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+
             &:hover {
-                color: rgba(0, 150, 138);
+                color: white;
+                transform: scale(1.3); /* 호버 시 약간 확대되도록 설정 */
             }
         }
     }

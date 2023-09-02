@@ -4,7 +4,7 @@ import { auth, db } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import signupImg  from '../../img/signupImg.jpeg'; 
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { HiOutlineUser, HiOutlineLockClosed, HiOutlineUserCircle } from "react-icons/hi2";
 
 const SignUp = ({setOpen, open}) => {
@@ -92,6 +92,15 @@ const SignUp = ({setOpen, open}) => {
     )
 };
 
+const blinkAnimation = keyframes`
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+`;
+
 const Container = styled.div`
     position: relative;
     text-align: center;
@@ -115,9 +124,11 @@ const Container = styled.div`
             margin-right: 10px;
             margin-left: 3px;
             cursor: pointer;
-            &:hover {
-                color: rgba(0, 150, 138);
-            }
+            animation: ${blinkAnimation} 2s infinite; /* blink 애니메이션 적용 */
+        }
+        .transformIcon:hover {
+            color: rgba(0, 150, 138);
+            animation: none; /* hover 시 애니메이션 중단 */
         }
     }
     .logo {
