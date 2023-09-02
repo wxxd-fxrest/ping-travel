@@ -229,7 +229,7 @@ const Container = styled.div`
             display: flex;
             flex-direction: row;
             margin: 30px 0px;
-            height: 100vh;
+            height: 90%;
             .clickOpen {
                 background-color: white;
                 position: absolute;
@@ -595,14 +595,15 @@ const Container = styled.div`
                 }
 
                 .profileTabComponent {
-                    background-color: rgba(255, 255, 255, 0.3);
+                    /* background-color: rgba(255, 255, 255, 0.3); */
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
                     /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
                     /* 아래의 margin 값을 조정하여 탭과 컴포넌트 사이의 간격을 조절할 수 있습니다. */
                     margin-bottom: 20px;
-                    height: 69vh;
+                    height: 75%;
                     overflow: hidden;
                     .tabComponent {
                         display: flex;
