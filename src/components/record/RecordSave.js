@@ -68,10 +68,10 @@ const RecordSave = () => {
                     });     
                     const e = query(
                         collection(db, "UserInfo", shareUserData.uid, "record"), 
-                        where("placeID", "==", `${state.state.placeID}`),
-                        where("placeX", "==", `${state.state.placeX}`),
-                        where("placeY", "==", `${state.state.placeY}`),
-                        where("writeUID", "==", `${currentUser.uid}`),
+                            where("placeID", "==", `${state.state.placeID}`),
+                            where("placeX", "==", `${state.state.placeX}`),
+                            where("placeY", "==", `${state.state.placeY}`),
+                            where("writeUID", "==", `${currentUser.uid}`),
                         );
                     const querySnapshot2 = await getDocs(e);
                     querySnapshot2.forEach(async (doc) => {

@@ -89,7 +89,7 @@ const PlanSearchList = ({places, pathUID, pathDocID, state}) => {
                                     roadAdrees: places.road_address_name,
                                 }
                             }); 
-                        }}> 추가 기록하기 </button>
+                        }}> 계획 추가하기 </button>
                     </> : <>
                         <button onClick={(e) => {
                             e.preventDefault();

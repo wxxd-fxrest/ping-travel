@@ -93,18 +93,20 @@ const PlanDetail = () => {
                         <h3> 장소 : {planData.placeName} </h3>
 
                         {share ? <>
-                            <p> 함께 공유한 user </p>
+                            <div  className="ShareUserID"> <p>동행 할 ID:</p>
                             {share.map((r, i) => {
                                 return (
                                     <div key={i}>
-                                        <p> {r} </p>
+                                        <p  style={{fontSize: '17px', fontWeight: '600'}}> {r} </p>
                                     </div>
                                 )
-                            })}
+                            })} </div>
                         </> : <>
-                            <p> 공유해준 user : {planData.ownerID} </p>
+                            <div  className="ShareUserID"> 
+                                <p>동행 할 ID:</p>
+                                <p style={{fontSize: '17px', fontWeight: '600'}}> {planData.ownerID} </p>
+                            </div>
                         </>}
-
                         <p> 날짜 : {planData.date} </p>
                         <p> 계획 : {planData.plan} </p>
                     </div>
@@ -146,34 +148,34 @@ const Container = styled.div`
     height: 98vh;
     display: flex;
     flex-direction: column;
-    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border: solid 0.01rem rgba(250, 117, 65, 0.85);
     border-radius: 10px;
-    @media screen and (max-width: 700px) {
-        width: 90vw;
+    @media screen and (max-width: 800px) {
+        width: 80vw;
     }
     .placeHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgba(250, 117, 65, 0.85);
         }
         .placeHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgba(250, 117, 65, 0.85);
             }
             h4 {
                 font-size: 17px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgba(250, 117, 65, 0.85);
             }
         }
     }
     .recordMessageContainer {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: rgba(250, 117, 65, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -204,13 +206,20 @@ const Container = styled.div`
                 h3 {
                     margin-top: 8px;
                     font-size: 18px;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: rgba(250, 117, 65, 0.85);
                     margin-bottom: 3px;
+                    font-weight: bold;
                 }
                 p {
                     font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: rgba(250, 117, 65, 0.85);
                     margin-top: 3px;
+                    margin-bottom: 5px;
+                }
+                .ShareUserID {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
                 }
             }
             .recordMainButton {
@@ -224,13 +233,18 @@ const Container = styled.div`
                     height: 28px;
                     border-radius: 50px;
                     border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
                     color: white;
                     font-size: 10px;
                     font-weight: bold;
                     cursor: pointer;
+                    background-color: rgba(250, 117, 65, 0.8);
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                     &:hover {
-                        background-color: rgba(0, 150, 138);
+                        /* 호버 시 약간의 변환 효과 추가 */
+                        transform: translateZ(5px);
+                        background-color: rgb(250, 117, 65);
                     }
                 }
             }
@@ -244,13 +258,18 @@ const Container = styled.div`
             z-index: 10;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
             color: white;
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
+            background-color: rgba(250, 117, 65, 0.8);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+
             &:hover {
-                background-color: rgba(0, 150, 138);
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+                background-color: rgb(250, 117, 65);
             }
         }
     }

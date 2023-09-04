@@ -42,7 +42,7 @@ const AddPlanDetail = ({addPlanData, pathUID, pathDocID}) => {
                 <div className="addContainer">
                     <div className="recordMainContainer">
                         <h3> {addPlanData.addPlaceName} </h3>
-                        <p> {addPlanData.addDate} </p>
+                        <p style={{marginBottom: '5px'}}> {addPlanData.addDate} </p>
                         <p> {addPlanData.addPlan} </p>
                     </div>
 
@@ -94,7 +94,7 @@ const Box = styled.div`
     .addContainer {
         width: 80%;
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: rgba(250, 117, 65, 0.3);
         border-radius: 10px 10px 2px 10px;
         list-style: none;
         text-align: start;
@@ -120,12 +120,13 @@ const Box = styled.div`
             /* margin-bottom: 10px; */
             h3 {
                 font-size: 18px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgba(250, 117, 65, 0.85);
                 margin-bottom: 5px;
+                font-weight: bold;
             }
             p {
                 font-size: 14px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgba(250, 117, 65, 0.85);
                 margin-top: 5px;
             }
         }
@@ -135,13 +136,18 @@ const Box = styled.div`
             height: 28px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
             color: white;
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
+            background-color: rgba(250, 117, 65, 0.8);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+
             &:hover {
-                background-color: rgba(0, 150, 138);
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+                background-color: rgb(250, 117, 65);
             }
         }
     }
@@ -154,7 +160,7 @@ const Box2 = styled.div`
     .unAddContainer {
         width: 80%;
         display: flex;
-        background-color: rgba(0, 150, 138, 0.8);
+        background-color: rgba(250, 117, 65, 0.8);
         border-radius: 10px 10px 10px 2px;
         list-style: none;
         text-align: start;
@@ -197,7 +203,7 @@ const Box2 = styled.div`
             border-radius: 50px;
             border: none;
             background-color: rgba(255, 255, 255, 0.3);
-            color: rgba(0, 150, 138, 0.85);
+            color: rgba(250, 117, 65, 0.85);
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
