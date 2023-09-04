@@ -381,7 +381,7 @@ const Container = styled.div`
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    height: 90vh;
+                    height: 92%;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
