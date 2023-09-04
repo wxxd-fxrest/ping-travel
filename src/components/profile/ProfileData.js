@@ -61,7 +61,7 @@ const ProfileData = ({mainPing, loginUserData}) => {
 };
 
 const Container = styled.div`
-    /* background-color: rgba(0, 150, 138, 0.3); */
+    background-color: #f2b195;
     width: 100%;
     height: 100vh;
     .pathUIDunHave {

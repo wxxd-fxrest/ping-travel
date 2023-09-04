@@ -277,16 +277,18 @@ const Container = styled.div`
                 }
             }  
             .profileFlex1 { 
-                background-color: white;
+                /* background-color: white; */
                 flex-direction: column;
                 width: 100%;
-                flex: 0.65;
+                flex: 1;
                 margin-left: 30px;
-                /* margin-right: 30px; */
-                padding-left: 1px;
-                padding-right: 1px;
-                border-top-left-radius: 30px;
-                border-top-right-radius: 30px;
+                margin-right: 80px;
+                /* border-top-left-radius: 30px;
+                border-top-right-radius: 30px; */
+                border-radius: 30px;
+                transition: all 0.2s ease; 
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                transform: translateZ(5px); 
                 @media screen and (max-width: 1100px) {
                     display: none;
                 }
@@ -335,15 +337,15 @@ const Container = styled.div`
                     }
                 }
                 .profileTab {
-                    background-color: white;
+                    background-color: transparent;
                     display: flex;
                     flex-direction: row;
                     flex: 1;
-                    justify-content: center;
-                    height: 40px;
-                    align-items: end;
+                    justify-content: space-around; /* 탭들을 균등한 간격으로 정렬합니다. */
+                    /* height: 40px; */
+                    align-items: center;
                     .unSelectTab {
-                        background-color:  rgba(250, 117, 65, 0.85);
+                        background-color: rgba(250, 117, 65);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -355,44 +357,48 @@ const Container = styled.div`
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        &:hover {
-                            background-color:  rgba(250, 117, 65, 0.3);
-                        }
                     }
                     .selectTab {
+                        background-color: rgba(255, 255, 255, 0.3);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
                         height: 32px;
                         font-size: 14px;
-                        color:  rgba(250, 117, 65, 0.85);
+                        color: rgba(250, 117, 65);
                         align-items: end;
                         justify-content: center;
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         border-bottom: none;
-                        border: solid 0.01rem  rgba(250, 117, 65, 0.85);
-                        border-bottom: none;
+                        transition: background-color 0.2s ease, transform 0.2s ease; /* 트랜지션 효과 추가 */
+                        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+                        transform: translateZ(5px); /* 입체적인 효과 추가 */
                     }
                 }
                 .profileTabComponent {
-                    /* background-color:  rgba(250, 117, 65, 0.1); */
+                    /* background-color: rgba(255, 255, 255, 0.3); */
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+                    /* border: solid 0.01rem  rgba(250, 117, 65, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    height: 92%;
+                    /* 아래의 margin 값을 조정하여 탭과 컴포넌트 사이의 간격을 조절할 수 있습니다. */
+                    /* margin-bottom: 20px; */
+                    height: 75%;
+                    overflow: hidden;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
                         flex: 1;
                         align-items: center;
-                        margin-left: 15px;
-                        margin-right: 15px;
+                        margin-left: 30px;
+                        margin-right: 30px;
                         .wirteName {
                             display: flex;
                             flex: 0.85;
-                            color:  rgba(250, 117, 65, 0.85);
+                            color: rgba(250, 117, 65);
                             margin-right: 5px;
                             font-size: 16px;
                             padding-top: 20px;
@@ -404,7 +410,7 @@ const Container = styled.div`
                             height: 30px;
                             border-radius: 50px;
                             border: none;
-                            background-color:  rgba(250, 117, 65, 0.85);
+                            background-color: rgb(250, 117, 65, 0.9);
                             color: white;
                             font-size: 10px;
                             font-weight: bold;
@@ -421,7 +427,7 @@ const Container = styled.div`
 
                             /* 호버 시 배경색 변경 및 그림자 효과 강화 */
                             &:hover {
-                                background-color:   rgb(250, 117, 65);
+                                background-color:  rgb(250, 117, 65);
                                 box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2), 0px 3px 6px rgba(0, 0, 0, 0.2);
                             }
                         }
@@ -431,12 +437,12 @@ const Container = styled.div`
                         flex-direction: column;
                         h4 {
                             display: flex;
-                            color:  rgb(250, 117, 65);
+                            color: rgb(250, 117, 65);
                             font-size: 16px;
                             margin-left: 15px;
                             margin-right: 15px;
-                            margin-bottom: 10px;
                             padding-top: 20px;
+                            margin-bottom: 10px;
                         }
                         .firstTab {
                             display: flex;
@@ -710,7 +716,7 @@ const Container = styled.div`
                                 }
                                 .firstTabComponent {
                                     width: 100%;
-                                    height: 38vh;
+                                    height: 30vh;
                                     overflow-y: scroll;
                                     overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -823,7 +829,7 @@ const Container = styled.div`
                     }
                 }
                 .profileTab {
-                    background-color: white;
+                    background-color: transparent;
                     display: flex;
                     flex-direction: row;
                     flex: 1;
@@ -831,7 +837,7 @@ const Container = styled.div`
                     height: 40px;
                     align-items: end;
                     .unSelectTab {
-                        background-color:  rgba(250, 117, 65, 0.85);
+                        background-color: rgba(250, 117, 65);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -843,37 +849,37 @@ const Container = styled.div`
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        &:hover {
-                            background-color:  rgba(250, 117, 65, 0.9);
-                        }
                     }
                     .selectTab {
+                        background-color: rgba(255, 255, 255, 0.3);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
                         height: 32px;
                         font-size: 14px;
-                        color:  rgba(250, 117, 65, 0.85);
+                        color: rgba(250, 117, 65);
                         align-items: end;
                         justify-content: center;
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        border: solid 0.01rem  rgba(250, 117, 65, 0.85);
                         border-bottom: none;
-                        &:hover {
-                            background-color:  rgba(250, 117, 65, 0.2);
-                        }
+                        transition: background-color 0.2s ease, transform 0.2s ease; /* 트랜지션 효과 추가 */
+                        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+                        transform: translateZ(5px); /* 입체적인 효과 추가 */
                     }
                 }
                 .profileTabComponent {
-                    /* background-color:  rgba(250, 117, 65, 0.1); */
-                    /* background-color: bisque; */
+                    /* background-color: rgba(255, 255, 255, 0.3); */
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
                     /* border: solid 0.01rem  rgba(250, 117, 65, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
-                    /* height: 53vh; */
+                    /* 아래의 margin 값을 조정하여 탭과 컴포넌트 사이의 간격을 조절할 수 있습니다. */
+                    /* margin-bottom: 20px; */
+                    height: 80%;
+                    overflow: hidden;
                     .tabComponent {
                         display: flex;
                         flex-direction: row;
@@ -934,7 +940,6 @@ const Container = styled.div`
                             }
                             .firstTabComponent {
                                 width: 33%;
-                                /* height: 37vh; */
                                 height: 50.5vh;
                                 overflow-y: scroll;
                                 overflow-x: hidden;
@@ -948,7 +953,7 @@ const Container = styled.div`
                         @media screen and (max-width: 900px) {
                             h4 {
                                 display: flex;
-                                color: rgb(250, 117, 65);
+                                color:   rgb(250, 117, 65);
                                 font-size: 16px;
                                 margin-bottom: 10px;
                             }
@@ -958,11 +963,11 @@ const Container = styled.div`
                                 justify-content: space-between;
                                 .firstTabMap {
                                     width: 100%;
-                                    height: 230px;
+                                    height: 200px;
                                 }
                                 .firstTabComponent {
                                     width: 100%;
-                                    height: 37vh;
+                                    height: 40vh;
                                     overflow-y: scroll;
                                     overflow-x: hidden;
                                     -ms-overflow-style: none; /* 인터넷 익스플로러 */

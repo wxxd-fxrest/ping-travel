@@ -106,33 +106,33 @@ const Search = () => {
 
 const Container = styled.div`
     background-color: white;
-    width: 60vw;
+    width: 50vw;
     height: 98vh;
     display: flex;
     flex-direction: column;
-    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border: solid 0.01rem rgb(250, 117, 65, 0.85);
     border-radius: 10px;
-    @media screen and (max-width: 700px) {
-        width: 90vw;
+    @media screen and (max-width: 800px) {
+        width: 80vw;
     }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
         }
         .searchHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             
             }
             h4 {
                 font-size: 17px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
         }
     }
@@ -148,6 +148,7 @@ const Container = styled.div`
     .searchInputBox {
         display: flex;
         justify-content: end;
+        align-items: center;
         margin: 10px;
         input {
             width: 40%;
@@ -155,30 +156,41 @@ const Container = styled.div`
             margin-right: 5px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.3);
+            background-color: rgb(250, 117, 65, 0.3);
             padding-left: 30px;
             padding-right: 50px;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
             outline: none;
+            /* 그림자 효과 추가 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+            /* 입체적인 효과 추가 */
+            transform: translateZ(5px);
+            transition: transform 0.2s ease;
             &::placeholder {
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
             &:focus {
-                background-color: rgba(0, 150, 138, 0.3);
+                background-color: rgb(250, 117, 65, 0.3);
             }
         }
         button {
-            width: 100px;
-            height: 40px;
+            width: 80px;
+            height: 38px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
             color: white;
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
+            background-color: rgba(250, 117, 65, 0.8);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+
             &:hover {
-                background-color: rgba(0, 150, 138);
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+                background-color: rgb(250, 117, 65);
             }
         }
     }
