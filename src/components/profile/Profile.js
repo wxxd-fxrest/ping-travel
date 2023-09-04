@@ -312,22 +312,26 @@ const Container = styled.div`
                         font-size: 22px;
                         margin-left: 15px;
                         margin-right: 10px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color:  rgba(250, 117, 65, 0.85);
                     }
                     .organizeBtn {
                         width: 80px;
                         height: 25px;
                         border-radius: 50px;
                         border: none;
-                        background-color: rgba(0, 150, 138, 0.85);
                         color: white;
                         font-size: 10px;
                         font-weight: bold;
                         margin-left: 10px;
-                        cursor: pointer;
+                        background-color: rgba(250, 117, 65, 0.8);
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                         &:hover {
-                            background-color:   rgb(250, 117, 65);
-                        }
+                            /* 호버 시 약간의 변환 효과 추가 */
+                            transform: translateZ(5px);
+                            background-color: rgb(250, 117, 65);
+                    }
                     }
                 }
                 .profileTab {
@@ -339,7 +343,7 @@ const Container = styled.div`
                     height: 40px;
                     align-items: end;
                     .unSelectTab {
-                        background-color: rgba(0, 150, 138, 0.85);
+                        background-color:  rgba(250, 117, 65, 0.85);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -352,7 +356,7 @@ const Container = styled.div`
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         &:hover {
-                            background-color: rgba(0, 150, 138, 0.3);
+                            background-color:  rgba(250, 117, 65, 0.3);
                         }
                     }
                     .selectTab {
@@ -361,19 +365,19 @@ const Container = styled.div`
                         flex: 0.36;
                         height: 32px;
                         font-size: 14px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color:  rgba(250, 117, 65, 0.85);
                         align-items: end;
                         justify-content: center;
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         border-bottom: none;
-                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border: solid 0.01rem  rgba(250, 117, 65, 0.85);
                         border-bottom: none;
                     }
                 }
                 .profileTabComponent {
-                    /* background-color: rgba(0, 150, 138, 0.1); */
+                    /* background-color:  rgba(250, 117, 65, 0.1); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
@@ -388,7 +392,7 @@ const Container = styled.div`
                         .wirteName {
                             display: flex;
                             flex: 0.85;
-                            color: rgba(0, 150, 138, 0.85);
+                            color:  rgba(250, 117, 65, 0.85);
                             margin-right: 5px;
                             font-size: 16px;
                             padding-top: 20px;
@@ -400,7 +404,7 @@ const Container = styled.div`
                             height: 30px;
                             border-radius: 50px;
                             border: none;
-                            background-color: rgba(0, 150, 138, 0.85);
+                            background-color:  rgba(250, 117, 65, 0.85);
                             color: white;
                             font-size: 10px;
                             font-weight: bold;
@@ -533,7 +537,7 @@ const Container = styled.div`
                         font-weight: bold;
                         margin-left: 15px;
                         margin-right: 10px;
-                        /* color: rgba(0, 150, 138, 0.85); */
+                        /* color:  rgba(250, 117, 65, 0.85); */
                         color: white;
                     }
                     .organizeBtn {
@@ -541,14 +545,19 @@ const Container = styled.div`
                         height: 25px;
                         border-radius: 50px;
                         border: none;
-                        background-color: rgba(0, 150, 138, 0.85);
                         color: white;
                         font-size: 10px;
                         font-weight: bold;
                         margin-left: 10px;
                         cursor: pointer;
+                        background-color: rgba(250, 117, 65, 0.8);
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                         &:hover {
-                            background-color:   rgb(250, 117, 65);
+                            /* 호버 시 약간의 변환 효과 추가 */
+                            transform: translateZ(5px);
+                            background-color: rgb(250, 117, 65);
                         }
                     }
                 }
@@ -593,16 +602,15 @@ const Container = styled.div`
                         transform: translateZ(5px); /* 입체적인 효과 추가 */
                     }
                 }
-
                 .profileTabComponent {
                     /* background-color: rgba(255, 255, 255, 0.3); */
                     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
-                    /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
+                    /* border: solid 0.01rem  rgba(250, 117, 65, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
                     /* 아래의 margin 값을 조정하여 탭과 컴포넌트 사이의 간격을 조절할 수 있습니다. */
-                    margin-bottom: 20px;
+                    /* margin-bottom: 20px; */
                     height: 75%;
                     overflow: hidden;
                     .tabComponent {
@@ -718,7 +726,7 @@ const Container = styled.div`
         }
     }
     .pathUIDhave {
-        /* background-color: rgba(0, 150, 138, 0.3); */
+        /* background-color:  rgba(250, 117, 65, 0.3); */
         display: flex;
         position: relative;
         flex-direction: column;
@@ -728,15 +736,15 @@ const Container = styled.div`
             flex-direction: row;
             justify-content: flex-end;
             align-items: center;
-            border-bottom: solid 0.01rem rgba(0, 150, 138, 0.85);
+            border-bottom: solid 0.01rem  rgba(250, 117, 65, 0.85);
             .tabHeaderIcon {
-                color: rgba(0, 150, 138, 0.85);
+                color:  rgba(250, 117, 65, 0.85);
                 width: 35px;
                 height: 35px;
                 margin: 10px 0px 10px 50px;
             }
             .tabHeaderName {
-                color: rgba(0, 150, 138, 0.85);
+                color:  rgba(250, 117, 65, 0.85);
                 font-size: 20px;
                 margin: 10px 10px 0px 0px;
             }
@@ -745,7 +753,7 @@ const Container = styled.div`
             display: flex;
             flex-direction: row;
             .clickOpen {
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color:  rgba(250, 117, 65, 0.85);
                 position: absolute;
                 top: 60px;
                 z-index: 10;
@@ -767,7 +775,7 @@ const Container = styled.div`
                 flex-direction: column;
                 display: flex;
                 flex: 0.2;
-                border-right: solid 0.01rem rgba(0, 150, 138, 0.85);
+                border-right: solid 0.01rem  rgba(250, 117, 65, 0.85);
             }  
             .openProfileFlex1{
                 flex-direction: column;
@@ -790,21 +798,26 @@ const Container = styled.div`
                         font-size: 24px;
                         margin-left: 20px;
                         margin-right: 10px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color:  rgba(250, 117, 65, 0.85);
                     }
                     .organizeBtn {
                         width: 80px;
                         height: 25px;
                         border-radius: 50px;
                         border: none;
-                        background-color: rgba(0, 150, 138, 0.85);
                         color: white;
                         font-size: 10px;
                         font-weight: bold;
                         margin-left: 10px;
                         cursor: pointer;
+                        background-color: rgba(250, 117, 65, 0.8);
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                         &:hover {
-                            background-color:   rgb(250, 117, 65);
+                            /* 호버 시 약간의 변환 효과 추가 */
+                            transform: translateZ(5px);
+                            background-color: rgb(250, 117, 65);
                         }
                     }
                 }
@@ -817,7 +830,7 @@ const Container = styled.div`
                     height: 40px;
                     align-items: end;
                     .unSelectTab {
-                        background-color: rgba(0, 150, 138, 0.85);
+                        background-color:  rgba(250, 117, 65, 0.85);
                         display: flex;
                         cursor: pointer;
                         flex: 0.36;
@@ -830,7 +843,7 @@ const Container = styled.div`
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
                         &:hover {
-                            background-color: rgba(0, 150, 138, 0.9);
+                            background-color:  rgba(250, 117, 65, 0.9);
                         }
                     }
                     .selectTab {
@@ -839,23 +852,23 @@ const Container = styled.div`
                         flex: 0.36;
                         height: 32px;
                         font-size: 14px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color:  rgba(250, 117, 65, 0.85);
                         align-items: end;
                         justify-content: center;
                         padding-bottom: 5px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        border: solid 0.01rem rgba(0, 150, 138, 0.85);
+                        border: solid 0.01rem  rgba(250, 117, 65, 0.85);
                         border-bottom: none;
                         &:hover {
-                            background-color: rgba(0, 150, 138, 0.2);
+                            background-color:  rgba(250, 117, 65, 0.2);
                         }
                     }
                 }
                 .profileTabComponent {
-                    /* background-color: rgba(0, 150, 138, 0.1); */
+                    /* background-color:  rgba(250, 117, 65, 0.1); */
                     /* background-color: bisque; */
-                    /* border: solid 0.01rem rgba(0, 150, 138, 0.85); */
+                    /* border: solid 0.01rem  rgba(250, 117, 65, 0.85); */
                     border-top: none;
                     flex-direction: column;
                     width: 100%;
@@ -870,7 +883,7 @@ const Container = styled.div`
                         .wirteName {
                             display: flex;
                             flex: 0.85;
-                            color: rgba(0, 150, 138, 0.85);
+                            color:  rgba(250, 117, 65, 0.85);
                             margin-right: 5px;
                             font-size: 16px;
                             padding-top: 20px;
@@ -882,7 +895,7 @@ const Container = styled.div`
                             height: 30px;
                             border-radius: 50px;
                             border: none;
-                            background-color: rgba(0, 150, 138, 0.85);
+                            background-color:  rgba(250, 117, 65, 0.85);
                             color: white;
                             font-size: 10px;
                             font-weight: bold;

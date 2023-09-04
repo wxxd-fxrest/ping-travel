@@ -81,7 +81,7 @@ const Container = styled.div`
             color: white;
             top: 10px;
             cursor: pointer;
-            color: rgba(0, 150, 138, 0.85);
+            color:  rgba(250, 117, 65, 0.85);
         }
         @media screen and (max-width: 900px) {
             width: 80vw;

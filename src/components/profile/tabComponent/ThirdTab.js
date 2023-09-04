@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../../firebase";
@@ -9,7 +9,7 @@ const ThirdTab = ({profileUser, pathUID}) => {
 
     useEffect(() => {
         const FeedCollection = query(
-            collection(db, "UserInfo", `${profileUser.uid}`, "plan"));
+            collection(db, "UserInfo", `${profileUser.uid}`, "plan"), orderBy('date', 'desc'));
           onSnapshot(FeedCollection, (querySnapshot) => {
             let feedArray = []
             querySnapshot.forEach((doc) => {

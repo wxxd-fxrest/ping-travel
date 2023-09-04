@@ -207,28 +207,28 @@ const Container = styled.div`
     height: 98vh;
     display: flex;
     flex-direction: column;
-    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border: solid 0.01rem rgb(250, 117, 65, 0.85);
     border-radius: 10px;
-    @media screen and (max-width: 700px) {
-        width: 90vw;
+    @media screen and (max-width: 800px) {
+        width: 80vw;
     }
     .placeHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
         }
         .placeHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
             h4 {
                 font-size: 17px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
         }
     }
@@ -247,8 +247,9 @@ const Container = styled.div`
         padding: 20px 20px 10px 20px;
         h4 {
             font-size: 20px;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
             margin-bottom: 5px;
+            font-weight: bold;
         }
         .checkBoxContainer {
             display: flex;
@@ -258,7 +259,7 @@ const Container = styled.div`
             h3 {
                 font-size: 15px;
                 color: black;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
             .checkBoxComponent {
                 align-items: center;
@@ -306,7 +307,7 @@ const Container = styled.div`
                     left: 50%;
                 }
                 .toggle-btn.toggle-btn-on {
-                    background: #00968A;
+                    background: #FA7541;
                 }
                 .toggle-btn.toggle-btn-on:active {
                     box-shadow: none;
@@ -335,8 +336,8 @@ const Container = styled.div`
                 // 체크박스 디자인 끝
                 h6 {
                     margin-right: 10px;
-                    font-size: 14px;
-                    color: rgba(0, 150, 138, 0.85);
+                    font-size: 16px;
+                    color: rgb(250, 117, 65, 0.85);
                     border-right: solid 1px black;
                     padding-right: 10px;
                 }
@@ -345,14 +346,19 @@ const Container = styled.div`
                     height: 30px;
                     border-radius: 50px;
                     border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
                     color: white;
                     font-size: 13px;
                     font-weight: bold;
                     margin-right: 3px;
                     cursor: pointer;
+                    background-color: rgba(250, 117, 65, 0.8);
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                     &:hover {
-                        background-color: rgba(0, 150, 138);
+                        /* 호버 시 약간의 변환 효과 추가 */
+                        transform: translateZ(5px);
+                        background-color: rgb(250, 117, 65);
                     }
                 }
             }
@@ -363,17 +369,22 @@ const Container = styled.div`
             min-height: 40px;
             border-radius: 10px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.3);
-            color: rgba(0, 150, 138, 0.85);
+            background-color: rgb(250, 117, 65, 0.3);
+            color: rgb(250, 117, 65);
             outline: none;
             padding: 10px;
             margin-right: 5px;
             margin-top: 5px;
+            /* 그림자 효과 추가 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            /* 입체적인 효과 추가 */
+            transform: translateZ(5px);
+            transition: transform 0.2s ease;
             &::placeholder {
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
             &:focus {
-                background-color: rgba(0, 150, 138, 0.3);
+                background-color: rgb(250, 117, 65, 0.3);
             }
         }
     }

@@ -3,7 +3,8 @@ import { AuthContext } from "../AuthContext";
 import { db } from "../firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import styled from "styled-components";
-import { HiMiniArrowSmallRight, HiOutlineXCircle } from "react-icons/hi2";
+import { HiOutlineXCircle } from "react-icons/hi2";
+import { IoArrowRedo } from "react-icons/io5";
 
 const MainPingMap = ({docData, type}) => {
     const {currentUser} = useContext(AuthContext);
@@ -76,7 +77,7 @@ const MainPingMap = ({docData, type}) => {
                                 console.log(answerData)
                                 return(
                                     <div className="answerMessage">
-                                        <HiMiniArrowSmallRight size="23px" className="answerIcon"/>
+                                        <IoArrowRedo size="23px" className="answerIcon"/>
                                         <div className="answerBody">
                                             <p key={i}> {a.text} </p>
                                             {currentUser.uid === a.UID && <div>
@@ -110,7 +111,7 @@ const Container = styled.div`
         background-color: rgba(255, 255, 255, 0.27);
         .aboutBox {
             display: flex;
-            background-color: rgba(0, 150, 138, 0.3);
+            background-color: rgb(250, 117, 65, 0.3);
             border-radius: 10px;
             list-style: none;
             align-items: center;
@@ -121,25 +122,35 @@ const Container = styled.div`
             margin-bottom: 10px;
             padding: 13px;
             margin: 5px;
-            border-bottom: solid 1px rgba(0, 150, 138, 0.85);
-            border-right: solid 1px rgba(0, 150, 138, 0.85);
+            /* 그림자 효과 추가 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+            /* 입체적인 효과 추가 */
+            transform: translateZ(5px);
+            transition: transform 0.2s ease;
             h4 {
                 font-size: 16px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
             button {
                 width: 65px;
                 height: 30px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgb(250, 117, 65, 0.85);
                 color: white;
                 font-size: 11px;
                 font-weight: bold;
                 margin-right: 3px;
                 cursor: pointer;
+                background-color: rgba(250, 117, 65, 0.8);
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                 &:hover {
-                    background-color: rgba(0, 150, 138);
+                    /* 호버 시 약간의 변환 효과 추가 */
+                    transform: translateZ(5px);
+                    background-color: rgb(250, 117, 65);
                 }
             }
         }
@@ -160,7 +171,7 @@ const Container = styled.div`
                 min-height: 40px;
                 border-radius: 10px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgb(250, 117, 65, 0.85);
                 color: rgba(255, 255, 255, 0.9);
                 outline: none;
                 padding: 10px;
@@ -170,7 +181,7 @@ const Container = styled.div`
                     color: rgba(255, 255, 255, 0.7);
                 }
                 &:focus {
-                    background-color: rgba(0, 150, 138, 0.85);
+                    background-color: rgb(250, 117, 65, 0.85);
                 }
             }
             .textareaDeleteBtn {
@@ -180,13 +191,18 @@ const Container = styled.div`
                 height: 50px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
+                background-color: rgb(250, 117, 65, 0.75);
                 color: white;
                 font-size: 15px;
                 font-weight: bold;
                 cursor: pointer;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                 &:hover {
-                    background-color: rgba(0, 150, 138);
+                    /* 호버 시 약간의 변환 효과 추가 */
+                    transform: translateZ(5px);
+                    background-color: rgb(250, 117, 65);
                 }
             }
         }
@@ -201,13 +217,13 @@ const Container = styled.div`
                 margin-right: 10px;
                 .answerIcon {
                     margin-right: 10px;
-                    color:  rgba(0, 150, 138, 0.85);
+                    color:  rgb(250, 117, 65, 0.85);
                 }
                 .answerBody {
                     /* height: 10%; */
                     width: 100%;
                     display: flex;
-                    background-color: rgba(0, 150, 138, 0.3);
+                    background-color: rgb(250, 117, 65, 0.3);
                     border-radius: 10px;
                     list-style: none;
                     text-align: start;
@@ -219,10 +235,16 @@ const Container = styled.div`
                     padding: 13px;
                     align-items: center;
                     word-break: break-all;
+                    /* 그림자 효과 추가 */
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                    /* 입체적인 효과 추가 */
+                    transform: translateZ(5px);
+                    transition: transform 0.2s ease;
                     p {
                         display: flex;
                         font-size: 16px;
-                        color: rgba(0, 150, 138, 0.85);
+                        color: rgb(250, 117, 65, 0.85);
                         margin-right: 5px;
                     }
                     div {
@@ -230,7 +252,11 @@ const Container = styled.div`
                         position: relative;
                         .deleteBtn {
                             display: flex;
-                            color: rgba(0, 150, 138, 0.85);
+                            cursor: pointer;
+                            color: rgba(250, 117, 65, 0.58);
+                            &:hover {
+                                color: rgba(250, 117, 65, 0.95);
+                            }
                         }
                     }
                 }

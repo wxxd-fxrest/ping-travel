@@ -282,28 +282,28 @@ const Container = styled.div`
     height: 98vh;
     display: flex;
     flex-direction: column;
-    border: solid 0.01rem rgba(0, 150, 138, 0.85);
+    border: solid 0.01rem rgb(250, 117, 65, 0.85);
     border-radius: 10px;
-    @media screen and (max-width: 700px) {
-        width: 90vw;
+    @media screen and (max-width: 800px) {
+        width: 80vw;
     }
     .searchHeaderContainer {
         display: flex;
         justify-content: space-between;
         padding: 10px;
         .haveBackBtn {
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
         }
         .searchHeader {
             display: flex;
             align-items: center;
             .searchIcon {
                 margin-right: 5px;
-                color:  rgba(0, 150, 138, 0.85);
+                color:  rgb(250, 117, 65, 0.85);
             }
             h4 {
                 font-size: 17px;
-                color:  rgba(0, 150, 138, 0.85);
+                color:  rgb(250, 117, 65, 0.85);
             }
         }
         @media screen and (max-width: 500px) {
@@ -329,12 +329,12 @@ const Container = styled.div`
                 margin-bottom: 20px;
                 h4 {
                     font-size: 24px;
-                    color:  rgba(0, 150, 138, 0.85);
+                    color:  rgb(250, 117, 65, 0.85);
                     margin-right: 10px;
                 }
                 p {
                     font-size: 24px;
-                    color:  rgba(0, 150, 138, 0.85);
+                    color:  rgb(250, 117, 65, 0.85);
                 }
             }
             .recordSaveContainer {
@@ -350,35 +350,46 @@ const Container = styled.div`
                     min-height: 200px;
                     border-radius: 10px;
                     border: none;
-                    background-color:  rgba(0, 150, 138, 0.3);
+                    background-color:  rgb(250, 117, 65, 0.3);
                     /* background-color: rgba(255, 255, 255); */
-                    color:  rgba(0, 150, 138, 0.85);
+                    color:  rgb(250, 117, 65, 0.85);
                     outline: none;
                     margin-top: 5px;
                     padding: 15px;
+                    /* 그림자 효과 추가 */
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                    /* 입체적인 효과 추가 */
+                    transform: translateZ(5px);
+                    transition: transform 0.2s ease;
                     &::placeholder {
-                        color:  rgba(0, 150, 138, 0.85);
+                        color:  rgb(250, 117, 65, 0.85);
                     }
                     &:focus {
-                        background-color:  rgba(0, 150, 138, 0.3);
+                        background-color:  rgb(250, 117, 65, 0.3);
                     }
                 }
                 button {
                     position: absolute;
-                    top: 235px;
+                    top: -58px;
                     right: -30px;
                     margin-top: 10px;
-                    width: 150px;
-                    height: 40px;
+                    width: 60px;
+                    height: 35px;
                     border-radius: 50px;
                     border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
                     color: white;
                     font-size: 15px;
                     font-weight: bold;
                     cursor: pointer;
+                    background-color: rgba(250, 117, 65, 0.8);
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
+
                     &:hover {
-                        background-color: rgba(0, 150, 138);
+                        /* 호버 시 약간의 변환 효과 추가 */
+                        transform: translateZ(5px);
+                        background-color: rgb(250, 117, 65);
                     }
                 }
             }
@@ -389,7 +400,7 @@ const Container = styled.div`
             flex-direction: column;
             h4 {
                 font-size: 20px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
                 text-align: end;
                 margin-right: 5px;
                 margin-top: 5px;
@@ -399,13 +410,19 @@ const Container = styled.div`
                 display: flex;
                 justify-content: start;
                 align-items: center;
-                background-color: rgba(0, 150, 138, 0.3);
+                background-color: rgb(250, 117, 65, 0.3);
                 border-radius: 10px;
                 list-style: none;
                 position: relative;
                 margin-top: 5px;
                 margin-bottom: 5px;
                 padding: 13px;
+                /* 그림자 효과 추가 */
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+                /* 입체적인 효과 추가 */
+                transform: translateZ(5px);
+                transition: transform 0.2s ease;
                 input {
                     width: 18px;
                     height: 18px;
@@ -413,7 +430,7 @@ const Container = styled.div`
                 }
                 label {
                     word-break: break-all;
-                    color: rgba(0, 150, 138, 0.85);
+                    color: rgb(250, 117, 65, 0.85);
                 }
             }
         }
@@ -425,7 +442,7 @@ const Container = styled.div`
             .recordSaveText {
                 display: flex;
                 width: 100%;
-                padding: 30px;
+                /* padding: 30px; */
                 .recordSaveContainer {
                     display: flex;
                     flex-direction: column;
@@ -435,20 +452,17 @@ const Container = styled.div`
                         width: 90%;
                     }
                     button {
-                        /* position: absolute; */
-                        /* top: -55px; */
                         right: 0px;
-                        width: 100%;
+                        width: 50px;
                         height: 35px;
                     }
                 }
-
             }
             .checkBox {
                 display: flex;
                 border-top: solid 0.01rem white;
-                margin-top: 40px;
-                padding-top: 15px;
+                /* margin-top: 40px; */
+                padding-top: 25px;
                 width: 100%;
             }
         }

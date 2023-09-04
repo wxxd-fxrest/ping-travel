@@ -112,7 +112,7 @@ const Container = styled.div`
     width: 100%;
     .searchList {
         display: flex;
-        background-color: rgba(0, 150, 138, 0.3);
+        background-color: rgb(250, 117, 65, 0.3);
         border-radius: 10px;
         list-style: none;
         text-align: start;
@@ -124,13 +124,14 @@ const Container = styled.div`
         padding: 18px;
         h3 {
             width: 80%;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
             margin-bottom: 5px;
             font-size: 16px;
+            font-weight: bold;
         }
         p {
             width: 80%;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
             margin-bottom: 5px;
             font-size: 13px;
         }
@@ -139,7 +140,16 @@ const Container = styled.div`
             cursor: pointer;
             top: 10px;
             right: 15px;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgba(250, 117, 65);
+            transition: color 0.2s ease, transform 0.2s ease; /* 색상과 크기 조정 애니메이션 추가 */
+            z-index: 10;
+            &:hover {
+                /* 호버 시 색상 변경 */
+                color: rgba(235, 93, 38);
+                
+                /* 호버 시 약간 크기를 키워 입체감을 높임 */
+                transform: scale(1.1);
+            }
         }
         .clickName {
             background-color: blue;
@@ -151,20 +161,26 @@ const Container = styled.div`
             right: 0px;
             font-size: 1px;
             opacity: 0;
+            z-index: 11;
         }
         button {
             width: 100%;
             height: 30px;
             border-radius: 50px;
             border: none;
-            background-color: rgba(0, 150, 138, 0.85);
             color: white;
             font-size: 10px;
             font-weight: bold;
             margin-top: 5px;
             cursor: pointer;
+            background-color: rgba(250, 117, 65, 0.8);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; /* 변환 효과 추가 */
+
             &:hover {
-                background-color: rgba(0, 150, 138);
+                /* 호버 시 약간의 변환 효과 추가 */
+                transform: translateZ(5px);
+                background-color: rgb(250, 117, 65);
             }
         }
     }

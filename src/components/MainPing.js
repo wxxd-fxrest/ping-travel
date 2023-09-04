@@ -71,12 +71,12 @@ const Container = styled.div`
         align-items: center;
         h3 {
             font-size: 16px;
-            color: rgba(0, 150, 138, 0.85);
+            color: rgb(250, 117, 65, 0.85);
             display: flex;
             flex-direction: row;
             p {
                 font-size: 16px;
-                color: rgba(0, 150, 138, 0.85);
+                color: rgb(250, 117, 65, 0.85);
             }
         }
         .toggle-container {
@@ -122,7 +122,7 @@ const Container = styled.div`
             left: 50%;
         }
         .toggle-btn.toggle-btn-on {
-            background: #00968A;
+            background: #FA7541;
         }
         .toggle-btn.toggle-btn-on:active {
             box-shadow: none;

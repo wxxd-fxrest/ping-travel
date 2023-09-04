@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MapComponent from '../components/MapComponent';
 import styled from "styled-components";
 import { HiOutlineXCircle } from "react-icons/hi2";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const ReviewQuestion = ({mainPing}) => {
     const { kakao } = window;
@@ -87,7 +88,10 @@ const ReviewQuestion = ({mainPing}) => {
                                         }
                                     }); 
                                 }}> 상세보기 </button>
-                        </div> : <h4> 마커를 클릭하세요. </h4>}
+                        </div> : <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <FaMapMarkerAlt color='white'/>
+                            <h4> 마커를 클릭하세요. </h4>
+                        </div>}
                     </div>
                 </div>
                 <div className='reviewQuestionListContainer'>
@@ -128,14 +132,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
-    margin-right: 100px;
-    margin-left: 100px;
     .reviewQuestionMap {
         justify-content: space-between;
         display: flex;
         margin: 10px 10px 0px 10px;
         @media screen and (max-width: 1200px) {
-            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            margin-right: 80px;
+            margin-left: 80px;
             margin-top: 10px;
         }
         .reviewQuestionMapContainer {
@@ -151,8 +156,9 @@ const Container = styled.div`
         .reviewQuestionListContainer {
             display: flex;
             flex-direction: column;
-            width: 35%;
-            height: 50.5vh;
+            width: 60%;
+            margin-right: 20px;
+            height: 48vh;
             overflow-y: scroll;
             -ms-overflow-style: none; /* 인터넷 익스플로러 */
             scrollbar-width: none; /* 파이어폭스 */
@@ -172,13 +178,17 @@ const Container = styled.div`
                     height: 30px;
                     border-radius: 50px;
                     border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
                     color: white;
                     font-size: 10px;
                     font-weight: bold;
                     cursor: pointer;
+                    background-color: rgba(250, 117, 65, 0.8);
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
                     &:hover {
-                        background-color: rgba(0, 150, 138);
+                        /* 호버 시 약간의 변환 효과 추가 */
+                        transform: translateZ(5px);
+                        background-color: rgb(250, 117, 65);
                     }
                 }
                 button {
@@ -186,13 +196,17 @@ const Container = styled.div`
                     height: 25px;
                     border-radius: 50px;
                     border: none;
-                    background-color: rgba(0, 150, 138, 0.85);
                     color: white;
                     font-size: 10px;
                     font-weight: bold;
                     cursor: pointer;
+                    background-color: rgba(250, 117, 65, 0.8);
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease; /* 변환 효과 추가 */
                     &:hover {
-                        background-color: rgba(0, 150, 138);
+                        /* 호버 시 약간의 변환 효과 추가 */
+                        transform: translateZ(5px);
+                        background-color: rgb(250, 117, 65);
                     }
                 }
                 div {
@@ -210,13 +224,14 @@ const Container = styled.div`
                     padding: 13px;
                     box-shadow: 0px 4px 16px rgba(158, 158, 158, 0.25);
                     h3 {
-                        color: rgba(0, 150, 138, 0.9);
+                        color:  rgb(250, 117, 65);
+                        font-weight: bold;
                         font-size: 15px;
                         margin-top: 5px;
                         margin-bottom: 5px;
                     }
                     p {
-                        color: rgba(0, 150, 138, 0.6);
+                        color:  rgba(250, 117, 65, 0.7);
                         font-size: 12px;
                         margin-bottom: 5px;
                     }
@@ -226,10 +241,7 @@ const Container = styled.div`
                 display: none;
             }
         }
-        @media screen and (max-width: 1200px) {
-            display: flex;
-            flex-direction: column;
-        }
+
     }
     .selectPlace {
         display: flex;
@@ -250,23 +262,24 @@ const Container = styled.div`
             margin-bottom: 10px;
             padding: 15px;
             .XIcon {
-                color: rgba(0, 150, 138, 0.5);
                 position: absolute;
                 right: 10px;
                 top: 10px;
                 height: 25px;
                 width: 25px;
                 cursor: pointer;
+                color: rgba(250, 117, 65, 0.58);
                 &:hover {
-                    color: rgba(0, 150, 138, 0.85);
+                    color: rgba(250, 117, 65, 0.95);
                 }
             }
             h4 {
-                color: rgba(0, 150, 138, 0.85);
+                color:  rgb(250, 117, 65);
+                font-weight: bold;
                 font-size: 17px;
             }
             p {
-                color: rgba(0, 150, 138, 0.85);
+                color:  rgba(250, 117, 65, 0.7);
                 font-size: 12px;
                 margin-top: 5px;
             }
@@ -276,18 +289,24 @@ const Container = styled.div`
                 height: 30px;
                 border-radius: 50px;
                 border: none;
-                background-color: rgba(0, 150, 138, 0.85);
                 color: white;
                 font-size: 10px;
                 font-weight: bold;
                 cursor: pointer;
+                background-color: rgba(250, 117, 65, 0.8);
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease; /* 변환 효과 추가 */
                 &:hover {
-                    background-color: rgba(0, 150, 138);
+                    /* 호버 시 약간의 변환 효과 추가 */
+                    transform: translateZ(5px);
+                    background-color: rgb(250, 117, 65);
                 }
             }
         }
         h4 {
             color: white;
+            margin-left: 10px;
+            font-size: 14px;
         }
     }
 `;

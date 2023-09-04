@@ -11,12 +11,9 @@ import ProfileData from "../components/profile/ProfileData";
 import styled from "styled-components";
 import { HiOutlinePower, HiOutlineMapPin, HiOutlineDocumentText, HiBellAlert, HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-// HiBell
-
 const MenuBar = ({mainPing}) => {
     const {currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
-
     const [requestAlert, setRequestAlert] = useState(false);
     const [open, setOpen] = useState(false); 
     const [loginUserData, setLoginUserData] = useState([]);
@@ -258,6 +255,13 @@ const Container = styled.div`
                 position: absolute;
                 margin: 10px 10px 20px 10px;
                 cursor: pointer;
+                transform: scale(1);
+                transition: transform 0.2s ease-in-out; /* 변환 효과를 부드럽게 적용하기 위한 트랜지션 */
+
+                /* 마우스 호버 시 크기 확대 */
+                &:hover {
+                    transform: scale(1.1); /* 크기를 1.1배 확대 (원하는 크기로 조절 가능) */
+                }
                 @media screen and (max-width: 600px) {
                     margin: 10px 10px 20px 0px;
                     justify-items: center;
@@ -334,6 +338,11 @@ const Container = styled.div`
                 /* 입체 효과를 위한 그림자 추가 */
                 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
                 transition: transform 0.2s ease; /* 변환 효과 추가 */
+
+                @media screen and (max-width: 600px) {
+                    justify-content: center;
+                    padding: 0px 0px;
+                }
             }
 
             .clickTabContainer:hover {
@@ -486,11 +495,9 @@ const Container = styled.div`
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                margin-right: 100px;
-                /* margin-left: 100px; */
+                margin-right: 30px;
                 border-bottom: solid 0.01rem white;
                 .searchBox {
-                    border: 1px solid white;
                     margin-left: 10px;
                     border-radius: 20px;
                     padding: 10px;
@@ -509,7 +516,6 @@ const Container = styled.div`
                         font-size: 20px;
                         margin-left: 10px;
                         margin-right: 10px;
-                        /* margin: 10px 10px 0px 5px; */
                     }
                     &:hover {
                         background-color: rgba(255, 255, 255, 0.15);
@@ -517,17 +523,17 @@ const Container = styled.div`
                 }
                 .tabComponent {
                     display: flex;
-                    align-items: end;
+                    align-items: center;
                     .tabHeaderIcon {
                         color: white;
                         width: 35px;
                         height: 35px;
-                        margin: 10px 0px 10px 50px;
+                        margin: 10px 10px 10px 50px;
                     }
                     .tabHeaderName {
                         color: white;
                         font-size: 20px;
-                        margin: 10px 10px 10px 0px;
+                        margin: 10px 10px 0px 0px;
                     }
                 }
             }
