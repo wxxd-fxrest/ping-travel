@@ -229,7 +229,7 @@ const Container = styled.div`
             display: flex;
             flex-direction: row;
             margin: 30px 0px;
-            height: 90%;
+            height: 85%;
             .clickOpen {
                 background-color: white;
                 position: absolute;
@@ -499,8 +499,9 @@ const Container = styled.div`
                 flex: 1;
                 margin-left: 60px;
                 margin-right: 80px;
-                border-top-left-radius: 30px;
-                border-top-right-radius: 30px;
+                /* border-top-left-radius: 30px;
+                border-top-right-radius: 30px; */
+                border-radius: 30px;
                 transition: all 0.2s ease; 
                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
                 transform: translateZ(5px); 
