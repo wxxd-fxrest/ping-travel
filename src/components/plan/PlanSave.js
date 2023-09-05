@@ -79,7 +79,7 @@ const PlanSave = () => {
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
                         console.log('shareUserData', shareUserData)
-                        console.log('querySnapshot =>', doc.id, " => ", doc.data());
+                        // console.log('querySnapshot =>', doc.id, " => ", doc.data());
                     });     
                     const e = query(
                         collection(db, "UserInfo", shareUserData.uid, "plan"), 
@@ -92,7 +92,7 @@ const PlanSave = () => {
                     querySnapshot2.forEach(async (doc) => {
                         shareUserDocID = doc.id; 
                         // console.log(shareUserDocID)
-                        console.log('querySnapshot2 =>', doc.id, " => ", doc.data());
+                        // console.log('querySnapshot2 =>', doc.id, " => ", doc.data());
                     });  
 
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "plan", shareUserDocID), {
@@ -130,7 +130,7 @@ const PlanSave = () => {
                 const querySnapshot2 = await getDocs(e);
                 querySnapshot2.forEach(async (doc) => {
                     ownerUserDocID = doc.id; 
-                    console.log('ownerUserDocID =>', doc.id, " => ", doc.data());
+                    // console.log('ownerUserDocID =>', doc.id, " => ", doc.data());
                 });  
                 await updateDoc(doc(db, "UserInfo", ownerUserID.writeUID, "plan", ownerUserDocID), {
                     addPlan: arrayUnion({
