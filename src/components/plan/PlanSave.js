@@ -65,7 +65,7 @@ const PlanSave = () => {
 
     const onClickSave = async () => {
         currentUserID = `${currentUser.email}`.split('@')[0];
-
+        // console.log('state => ', state)
         if(state.addPathDocID) {
             shareID = shareID.share; 
             // 기록 추가 시 데이터 저장 
@@ -78,8 +78,8 @@ const PlanSave = () => {
                     const querySnapshot = await getDocs(q);
                     querySnapshot.forEach(async (doc) => {
                         shareUserData = doc.data()
-                        // console.log(shareUserData.uid)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log('shareUserData', shareUserData)
+                        console.log('querySnapshot =>', doc.id, " => ", doc.data());
                     });     
                     const e = query(
                         collection(db, "UserInfo", shareUserData.uid, "plan"), 
@@ -92,8 +92,9 @@ const PlanSave = () => {
                     querySnapshot2.forEach(async (doc) => {
                         shareUserDocID = doc.id; 
                         // console.log(shareUserDocID)
-                        // console.log(doc.id, " => ", doc.data());
+                        console.log('querySnapshot2 =>', doc.id, " => ", doc.data());
                     });  
+
                     await updateDoc(doc(db, "UserInfo", shareUserData.uid, "plan", shareUserDocID), {
                         addPlan: arrayUnion({
                             addDate: saveDate,
@@ -107,7 +108,8 @@ const PlanSave = () => {
                             addPlan: text,
                             writeUID: currentUser.uid
                         })
-                    });   
+                    }); 
+            
                 })
             } else {
                 const docRef = doc(db, "UserInfo", `${currentUser.uid}`, "plan", `${state.addPathDocID}`);
@@ -121,14 +123,14 @@ const PlanSave = () => {
 
                 const e = query(
                     collection(db, "UserInfo", ownerUserID.writeUID, "plan"), 
-                    where("placeID", "==", `${state.state.placeID}`),
-                    where("placeX", "==", `${state.state.placeX}`),
-                    where("placeY", "==", `${state.state.placeY}`),
+                        where("placeID", "==", `${state.state.placeID}`),
+                        where("placeX", "==", `${state.state.placeX}`),
+                        where("placeY", "==", `${state.state.placeY}`),
                     );
                 const querySnapshot2 = await getDocs(e);
                 querySnapshot2.forEach(async (doc) => {
                     ownerUserDocID = doc.id; 
-                    console.log(doc.id, " => ", doc.data());
+                    console.log('ownerUserDocID =>', doc.id, " => ", doc.data());
                 });  
                 await updateDoc(doc(db, "UserInfo", ownerUserID.writeUID, "plan", ownerUserDocID), {
                     addPlan: arrayUnion({
@@ -212,7 +214,7 @@ const PlanSave = () => {
                 writeUID: currentUser.uid,
             });
         }
-        // navigate('/');
+        navigate('/');
     };
     
     // console.log(state)
@@ -372,8 +374,8 @@ const Container = styled.div`
                 }
                 button {
                     position: absolute;
-                    top: -58px;
-                    right: -30px;
+                    top: 240px;
+                    /* right: -200px; */
                     margin-top: 10px;
                     width: 60px;
                     height: 35px;
@@ -455,12 +457,11 @@ const Container = styled.div`
                     button {
                         /* position: absolute; */
                         /* top: -55px; */
-                        right: 0px;
+                        left: 0px;
                         width: 50px;
                         height: 35px;
                     }
                 }
-
             }
             .checkBox {
                 display: flex;
